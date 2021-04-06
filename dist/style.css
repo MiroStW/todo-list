@@ -25,20 +25,20 @@ body {
     border-bottom: 1px white dashed;
 }
 
-.projectlist {
+.projectarea {
     border-right: 1px white dashed;
     height: 100%;
     text-align: center;
 }
 
-.projectlist div {
+.projectarea div {
     border-bottom: 1px white dashed;
     width: 80%;
     padding: 8px;
     margin: 0 auto;
 }
 
-.projectlist div:checked+label {
+.projectarea div:checked+label {
     background: #fff;
     color: #5a5243;
 }
