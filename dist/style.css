@@ -61,6 +61,7 @@ body {
     cursor: pointer;
   }
 
+  /* TODO make them visible only on hover */
   .icon {
     cursor: pointer;
     margin-left: 7px;

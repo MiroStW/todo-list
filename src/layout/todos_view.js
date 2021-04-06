@@ -1,5 +1,5 @@
-import {todoList, createTodo} from "../application_logic/arrays.js";
-import {  } from "./buttons.js";
+import {todoList, projectList} from "../application_logic/arrays.js";
+import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
 
 const showTodos = (project) => {
     const todoArea = document.querySelector(".todoarea");
@@ -8,24 +8,28 @@ const showTodos = (project) => {
     const todoHeader = document.createElement("h2");
     todoHeader.textContent = "Todos";
     todoArea.appendChild(todoHeader);
-    todoList.todos.forEach(todo => {
+
+    if(!project) {project = projectList.projects[0]}
+    project.todos.forEach(todo => {
         const todoDiv = document.createElement("div");
-        todoDiv.textContent = todo.title;
+        todoDiv.textContent = todo.name;
         //TODO port the rest to todos
         createRenameBtn(todoDiv,todo);
         createDeleteBtn(todoDiv,todo);
         todoArea.appendChild(todoDiv);
     });
-    const newProjectBtn = document.createElement("button");
-    newProjectBtn.textContent = "new project";
-    newProjectBtn.addEventListener("click", () => {createProject()});
-    todoArea.appendChild(newProjectBtn);
+
+    createNewItemBtn(todoArea,"todo",project);
     
 }
 
 const clearTodoList = (todoArea) => {
     //clear displayed todo Area
-    todoArea.childNodes.forEach(child => {child.remove()});
+    if (todoArea && todoArea.childNodes.length > 0) {
+        while (todoArea.firstChild) {
+            todoArea.removeChild(todoArea.lastChild);
+          }
+    }
 }
 
 export {showTodos}

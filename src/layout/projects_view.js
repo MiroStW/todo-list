@@ -11,11 +11,13 @@ const showProjects = () => {
     projectArea.appendChild(projectsHeader);
     projectList.projects.forEach(project => {
         const projectDiv = document.createElement("div");
-        projectDiv.textContent = project.name;
-        
-        projectDiv.addEventListener("click", () => {showTodos(project);})
 
-        if (project.name !== "inbox") {
+        const projectName = document.createElement("span");
+        projectName.textContent = project.name;
+        projectName.addEventListener("click", () => {showTodos(project);})
+        projectDiv.appendChild(projectName);
+
+        if (project !== projectList.projects[0]) {
             createRenameBtn(projectDiv,project);
             createDeleteBtn(projectDiv,project);
         }

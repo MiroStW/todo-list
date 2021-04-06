@@ -1,7 +1,8 @@
 import {deleteItem, renameItem, createItem} from "../application_logic";
 import {showProjects} from "./projects_view.js"
+import {showTodos} from "./todos_view.js";
 
-const createNewItemBtn = (parent,type) => {
+const createNewItemBtn = (parent, type, project) => {
     const newBtn = document.createElement("button");
     if (type === "project") {
         newBtn.textContent = "new project";
@@ -10,17 +11,17 @@ const createNewItemBtn = (parent,type) => {
             showProjects();
         });
     }
-    if (type === "todo"){
+    if (type === "todo") {
     newBtn.textContent = "new todo";
     newBtn.addEventListener("click", () => {
-        createItem(type);
-        showTodos();
+        createItem(type, project);
+        showTodos(project);
     });
     }
     parent.appendChild(newBtn);
 }
 
-const createRenameBtn = (parent,item) => {
+const createRenameBtn = (parent, item) => {
     //rename btn
     const RenameBtn = document.createElement("span");
     RenameBtn.classList.add("icon");
