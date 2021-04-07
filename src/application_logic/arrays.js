@@ -20,17 +20,16 @@ const projectList = (() => {
 })();
 
 // factory for todos
-const todo = (name, project) => {
+const todo = (name, parentProject) => {
     // todo properties: title, description, dueDate, priority, project,
     // complete?
     const proto = {
         type: "todo"
     }
-    if (project) {
-        project.type === "project" ? 
-                    project : 
-                    project = projectList[0]
+    if (!parentProject || parentProject.type !== "project") {
+        parentProject = projectList[0];
     }
+    const project = parentProject;
     const complete = false;
     const description = "";
     const dueDate = null;

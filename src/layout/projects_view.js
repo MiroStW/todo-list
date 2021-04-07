@@ -1,14 +1,15 @@
 import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
 import {projectList} from "../application_logic/arrays.js";
 import {showTodos} from "./todos_view.js";
+import {initialPage} from "./initial_page.js";
 
 const showProjects = () => {
-    const projectArea = document.querySelector(".projectarea");
-    clearProjectList(projectArea);
+    // const projectArea = document.querySelector(".projectarea");
+    clearProjectList();
     // show project list
     const projectsHeader = document.createElement("h2");
     projectsHeader.textContent = "Projects";
-    projectArea.appendChild(projectsHeader);
+    initialPage.projectArea.appendChild(projectsHeader);
     projectList.projects.forEach(project => {
         const projectDiv = document.createElement("div");
 
@@ -22,18 +23,18 @@ const showProjects = () => {
             createDeleteBtn(projectDiv,project);
         }
 
-        projectArea.appendChild(projectDiv);
+        initialPage.projectArea.appendChild(projectDiv);
     });
 
-    createNewItemBtn(projectArea,"project");
+    createNewItemBtn(initialPage.projectArea,"project");
     
 }
 
-const clearProjectList = (projectArea) => {
+const clearProjectList = () => {
     //clear displayed project Area
-    if (projectArea && projectArea.childNodes.length > 0) {
-        while (projectArea.firstChild) {
-            projectArea.removeChild(projectArea.lastChild);
+    if (initialPage.projectArea && initialPage.projectArea.childNodes.length > 0) {
+        while (initialPage.projectArea.firstChild) {
+            initialPage.projectArea.removeChild(initialPage.projectArea.lastChild);
           }
     }
 }

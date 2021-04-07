@@ -20,6 +20,8 @@ export const initialPage = (() => {
     todoArea.classList.add("todoarea");
     container.appendChild(todoArea);
 
+    return {projectArea, todoArea}
+
 })();
 
 showProjects();
