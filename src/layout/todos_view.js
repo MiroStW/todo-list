@@ -1,16 +1,16 @@
-import {todoList, projectList} from "../application_logic/arrays.js";
+import {projectArray} from "../application_logic/arrays.js";
 import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
 import {initialPage} from "./initial_page.js";
 
 const showTodos = (project) => {
-    // const todoArea = document.querySelector(".todoarea");
+    if (!project) {project = projectArray[0];} //default to inbox
     clearTodoList();
     // show project list
     const todoHeader = document.createElement("h2");
-    todoHeader.textContent = "Todos";
+    todoHeader.textContent = "Todos - " + project.name;
     initialPage.todoArea.appendChild(todoHeader);
 
-    if(!project) {project = projectList.projects[0]}
+    if(!project) {project = projectArray[0]}
     project.todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.textContent = todo.name;

@@ -1,4 +1,4 @@
-import {projectList, todoList, project, todo} from "./arrays.js";
+import {updateStorage, projectArray, project, todo} from "./arrays.js";
 import {showProjects} from "../layout/projects_view.js"
 import {showTodos} from "../layout/todos_view.js";
 
@@ -6,12 +6,13 @@ const createItem = (type, parentProject) => {
     const name = prompt(`What is the title of the new ${type}?`);
     if (name && type === "project") {
         const newProject = project(name);
-        projectList.projects.push(newProject);
+        projectArray.push(newProject);
     }
     if (name && parentProject && type === "todo") {
         const newTodo = todo(name, parentProject);
         parentProject.todos.push(newTodo);
     }
+    updateStorage();
 }
 
 const renameItem = (item) => {
@@ -25,12 +26,13 @@ const renameItem = (item) => {
             showTodos();
         }
     }
+    updateStorage();
 }
 
 const deleteItem = (item) => {
     if(confirm("really remove " + item.name + "?")) {
         if (item.type === "project") {
-            projectList.projects.splice(projectList.projects.indexOf(item),1);
+            projectArray.splice(projectArray.indexOf(item),1);
             showProjects();
         }
         if (item.type === "todo") {
@@ -38,6 +40,7 @@ const deleteItem = (item) => {
             showTodos();
         }
     }
+    updateStorage();
 }
 
 export {deleteItem, renameItem, createItem}

@@ -9,16 +9,6 @@ const project = (name) => {
     return Object.assign(Object.create(proto), {name, todos, createdDate})
 }
 
-// projects , list, create, delete, rename
-const projectList = (() => {
-    const projects = [];
-    // default project: inbox
-    if (projects.length == 0) {
-        projects.push(project("inbox"));
-    }
-    return {projects}
-})();
-
 // factory for todos
 const todo = (name, parentProject) => {
     // todo properties: title, description, dueDate, priority, project,
@@ -27,7 +17,7 @@ const todo = (name, parentProject) => {
         type: "todo"
     }
     if (!parentProject || parentProject.type !== "project") {
-        parentProject = projectList[0];
+        parentProject = projectArray[0];
     }
     const project = parentProject;
     const complete = false;
@@ -38,10 +28,32 @@ const todo = (name, parentProject) => {
     return Object.assign(Object.create(proto), {name, project, complete, description, dueDate, priority, createdDate})
 }
 
-// maintain a todolist for every project, update whenever projects get updated
-const todoList = (project) => {
-    const todos = project.todos
-    return {todos}
-};
+// projects array
+let projectArray = [];
 
-export {projectList, todoList, project, todo}
+const updateStorage = () => {
+    localStorage.setItem("todoSystem",JSON.stringify(projectArray));
+    restoreData();
+}
+
+const restoreData = () => {
+    projectArray = JSON.parse(localStorage.getItem("todoSystem"),);
+}
+
+//initiate local storage
+const initiateStorage = (() => {
+    if(!localStorage.getItem('todoSystem')) {
+        // push default inbox project
+        projectArray.push(project("inbox"));
+        // add demo data
+        // myLibrary.push(new Book("The lean startup","Eric Ries",250,true));
+        // myLibrary.push(new Book("The hard thing about hard things","Ben
+        // Horowitz",300,true));
+        updateStorage();
+    } 
+    else restoreData();
+})();
+
+export {projectArray, project, todo, updateStorage}
+
+//TODO: todos are not stored in chache
