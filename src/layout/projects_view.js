@@ -1,10 +1,10 @@
 import {projectArray} from "../application_logic/arrays.js";
 import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
-import {showTodos} from "./todos_view.js";
+import {showTodoList} from "./todos_view.js";
 import {initialPage} from "./initial_page.js";
 
-const showProjects = () => {
-    clearProjectView();
+const showProjectList = () => {
+    clearProjectList();
     // show project list
     const projectsHeader = document.createElement("h2");
     projectsHeader.textContent = "Projects";
@@ -15,7 +15,7 @@ const showProjects = () => {
 
         const projectName = document.createElement("span");
         projectName.textContent = project.name;
-        projectDiv.addEventListener("click", () => {showTodos(project);})
+        projectDiv.addEventListener("click", () => {showTodoList(project)});
         projectDiv.appendChild(projectName);
 
         if (project !== projectArray[0]) {
@@ -35,7 +35,7 @@ const showProjects = () => {
     
 }
 
-const clearProjectView = () => {
+const clearProjectList = () => {
     //clear displayed project Area
     if (initialPage.projectArea && initialPage.projectArea.childNodes.length > 0) {
         while (initialPage.projectArea.firstChild) {
@@ -44,4 +44,4 @@ const clearProjectView = () => {
     }
 }
 
-export {showProjects}
+export {showProjectList}

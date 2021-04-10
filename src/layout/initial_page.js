@@ -1,5 +1,5 @@
-import {showProjects} from "./projects_view.js";
-import {showTodos} from "./todos_view.js";
+import {showProjectList} from "./projects_view.js";
+import {showTodoList} from "./todos_view.js";
 
 export const initialPage = (() => {
     const container = document.querySelector("#content");
@@ -24,5 +24,5 @@ export const initialPage = (() => {
 
 })();
 
-showProjects();
-showTodos();
+showProjectList();
+showTodoList();

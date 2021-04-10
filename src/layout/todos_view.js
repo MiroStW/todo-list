@@ -2,7 +2,7 @@ import {projectArray, getTodos} from "../application_logic/arrays.js";
 import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
 import {initialPage} from "./initial_page.js";
 
-const showTodos = (project) => {
+const showTodoList = (project) => {
     if (!project) {project = projectArray[0];} //default to inbox
     clearTodoList();
     // show project list
@@ -41,4 +41,4 @@ const clearTodoList = () => {
     }
 }
 
-export {showTodos}
+export {showTodoList}

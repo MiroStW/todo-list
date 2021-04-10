@@ -1,6 +1,6 @@
 import {deleteItem, renameItem, createItem} from "../application_logic";
-import {showProjects} from "./projects_view.js"
-import {showTodos} from "./todos_view.js";
+import {showProjectList} from "./projects_view.js"
+import {showTodoList} from "./todos_view.js";
 
 const createNewItemBtn = (parent, type, project) => {
     const newBtn = document.createElement("button");
@@ -8,7 +8,7 @@ const createNewItemBtn = (parent, type, project) => {
         newBtn.textContent = "new project";
         newBtn.addEventListener("click", () => {
             createItem(type);
-            showProjects();
+            showProjectList();
         });
         parent.appendChild(newBtn);
     }
@@ -16,7 +16,7 @@ const createNewItemBtn = (parent, type, project) => {
         newBtn.textContent = "new todo";
         newBtn.addEventListener("click", () => {
             createItem(type, project);
-            showTodos(project);
+            showTodoList(project);
         });
         parent.appendChild(newBtn);
     }
