@@ -1,22 +1,18 @@
 // factory for projects
-const project = (name) => {
-    const proto = {
-        type: "project"
-    }
+let project = (name) => {
     // maintain a todolist for every project
-    const todos = [];
+    // --> now only stored on todo
+    // const todos = [];
     const createdDate = Date.now();
-    return Object.assign(Object.create(proto), {name, todos, createdDate})
+    return {name, createdDate}
 }
 
 // factory for todos
 const todo = (name, parentProject) => {
     // todo properties: title, description, dueDate, priority, project,
     // complete?
-    const proto = {
-        type: "todo"
-    }
-    if (!parentProject || parentProject.type !== "project") {
+    if (!parentProject) {
+        //default to "inbox" project
         parentProject = projectArray[0];
     }
     const project = parentProject;
@@ -25,24 +21,35 @@ const todo = (name, parentProject) => {
     const dueDate = null;
     const priority = 4;
     const createdDate = Date.now();
-    return Object.assign(Object.create(proto), {name, project, complete, description, dueDate, priority, createdDate})
+    return {name, project, complete, description, dueDate, priority, createdDate}
 }
 
-// projects array
+// project & todo array to hold all the data
 let projectArray = [];
+let todoArray = [];
 
 const updateStorage = () => {
-    localStorage.setItem("todoSystem",JSON.stringify(projectArray));
+    localStorage.setItem("todoSystem-projects",JSON.stringify(projectArray));
+    localStorage.setItem("todoSystem-todos",JSON.stringify(todoArray));
     restoreData();
 }
 
 const restoreData = () => {
-    projectArray = JSON.parse(localStorage.getItem("todoSystem"),);
+    projectArray = JSON.parse(localStorage.getItem("todoSystem-projects"),);
+    todoArray = JSON.parse(localStorage.getItem("todoSystem-todos"),);
+}
+
+const getTodos = (project) => {
+
+    // TODO: find a way to assign an auto-incremental ID
+    const todos = todoArray.filter((todo) => {return todo.project.name == project.name})
+
+    return todos
 }
 
 //initiate local storage
 const initiateStorage = (() => {
-    if(!localStorage.getItem('todoSystem')) {
+    if(!localStorage.getItem('todoSystem-projects')) {
         // push default inbox project
         projectArray.push(project("inbox"));
         // add demo data
@@ -54,6 +61,6 @@ const initiateStorage = (() => {
     else restoreData();
 })();
 
-export {projectArray, project, todo, updateStorage}
+export {projectArray, todoArray, project, todo, updateStorage, getTodos}
 
-//TODO: todos are not stored in chache
+//TODO: fix updateStorage + add storage of todoArray

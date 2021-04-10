@@ -1,4 +1,4 @@
-import {projectArray} from "../application_logic/arrays.js";
+import {projectArray, getTodos} from "../application_logic/arrays.js";
 import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
 import {initialPage} from "./initial_page.js";
 
@@ -9,14 +9,15 @@ const showTodos = (project) => {
     const todoHeader = document.createElement("h2");
     todoHeader.textContent = "Todos - " + project.name;
     initialPage.todoArea.appendChild(todoHeader);
+    
+    const todos = getTodos(project);
 
-    if(!project) {project = projectArray[0]}
-    project.todos.forEach(todo => {
+    todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.textContent = todo.name;
         //TODO port the rest to todos
-        createRenameBtn(todoDiv,todo);
-        createDeleteBtn(todoDiv,todo);
+        createRenameBtn(todoDiv, "todo", todo);
+        createDeleteBtn(todoDiv, "todo", todo);
         initialPage.todoArea.appendChild(todoDiv);
     });
 

@@ -10,32 +10,33 @@ const createNewItemBtn = (parent, type, project) => {
             createItem(type);
             showProjects();
         });
+        parent.appendChild(newBtn);
     }
     if (type === "todo") {
-    newBtn.textContent = "new todo";
-    newBtn.addEventListener("click", () => {
-        createItem(type, project);
-        showTodos(project);
-    });
+        newBtn.textContent = "new todo";
+        newBtn.addEventListener("click", () => {
+            createItem(type, project);
+            showTodos(project);
+        });
+        parent.appendChild(newBtn);
     }
-    parent.appendChild(newBtn);
 }
 
-const createRenameBtn = (parent, item) => {
+const createRenameBtn = (parent, type, item) => {
     //rename btn
     const RenameBtn = document.createElement("span");
     RenameBtn.classList.add("icon");
     RenameBtn.textContent = "✎";
-    RenameBtn.addEventListener("click", () => {renameItem(item)});
+    RenameBtn.addEventListener("click", () => {renameItem(item, type)});
     parent.appendChild(RenameBtn);
 }
 
-const createDeleteBtn = (parent,item) => {
+const createDeleteBtn = (parent, type, item) => {
     //delete btn
     const DeleteBtn = document.createElement("span");
     DeleteBtn.classList.add("icon");
     DeleteBtn.textContent = "❌";
-    DeleteBtn.addEventListener("click", () => {deleteItem(item)});
+    DeleteBtn.addEventListener("click", () => {deleteItem(item, type)});
     parent.appendChild(DeleteBtn);
 }
 

@@ -18,8 +18,8 @@ const showProjects = () => {
         projectDiv.appendChild(projectName);
 
         if (project !== projectArray[0]) {
-            createRenameBtn(projectDiv,project);
-            createDeleteBtn(projectDiv,project);
+            createRenameBtn(projectDiv,"project",project);
+            createDeleteBtn(projectDiv,"project",project);
         }
 
         initialPage.projectArea.appendChild(projectDiv);

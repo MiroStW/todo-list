@@ -1,4 +1,4 @@
-import {updateStorage, projectArray, project, todo} from "./arrays.js";
+import {updateStorage, projectArray, todoArray, project, todo} from "./arrays.js";
 import {showProjects} from "../layout/projects_view.js"
 import {showTodos} from "../layout/todos_view.js";
 
@@ -7,35 +7,37 @@ const createItem = (type, parentProject) => {
     if (name && type === "project") {
         const newProject = project(name);
         projectArray.push(newProject);
+        console.log(projectArray);
     }
     if (name && parentProject && type === "todo") {
         const newTodo = todo(name, parentProject);
-        parentProject.todos.push(newTodo);
+        todoArray.push(newTodo);
+        console.log(todoArray);
     }
     updateStorage();
 }
 
-const renameItem = (item) => {
+const renameItem = (item, type) => {
     const newName = prompt("What is the new name of " + item.name + "?");
     if(newName) {
         item.name = newName;
-        if (item.type === "project") {
+        if (type === "project") {
             showProjects();
         }
-        if (item.type === "todo") {
+        if (type === "todo") {
             showTodos();
         }
     }
     updateStorage();
 }
 
-const deleteItem = (item) => {
+const deleteItem = (item, type) => {
     if(confirm("really remove " + item.name + "?")) {
-        if (item.type === "project") {
+        if (type === "project") {
             projectArray.splice(projectArray.indexOf(item),1);
             showProjects();
         }
-        if (item.type === "todo") {
+        if (type === "todo") {
             item.project.todos.splice(item.project.todos.indexOf(item),1);
             showTodos();
         }
