@@ -14,10 +14,17 @@ const showTodos = (project) => {
 
     todos.forEach(todo => {
         const todoDiv = document.createElement("div");
+        todoDiv.classList.add("todo");
         todoDiv.textContent = todo.name;
-        //TODO port the rest to todos
-        createRenameBtn(todoDiv, "todo", todo);
-        createDeleteBtn(todoDiv, "todo", todo);
+
+        const btnDiv = document.createElement("div");
+        btnDiv.classList.add("buttons");
+        createRenameBtn(btnDiv, "todo", todo);
+        createDeleteBtn(btnDiv, "todo", todo);
+        todoDiv.appendChild(btnDiv);
+        todoDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
+        todoDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
+
         initialPage.todoArea.appendChild(todoDiv);
     });
 

@@ -11,15 +11,21 @@ const showProjects = () => {
     initialPage.projectArea.appendChild(projectsHeader);
     projectArray.forEach(project => {
         const projectDiv = document.createElement("div");
+        projectDiv.classList.add("project");
 
         const projectName = document.createElement("span");
         projectName.textContent = project.name;
-        projectName.addEventListener("click", () => {showTodos(project);})
+        projectDiv.addEventListener("click", () => {showTodos(project);})
         projectDiv.appendChild(projectName);
 
         if (project !== projectArray[0]) {
-            createRenameBtn(projectDiv,"project",project);
-            createDeleteBtn(projectDiv,"project",project);
+            const btnDiv = document.createElement("div");
+            btnDiv.classList.add("buttons");
+            createRenameBtn(btnDiv,"project",project);
+            createDeleteBtn(btnDiv,"project",project);
+            projectDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
+            projectDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
+            projectDiv.appendChild(btnDiv);
         }
 
         initialPage.projectArea.appendChild(projectDiv);
