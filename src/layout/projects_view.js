@@ -20,7 +20,7 @@ const showProjectList = () => {
 
         if (project !== projectArray[0]) {
             const btnDiv = document.createElement("div");
-            btnDiv.classList.add("buttons");
+            btnDiv.classList.add("btnrow");
             createRenameBtn(btnDiv,"project",project);
             createDeleteBtn(btnDiv,"project",project);
             projectDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});

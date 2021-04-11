@@ -1,5 +1,5 @@
 import {projectArray, getTodos} from "../application_logic/arrays.js";
-import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
+import {createRenameBtn, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
 import {initialPage} from "./initial_page.js";
 
 const showTodoList = (project) => {
@@ -18,13 +18,13 @@ const showTodoList = (project) => {
         todoDiv.textContent = todo.name;
 
         const btnDiv = document.createElement("div");
-        btnDiv.classList.add("buttons");
-        createRenameBtn(btnDiv, "todo", todo);
+        btnDiv.classList.add("btnrow");
+        // not needed: createRenameBtn(btnDiv, "todo", todo);
         createDeleteBtn(btnDiv, "todo", todo);
         todoDiv.appendChild(btnDiv);
         todoDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
         todoDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
-
+        todoDiv.addEventListener("click", () => {showTodo(todo,todoDiv, project)});
         initialPage.todoArea.appendChild(todoDiv);
     });
 
@@ -41,4 +41,51 @@ const clearTodoList = () => {
     }
 }
 
-export {showTodoList}
+const showTodo = (todo, todoDivClosed, project) => {
+    // TODO no borders of input, but overall border
+    // focus immediately in title
+    // complete checkbox
+    const todoDivOpen = document.createElement("div");
+    todoDivOpen.classList.add("todoOpen");
+
+    const nameInput = document.createElement("input");
+    nameInput.value = todo.name;
+    nameInput.placeholder = "Title";
+    todoDivOpen.appendChild(nameInput);
+
+    const descriptionInput = document.createElement("input");
+    descriptionInput.value = todo.description;
+    descriptionInput.placeholder = "Description";
+    todoDivOpen.appendChild(descriptionInput);
+    
+    const dueDateInput = document.createElement("input");
+    dueDateInput.value = todo.dueDate;
+    dueDateInput.placeholder = "Duedate";
+    todoDivOpen.appendChild(dueDateInput);
+    
+    const priorityInput = document.createElement("input");
+    priorityInput.value = todo.priority;
+    todoDivOpen.appendChild(priorityInput);
+    
+    const createdDate = document.createElement("div");
+    createdDate.value = todo.createdDate;
+    todoDivOpen.appendChild(createdDate);
+
+    createUpdateTodoBtn(
+        todo,
+        todoDivOpen,
+        nameInput,
+        descriptionInput,
+        dueDateInput,
+        priorityInput
+    );
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "cancel";
+    cancelBtn.addEventListener("click", () => {showTodoList(project)});
+    todoDivOpen.appendChild(cancelBtn);
+    
+    initialPage.todoArea.replaceChild(todoDivOpen,todoDivClosed);
+}
+
+export {showTodoList, showTodo}

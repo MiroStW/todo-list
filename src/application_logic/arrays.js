@@ -37,6 +37,10 @@ const updateStorage = () => {
 const restoreData = () => {
     projectArray = JSON.parse(localStorage.getItem("todoSystem-projects"),);
     todoArray = JSON.parse(localStorage.getItem("todoSystem-todos"),);
+    console.log("projects loaded: ");
+    console.log(projectArray);
+    console.log("todos loaded: ");
+    console.log(todoArray);
 }
 
 const getTodos = (project) => {

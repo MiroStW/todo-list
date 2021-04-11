@@ -1,4 +1,4 @@
-import {deleteItem, renameItem, createItem} from "../application_logic";
+import {deleteItem, updateTodo, renameItem, createItem} from "../application_logic";
 import {showProjectList} from "./projects_view.js"
 import {showTodoList} from "./todos_view.js";
 
@@ -24,20 +24,48 @@ const createNewItemBtn = (parent, type, project) => {
 
 const createRenameBtn = (parent, type, item) => {
     //rename btn
-    const RenameBtn = document.createElement("span");
-    RenameBtn.classList.add("icon");
-    RenameBtn.textContent = "✎";
-    RenameBtn.addEventListener("click", () => {renameItem(item, type)});
-    parent.appendChild(RenameBtn);
+    const renameBtn = document.createElement("span");
+    renameBtn.classList.add("icon");
+    renameBtn.textContent = "✎";
+    renameBtn.addEventListener("click", () => {
+        renameItem(item, type);
+        if (type === "project") {
+            showProjectList();
+        }
+        if (type === "todo") {
+            showTodoList(item.project);
+        }
+    });
+    parent.appendChild(renameBtn);
+}
+
+const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate,newPriority) => {
+
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "save";
+    saveBtn.addEventListener("click", () => {
+        updateTodo(todo,newName.value,newDescription.value,newDueDate.value,newPriority.value);
+        showTodoList(todo.project);
+    });
+    parent.appendChild(saveBtn);
 }
 
 const createDeleteBtn = (parent, type, item) => {
     //delete btn
-    const DeleteBtn = document.createElement("span");
-    DeleteBtn.classList.add("icon");
-    DeleteBtn.textContent = "❌";
-    DeleteBtn.addEventListener("click", () => {deleteItem(item, type)});
-    parent.appendChild(DeleteBtn);
+    const deleteBtn = document.createElement("span");
+    deleteBtn.classList.add("icon");
+    deleteBtn.textContent = "❌";
+    deleteBtn.addEventListener("click", () => {
+        deleteItem(item, type);
+        if (type === "project") {
+            showProjectList();
+            //TODO: if open project is deleted project: showTodoList()
+        }
+        if (type === "todo") {
+            showTodoList(item.project);
+        }
+    });
+    parent.appendChild(deleteBtn);
 }
 
-export {createDeleteBtn, createRenameBtn, createNewItemBtn}
+export {createDeleteBtn, createUpdateTodoBtn, createRenameBtn, createNewItemBtn}
