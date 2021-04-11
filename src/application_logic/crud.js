@@ -1,6 +1,6 @@
-import {updateStorage, projectArray, todoArray, project, todo} from "./arrays.js";
-import {showProjectList} from "../layout/projects_view.js"
-import {showTodoList} from "../layout/todos_view.js";
+import {updateStorage, projectArray, todoArray, project, todo} from "./arrays";
+import {showProjectList} from "../layout/projects_view"
+import {showTodoList} from "../layout/todos_view";
 
 const createItem = (type, parentProject) => {
     const name = prompt(`What is the title of the new ${type}?`);
@@ -33,6 +33,11 @@ const updateTodo = (todo, newName,newDescription,newDueDate,newPriority) => {
     updateStorage();
 }
 
+const completeTodo = (todo) => {
+    todo.complete = true;
+    updateStorage();
+}
+
 const deleteItem = (item, type) => {
     if(confirm("really remove " + item.name + "?")) {
         if (type === "project") {
@@ -48,4 +53,4 @@ const deleteItem = (item, type) => {
     }
 }
 
-export {deleteItem, renameItem, updateTodo, createItem}
+export {deleteItem, renameItem, updateTodo, completeTodo, createItem}

@@ -1,1 +1,0 @@
-export {initialPage} from "./initial_page.js";

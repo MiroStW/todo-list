@@ -6,6 +6,7 @@ body {
   background:black;
   color:white;
   font-family: sans-serif;
+  font-size: 16px;
 }
 
 #content {
@@ -46,25 +47,21 @@ body {
     color: #5a5243;
 }
 
-.todo {
+.todo, .todoOpen {
   border-bottom: 1px white dashed;
   width: 80%;
   padding: 8px;
 }
 
-.todoOpen {
-  border: 1px white dashed;
-  width: 80%;
-}
-
 .todoOpen input {
   background: black;
   color: white;
+  font-size: 16px;
   display: block;
   width: -webkit-fill-available;
-  padding: 8px;
-  margin-bottom: 15px;
+  padding: 8px 0;
   border: none;
+  outline: none;
 }
 
 .projectarea div:hover, .todoarea .todo:hover {

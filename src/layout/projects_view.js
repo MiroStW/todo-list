@@ -1,7 +1,7 @@
-import {projectArray} from "../application_logic/arrays.js";
-import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
-import {showTodoList} from "./todos_view.js";
-import {initialPage} from "./initial_page.js";
+import {projectArray} from "../application_logic/arrays";
+import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
+import {showTodoList} from "./todos_view";
+import {initialPage} from "./initial_page";
 
 const showProjectList = () => {
     clearProjectList();

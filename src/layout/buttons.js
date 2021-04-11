@@ -1,6 +1,6 @@
-import {deleteItem, updateTodo, renameItem, createItem} from "../application_logic";
-import {showProjectList} from "./projects_view.js"
-import {showTodoList} from "./todos_view.js";
+import {deleteItem, updateTodo, completeTodo, renameItem, createItem} from "../application_logic/crud";
+import {showProjectList} from "./projects_view"
+import {showTodoList} from "./todos_view";
 
 const createNewItemBtn = (parent, type, project) => {
     const newBtn = document.createElement("button");
@@ -39,6 +39,15 @@ const createRenameBtn = (parent, type, item) => {
     parent.appendChild(renameBtn);
 }
 
+const completeTodoCheckbox = (todo, parent) => {
+    const todoComplete = document.createElement("input");
+    todoComplete.type = "checkbox";
+    todoComplete.addEventListener("click", () => {
+        completeTodo(todo);
+    })
+    parent.appendChild(todoComplete);
+}
+
 const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate,newPriority) => {
 
     const saveBtn = document.createElement("button");
@@ -68,4 +77,4 @@ const createDeleteBtn = (parent, type, item) => {
     parent.appendChild(deleteBtn);
 }
 
-export {createDeleteBtn, createUpdateTodoBtn, createRenameBtn, createNewItemBtn}
+export {createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn}

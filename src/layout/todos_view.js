@@ -1,6 +1,6 @@
-import {projectArray, getTodos} from "../application_logic/arrays.js";
-import {createRenameBtn, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons.js";
-import {initialPage} from "./initial_page.js";
+import {projectArray, getTodos} from "../application_logic/arrays";
+import {completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
+import {initialPage} from "./initial_page";
 
 const showTodoList = (project) => {
     if (!project) {project = projectArray[0];} //default to inbox
@@ -15,16 +15,25 @@ const showTodoList = (project) => {
     todos.forEach(todo => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo");
+
+        // complete checkbox
+        completeTodoCheckbox(todo, todoDiv);
+
+        // todo title
         todoDiv.textContent = todo.name;
 
+        // remove button
         const btnDiv = document.createElement("div");
         btnDiv.classList.add("btnrow");
         // not needed: createRenameBtn(btnDiv, "todo", todo);
         createDeleteBtn(btnDiv, "todo", todo);
         todoDiv.appendChild(btnDiv);
+
+        // open todo
         todoDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
         todoDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
         todoDiv.addEventListener("click", () => {showTodo(todo,todoDiv, project)});
+        
         initialPage.todoArea.appendChild(todoDiv);
     });
 

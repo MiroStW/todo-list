@@ -1,4 +1,4 @@
-import {initialPage} from "./layout";
+import {initialPage} from "./layout/initial_page";
 
 // separate logic from DOM
 // store in localstorage
