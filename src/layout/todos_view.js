@@ -65,15 +65,27 @@ const showTodo = (todo, todoDivClosed, project) => {
     const todoDivOpen = document.createElement("div");
     todoDivOpen.classList.add("todoOpen");
 
+    // complete checkbox
+    completeTodoCheckbox(todo, todoDivOpen);
+
     const nameInput = document.createElement("input");
     nameInput.value = todo.name;
     nameInput.placeholder = "Title";
     todoDivOpen.appendChild(nameInput);
 
-    const descriptionInput = document.createElement("input");
+    const descriptionInput = document.createElement("textarea");
     descriptionInput.value = todo.description;
     descriptionInput.placeholder = "Description";
+
+    descriptionInput.addEventListener("input", OnInput, false);
+    function OnInput() {
+        console.log("height changed;")
+        this.style.height = "auto";
+        this.style.height = (this.scrollHeight) + "px";
+    }
+
     todoDivOpen.appendChild(descriptionInput);
+
     
     const dueDateInput = document.createElement("input");
     dueDateInput.value = todo.dueDate;
@@ -108,8 +120,6 @@ const showTodo = (todo, todoDivClosed, project) => {
 export {showTodoList, showTodo}
 
 // TODO: 
-// move checkbox to the left
-// make it clickable
 // make it visible in open todo
 // put completed todos in "done" list
 // add transition period before checked todo is moved there
