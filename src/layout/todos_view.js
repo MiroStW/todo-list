@@ -1,6 +1,8 @@
 import {projectArray, getTodos, todo} from "../application_logic/arrays";
 import {completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
+import {format} from "date-fns";
+// import {  } from "material-design-icons";
 
 const showTodoList = (project) => {
     if (!project) {project = projectArray[0];} //default to inbox
@@ -18,6 +20,11 @@ const showTodoList = (project) => {
 
         // complete checkbox
         completeTodoCheckbox(todo, todoDiv);
+
+        const flag = document.createElement("span");
+        flag.classList.add("material-icons-outlined");
+        flag.textContent = format(todo.createdDate, "yyyy-MM-dd");
+        todoDiv.appendChild(flag);
 
         // todo bar
         const todoBarDiv = document.createElement("div");
