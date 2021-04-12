@@ -1,4 +1,4 @@
-import {projectArray, getTodos} from "../application_logic/arrays";
+import {projectArray, getTodos, todo} from "../application_logic/arrays";
 import {completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
 
@@ -19,20 +19,28 @@ const showTodoList = (project) => {
         // complete checkbox
         completeTodoCheckbox(todo, todoDiv);
 
+        // todo bar
+        const todoBarDiv = document.createElement("div");
+        todoBarDiv.classList.add("todoBar");
+        todoDiv.appendChild(todoBarDiv);
+
         // todo title
-        todoDiv.textContent = todo.name;
+        const todoTitleDiv = document.createElement("span");
+        todoTitleDiv.classList.add("todoTitle");
+        todoTitleDiv.textContent = todo.name;
+        todoBarDiv.appendChild(todoTitleDiv);
 
         // remove button
         const btnDiv = document.createElement("div");
         btnDiv.classList.add("btnrow");
         // not needed: createRenameBtn(btnDiv, "todo", todo);
         createDeleteBtn(btnDiv, "todo", todo);
-        todoDiv.appendChild(btnDiv);
+        todoBarDiv.appendChild(btnDiv);
 
         // open todo
         todoDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
         todoDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
-        todoDiv.addEventListener("click", () => {showTodo(todo,todoDiv, project)});
+        todoBarDiv.addEventListener("click", () => {showTodo(todo,todoDiv, project)});
         
         initialPage.todoArea.appendChild(todoDiv);
     });
@@ -98,3 +106,11 @@ const showTodo = (todo, todoDivClosed, project) => {
 }
 
 export {showTodoList, showTodo}
+
+// TODO: 
+// move checkbox to the left
+// make it clickable
+// make it visible in open todo
+// put completed todos in "done" list
+// add transition period before checked todo is moved there
+// have done list closed by default

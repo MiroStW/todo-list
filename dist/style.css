@@ -47,10 +47,25 @@ body {
     color: #5a5243;
 }
 
+.todo {
+  display: grid;
+  grid-template-columns: 29px auto;
+  /* grid-template-rows: max-content auto; */
+  /* gap: 15px; */
+  /* max-width: 1080px; */
+}
+
 .todo, .todoOpen {
   border-bottom: 1px white dashed;
   width: 80%;
-  padding: 8px;
+}
+
+.todoBar, .todoOpen {
+  padding:8px 8px 8px 0;
+}
+
+.todoComplete {
+  margin:11.5px 8px;
 }
 
 .todoOpen input {
@@ -71,7 +86,6 @@ body {
 
 .btnrow {
   float: right;
-  line-height: 100%;
   display: none;
 }
 
@@ -92,4 +106,5 @@ button {
 .icon {
   cursor: pointer;
   margin-left: 7px;
+  line-height: 100%;
 }

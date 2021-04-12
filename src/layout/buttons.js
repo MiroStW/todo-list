@@ -42,6 +42,7 @@ const createRenameBtn = (parent, type, item) => {
 const completeTodoCheckbox = (todo, parent) => {
     const todoComplete = document.createElement("input");
     todoComplete.type = "checkbox";
+    todoComplete.classList.add("todoComplete");
     todoComplete.addEventListener("click", () => {
         completeTodo(todo);
     })
