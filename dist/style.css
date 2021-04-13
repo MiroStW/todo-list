@@ -51,7 +51,7 @@ body {
   border-bottom: 1px white dashed;
   width: 80%;
   display: grid;
-  grid-template-columns: 29px auto;
+  grid-template-columns: 29px 26px auto;
   /* gap: 15px; */
   /* max-width: 1080px; */
 }
@@ -65,8 +65,28 @@ body {
 }
 
 .todoComplete {
-  margin:11.5px 8px;
+  margin:10.5px 8px;
   grid-row: 1 / 8;
+}
+
+.todoPriority {
+  padding:7px 3px;
+}
+
+.prio1 { 
+  color: #ff0000;
+}
+
+.prio2 { 
+  color: #FB8C00;
+}
+
+.prio3 { 
+  color: #b0fb00;
+}
+
+.prio4 { 
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .todoOpen input, .todoOpen textarea {
@@ -114,4 +134,8 @@ button {
   cursor: pointer;
   margin-left: 7px;
   line-height: 100%;
+}
+
+.material-icons.md-18, .material-icons-outlined.md-18 { 
+  font-size: 18px;
 }

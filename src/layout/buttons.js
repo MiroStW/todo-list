@@ -49,6 +49,18 @@ const completeTodoCheckbox = (todo, parent) => {
     parent.appendChild(todoComplete);
 }
 
+const priorityFlag = (todo, parent) => {
+    const flag = document.createElement("span");
+    todo.priority == 4 ? 
+                flag.classList.add("material-icons-outlined") :
+                flag.classList.add("material-icons") ;
+    flag.classList.add("prio" + todo.priority);
+    flag.classList.add("todoPriority");
+    flag.classList.add("md-18");
+    flag.textContent = "flag";
+    parent.appendChild(flag);
+}
+
 const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate,newPriority) => {
 
     const saveBtn = document.createElement("button");
@@ -78,4 +90,4 @@ const createDeleteBtn = (parent, type, item) => {
     parent.appendChild(deleteBtn);
 }
 
-export {createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn}
+export {createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, priorityFlag}
