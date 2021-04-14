@@ -50,7 +50,7 @@ const deleteItem = (item, type) => {
             showProjectList();
         }
         if (type === "todo") {
-            item.project.todos.splice(item.project.todos.indexOf(item),1);
+            todoArray.splice(todoArray.indexOf(item),1);
             updateStorage();
             showTodoList();
         }
