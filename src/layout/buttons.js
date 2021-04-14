@@ -82,13 +82,43 @@ const priorityBtn = (todo, parent, newPriority) => {
     })
 }
 
-const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate,newPriority) => {
+const showTodoTitle = (todo, parent) => {
+    const todoTitleDiv = document.createElement("span");
+    todoTitleDiv.classList.add("todoTitle");
+    todoTitleDiv.textContent = todo.name;
+    parent.appendChild(todoTitleDiv);
+}
+
+const editTodoTitle = (todo, parent) => {
+    const nameInput = document.createElement("input");
+    nameInput.classList.add("todoTitle");
+    nameInput.value = todo.name;
+    nameInput.placeholder = "Title";
+    parent.querySelector(".todoTitle").replaceWith(nameInput);
+
+    return nameInput
+}
+
+const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate) => {
 
     const saveBtn = document.createElement("button");
     saveBtn.textContent = "save";
     saveBtn.addEventListener("click", () => {
+        const todoBarDiv = parent.parentNode.querySelector(".todoBar");
+        const btnDiv = parent.parentNode.querySelector(".btnrow");
+
         updateTodo(todo,newName.value,newDescription.value,newDueDate.value);
         showTodoList(todo.project);
+        // // & remove editableTitle & showTitle
+        // newName.remove();
+        // showTodoTitle(todo, todoBarDiv);
+        // // remove active class
+        // btnDiv.remove("active");
+        // parent.parentNode.classList.remove("active");
+        // // add eventlistener to reopen todo
+        // todoBarDiv.addEventListener("click", () => {showTodoDetails(todo, parent.parentNode);}, { once: true });
+        // // remove openTodoDiv
+        // parent.remove();
     });
     parent.appendChild(saveBtn);
 }
@@ -111,4 +141,4 @@ const createDeleteBtn = (parent, type, item) => {
     parent.appendChild(deleteBtn);
 }
 
-export {createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}
+export {showTodoTitle, editTodoTitle, createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}

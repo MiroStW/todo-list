@@ -1,5 +1,5 @@
 import {projectArray, getTodos} from "../application_logic/arrays";
-import {showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
+import {showTodoTitle, editTodoTitle, showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
 import {format} from "date-fns";
 
@@ -14,40 +14,7 @@ const showTodoList = (project) => {
     const todos = getTodos(project);
 
     todos.forEach(todo => {
-        const todoDiv = document.createElement("div");
-        todoDiv.classList.add("todo");
-
-        // complete checkbox
-        completeTodoCheckbox(todo, todoDiv);
-
-        // priority flag
-        const priority = showPriority(todoDiv, todo.priority);
-        priority.addEventListener("click", () => {openPrioPicker(todo, todoDiv)});
-
-        // todo bar
-        const todoBarDiv = document.createElement("div");
-        todoBarDiv.classList.add("todoBar");
-        todoDiv.appendChild(todoBarDiv);
-
-        // todo title
-        const todoTitleDiv = document.createElement("span");
-        todoTitleDiv.classList.add("todoTitle");
-        todoTitleDiv.textContent = todo.name;
-        todoBarDiv.appendChild(todoTitleDiv);
-
-        // remove button
-        const btnDiv = document.createElement("div");
-        btnDiv.classList.add("btnrow");
-        // not needed: createRenameBtn(btnDiv, "todo", todo);
-        createDeleteBtn(btnDiv, "todo", todo);
-        todoBarDiv.appendChild(btnDiv);
-
-        // open todo
-        todoDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
-        todoDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
-        todoBarDiv.addEventListener("click", () => {showTodo(todo,todoDiv, project)});
-        
-        initialPage.todoArea.appendChild(todoDiv);
+        showTodoBar(todo);
     });
 
     createNewItemBtn(initialPage.todoArea,"todo",project);
@@ -63,17 +30,52 @@ const clearTodoList = () => {
     }
 }
 
-const showTodo = (todo, todoDiv, project) => {
+const showTodoBar = (todo) => {
+    const todoDiv = document.createElement("div");
+    todoDiv.classList.add("todo");
+
+    // complete checkbox
+    completeTodoCheckbox(todo, todoDiv);
+
+    // priority flag
+    const priority = showPriority(todoDiv, todo.priority);
+    priority.addEventListener("click", () => {openPrioPicker(todo, todoDiv)});
+
+    // todo bar
+    const todoBarDiv = document.createElement("div");
+    todoBarDiv.classList.add("todoBar");
+    todoDiv.appendChild(todoBarDiv);
+
+    // todo title
+    showTodoTitle(todo, todoBarDiv);
+
+    // remove button
+    const btnDiv = document.createElement("div");
+    btnDiv.classList.add("btnrow");
+    createDeleteBtn(btnDiv, "todo", todo);
+    todoBarDiv.appendChild(btnDiv);
+
+    todoDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
+    todoDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
+    
+    // open todo
+    // function handler() {
+    //     showTodo(todo,todoDiv, project);
+    //     todoBarDiv.removeEventListener("click", handler);
+    // }
+    todoBarDiv.addEventListener("click", () => {showTodoDetails(todo,todoDiv, todo.project);}, { once: true });
+    
+    initialPage.todoArea.appendChild(todoDiv);
+}
+
+const showTodoDetails = (todo, todoDiv) => {
     todoDiv.classList.add("active");
-    // TODO doesnt work yet:
-    todoDiv.removeEventListener("click", () => {showTodo(todo,todoDiv, project)});
+    // function handler() {showTodo(todo,todoDiv, project)};
+    // todoDiv.querySelector(".todoBar").removeEventListener("click", handler);
     
     // make title editable
-    const nameInput = document.createElement("input");
-    nameInput.classList.add("todoTitle");
-    nameInput.value = todo.name;
-    nameInput.placeholder = "Title";
-    todoDiv.querySelector(".todoTitle").replaceWith(nameInput);
+    const nameInput = editTodoTitle(todo, todoDiv);
+    nameInput.focus();
 
     const todoDivOpen = document.createElement("div");
     todoDivOpen.classList.add("todoOpen");
@@ -113,15 +115,15 @@ const showTodo = (todo, todoDiv, project) => {
         dueDateInput,
     );
 
-    const cancelBtn = document.createElement("button");
-    cancelBtn.textContent = "cancel";
-    cancelBtn.addEventListener("click", () => {showTodoList(project)});
-    todoDivOpen.appendChild(cancelBtn);
+    // const cancelBtn = document.createElement("button");
+    // cancelBtn.textContent = "cancel";
+    // cancelBtn.addEventListener("click", () => {showTodoList(project)});
+    // todoDivOpen.appendChild(cancelBtn);
     
     todoDiv.appendChild(todoDivOpen);
 }
 
-export {showTodoList, showTodo}
+export {showTodoList, showTodoDetails}
 
 // overall todoArea
 // TODO focus immediately in title
