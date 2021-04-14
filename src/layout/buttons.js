@@ -1,4 +1,4 @@
-import {deleteItem, updateTodo, completeTodo, renameItem, createItem} from "../application_logic/crud";
+import {deleteItem, updateTodo, updatePriority, updateCompleted, renameItem, createItem} from "../application_logic/crud";
 import {showProjectList} from "./projects_view"
 import {showTodoList} from "./todos_view";
 
@@ -44,21 +44,42 @@ const completeTodoCheckbox = (todo, parent) => {
     todoComplete.type = "checkbox";
     todoComplete.classList.add("todoComplete");
     todoComplete.addEventListener("click", () => {
-        completeTodo(todo);
-    })
+        updateCompleted(todo, true);
+    });
     parent.appendChild(todoComplete);
 }
 
-const priorityFlag = (todo, parent) => {
+const openPrioPicker = (todo, parent) => {
+    const pickerContainer = document.createElement("div");
+    pickerContainer.classList.add("priorityPicker");
+    priorityBtn(todo,pickerContainer,1);
+    priorityBtn(todo,pickerContainer,2);
+    priorityBtn(todo,pickerContainer,3);
+    priorityBtn(todo,pickerContainer,4);
+    parent.appendChild(pickerContainer);
+}
+
+const showPriority = (parent, priority) => {
     const flag = document.createElement("span");
-    todo.priority == 4 ? 
+    priority == 4 ? 
                 flag.classList.add("material-icons-outlined") :
                 flag.classList.add("material-icons") ;
-    flag.classList.add("prio" + todo.priority);
+    flag.classList.add("prio" + priority);
     flag.classList.add("todoPriority");
     flag.classList.add("md-18");
     flag.textContent = "flag";
     parent.appendChild(flag);
+
+    return flag
+}
+
+const priorityBtn = (todo, parent, newPriority) => {
+    const btn = showPriority(parent, newPriority);
+    btn.addEventListener("click", () => {
+        updatePriority(todo,newPriority);
+        showTodoList(todo.project);
+        parent.remove();
+    })
 }
 
 const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate,newPriority) => {
@@ -66,7 +87,7 @@ const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate,newPr
     const saveBtn = document.createElement("button");
     saveBtn.textContent = "save";
     saveBtn.addEventListener("click", () => {
-        updateTodo(todo,newName.value,newDescription.value,newDueDate.value,newPriority.value);
+        updateTodo(todo,newName.value,newDescription.value,newDueDate.value);
         showTodoList(todo.project);
     });
     parent.appendChild(saveBtn);
@@ -90,4 +111,4 @@ const createDeleteBtn = (parent, type, item) => {
     parent.appendChild(deleteBtn);
 }
 
-export {createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, priorityFlag}
+export {createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}

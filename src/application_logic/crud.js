@@ -24,17 +24,21 @@ const renameItem = (item, type) => {
     }
 }
 
-const updateTodo = (todo, newName,newDescription,newDueDate,newPriority) => {
+const updateTodo = (todo, newName,newDescription,newDueDate) => {
     // TODO add change project
     todo.name = newName;
     todo.description = newDescription;
     todo.dueDate = newDueDate;
-    todo.priority = newPriority;
     updateStorage();
 }
 
-const completeTodo = (todo) => {
-    todo.complete = true;
+const updateCompleted = (todo,isCompleted) => {
+    todo.complete = isCompleted;
+    updateStorage();
+}
+
+const updatePriority = (todo, priority) => {
+    todo.priority = priority;
     updateStorage();
 }
 
@@ -53,4 +57,4 @@ const deleteItem = (item, type) => {
     }
 }
 
-export {deleteItem, renameItem, updateTodo, completeTodo, createItem}
+export {deleteItem, renameItem, updateTodo, updateCompleted, updatePriority, createItem}

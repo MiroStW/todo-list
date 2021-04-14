@@ -1,5 +1,5 @@
-import {projectArray, getTodos, todo} from "../application_logic/arrays";
-import {priorityFlag, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
+import {projectArray, getTodos} from "../application_logic/arrays";
+import {showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
 import {format} from "date-fns";
 
@@ -21,7 +21,8 @@ const showTodoList = (project) => {
         completeTodoCheckbox(todo, todoDiv);
 
         // priority flag
-        priorityFlag(todo, todoDiv);   
+        const priority = showPriority(todoDiv, todo.priority);
+        priority.addEventListener("click", () => {openPrioPicker(todo, todoDiv)});
 
         // todo bar
         const todoBarDiv = document.createElement("div");
@@ -89,7 +90,6 @@ const showTodo = (todo, todoDivClosed, project) => {
     }
 
     todoDivOpen.appendChild(descriptionInput);
-
     
     const dueDateInput = document.createElement("input");
     dueDateInput.value = todo.dueDate;

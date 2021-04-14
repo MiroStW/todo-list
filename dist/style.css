@@ -64,6 +64,11 @@ body {
   padding:8px 8px 8px 0;
 }
 
+.todoBar {
+  grid-row: 1 / 1;
+  grid-column: 3 / 3;
+}
+
 .todoComplete {
   margin:10.5px 8px;
   grid-row: 1 / 8;
@@ -71,6 +76,15 @@ body {
 
 .todoPriority {
   padding:7px 3px;
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
+}
+
+.priorityPicker {
+  background: black;
+  grid-row: 1 / 1;
+  grid-column: 2 / 4;
+  width: max-content;
 }
 
 .prio1 { 
