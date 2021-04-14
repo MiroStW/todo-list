@@ -63,21 +63,22 @@ const clearTodoList = () => {
     }
 }
 
-const showTodo = (todo, todoDivClosed, project) => {
-    // TODO no borders of input, but overall border
-    // focus immediately in title
-    // complete checkbox
+const showTodo = (todo, todoDiv, project) => {
+    todoDiv.classList.add("active");
+    // TODO doesnt work yet:
+    todoDiv.removeEventListener("click", () => {showTodo(todo,todoDiv, project)});
+    
+    // make title editable
+    const nameInput = document.createElement("input");
+    nameInput.classList.add("todoTitle");
+    nameInput.value = todo.name;
+    nameInput.placeholder = "Title";
+    todoDiv.querySelector(".todoTitle").replaceWith(nameInput);
+
     const todoDivOpen = document.createElement("div");
     todoDivOpen.classList.add("todoOpen");
 
-    // complete checkbox
-    completeTodoCheckbox(todo, todoDivOpen);
-
-    const nameInput = document.createElement("input");
-    nameInput.value = todo.name;
-    nameInput.placeholder = "Title";
-    todoDivOpen.appendChild(nameInput);
-
+    // todo description
     const descriptionInput = document.createElement("textarea");
     descriptionInput.value = todo.description;
     descriptionInput.placeholder = "Description";
@@ -91,26 +92,25 @@ const showTodo = (todo, todoDivClosed, project) => {
 
     todoDivOpen.appendChild(descriptionInput);
     
+    // todo duedate
     const dueDateInput = document.createElement("input");
+    dueDateInput.classList.add("todoDueDate");
     dueDateInput.value = todo.dueDate;
     dueDateInput.placeholder = "Duedate";
     todoDivOpen.appendChild(dueDateInput);
     
-    const priorityInput = document.createElement("input");
-    priorityInput.value = todo.priority;
-    todoDivOpen.appendChild(priorityInput);
-    
+    // show created date
     const createdDate = document.createElement("div");
     createdDate.value = todo.createdDate;
     todoDivOpen.appendChild(createdDate);
 
+    // buttons
     createUpdateTodoBtn(
         todo,
         todoDivOpen,
         nameInput,
         descriptionInput,
         dueDateInput,
-        priorityInput
     );
 
     const cancelBtn = document.createElement("button");
@@ -118,13 +118,27 @@ const showTodo = (todo, todoDivClosed, project) => {
     cancelBtn.addEventListener("click", () => {showTodoList(project)});
     todoDivOpen.appendChild(cancelBtn);
     
-    initialPage.todoArea.replaceChild(todoDivOpen,todoDivClosed);
+    todoDiv.appendChild(todoDivOpen);
 }
 
 export {showTodoList, showTodo}
 
-// TODO: 
-// make it visible in open todo
+// overall todoArea
+// TODO focus immediately in title
+// TODO put each element in own function
+// TODO create function to close todo
+// TODO opening a todo closes all other todos (only one open at a time)
+// TODO clicking anywhere else in todoArea closes open todo
+
+// dueDate
+// TODO add datepicker
+// TODO add dueDate icons
+
+// complete todo
 // put completed todos in "done" list
 // add transition period before checked todo is moved there
 // have done list closed by default
+
+// projectArea
+// add today view
+// add upcoming view

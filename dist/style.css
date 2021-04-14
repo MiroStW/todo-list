@@ -31,42 +31,34 @@ body {
     padding-left: 10px;
     border-right: 1px white dashed;
     height: 100%;
-    /* text-align: center; */
 }
 
 .project {
     border-bottom: 1px white dashed;
     width: 80%;
     padding: 8px;
-    /* margin: 0 auto; */
 }
-
 
 .projectarea div:checked+label {
     background: #fff;
     color: #5a5243;
 }
 
-.todo, .todoOpen {
+.todo {
   border-bottom: 1px white dashed;
   width: 80%;
   display: grid;
   grid-template-columns: 29px 26px auto;
-  /* gap: 15px; */
-  /* max-width: 1080px; */
-}
-
-/* .todoOpen {
-  grid-template-rows: max-content auto;
-} */
-
-.todoBar, .todoOpen {
-  padding:8px 8px 8px 0;
 }
 
 .todoBar {
+  padding:8px 8px 8px 0;
   grid-row: 1 / 1;
   grid-column: 3 / 3;
+}
+
+.todoOpen {
+  grid-column: 2 / -1;
 }
 
 .todoComplete {
@@ -103,21 +95,22 @@ body {
   color: rgba(255, 255, 255, 0.3);
 }
 
-.todoOpen input, .todoOpen textarea {
+.todo input, .todo textarea {
   background: black;
   color: white;
   font-size: 16px;
-  display: block;
-  width: -webkit-fill-available;
-  padding: 8px 0;
+  /* display: block;
+  width: -webkit-fill-available; */
   border: none;
   outline: none;
 }
 
-.todoOpen textarea {
+.todo textarea {
+  width: -webkit-fill-available;
   resize: none;
   overflow-y:hidden;
   font-family: sans-serif;
+  padding: 8px 0;
 }
 
 .projectarea div:hover, .todoarea .todo:hover {
@@ -125,12 +118,17 @@ body {
   cursor: pointer;
 }
 
+.todo.active:hover {
+  background: #000;
+  cursor: initial;
+}
+
 .btnrow {
   float: right;
   display: none;
 }
 
-.active {
+.btnrow.active, .active .btnrow {
   display: initial;
 }
 
