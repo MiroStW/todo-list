@@ -4,22 +4,42 @@ import {initialPage} from "./initial_page";
 import {format} from "date-fns";
 import flatpickr from "flatpickr";
 
-const showTodoList = (project) => {
-    if (!project) {project = projectArray[0];} //default to inbox
-    clearTodoList();
-    // show project list
-    const todoHeader = document.createElement("h2");
-    todoHeader.textContent = "Todos - " + project.name;
-    initialPage.todoArea.appendChild(todoHeader);
-    
-    const todos = getTodos(project);
+const showTodoList = (project,filterCompleted) => {    
+    if (!filterCompleted) {
 
-    todos.forEach(todo => {
-        showTodoBar(todo);
-    });
+        if (!project) {project = projectArray[0];} //default to inbox
+        clearTodoList();
 
-    createNewItemBtn(initialPage.todoArea,"todo",project);
+        // show project header
+        const todoHeader = document.createElement("h2");
+        todoHeader.textContent = project.name;
+        initialPage.todoArea.appendChild(todoHeader);
+   
+        const todos = getTodos(project).filter(todo => !todo.complete);
+
+        todos.forEach(todo => {
+            showTodoBar(todo);
+        });
+
+        createNewItemBtn(initialPage.todoArea,"todo",project);
     
+        showTodoList(project,true);
+    }
+
+    else {
+
+        // show project header
+        const todoHeader = document.createElement("h2");
+        todoHeader.textContent = "Completed Todos";
+        initialPage.todoArea.appendChild(todoHeader);
+
+        const todos = getTodos(project).filter(todo => todo.complete);
+        
+        todos.forEach(todo => {
+            showTodoBar(todo);
+        });
+    }
+
 }
 
 const clearTodoList = () => {

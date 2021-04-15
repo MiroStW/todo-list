@@ -55,7 +55,7 @@ const getTodos = (project) => {
 const initiateStorage = (() => {
     if(!localStorage.getItem('todoSystem-projects')) {
         // push default inbox project
-        projectArray.push(project("inbox"));
+        projectArray.push(project("Inbox"));
         // add demo data
         // myLibrary.push(new Book("The lean startup","Eric Ries",250,true));
         // myLibrary.push(new Book("The hard thing about hard things","Ben

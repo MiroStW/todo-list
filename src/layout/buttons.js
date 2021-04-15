@@ -43,6 +43,7 @@ const completeTodoCheckbox = (todo, parent) => {
     const todoComplete = document.createElement("input");
     todoComplete.type = "checkbox";
     todoComplete.classList.add("todoComplete");
+    if (todo.complete) todoComplete.setAttribute("checked",null);
     todoComplete.addEventListener("click", () => {
         updateCompleted(todo, true);
     });
