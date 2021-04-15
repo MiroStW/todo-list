@@ -1,3 +1,7 @@
+@import '../node_modules/flatpickr/dist/flatpickr.min.css';
+@import '../node_modules/flatpickr/dist/themes/dark.css';
+
+
 html, body {
   height: 100%;
 }
@@ -116,6 +120,20 @@ body {
 .projectarea div:hover, .todoarea .todo:hover {
   background: #444;
   cursor: pointer;
+}
+
+.flatpickr-calendar, .flatpickr-months .flatpickr-month, .flatpickr-current-month .flatpickr-monthDropdown-months, span.flatpickr-weekday {
+  background: black;
+}
+
+.flatpickr-calendar.arrowTop:before {
+  border-bottom-color: white;
+}
+
+.flatpickr-calendar {
+  border-top: 1px white dashed;
+  border-bottom: 1px white dashed;
+  border-radius: initial;
 }
 
 .todo.active:hover {

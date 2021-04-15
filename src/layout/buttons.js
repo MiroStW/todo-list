@@ -104,8 +104,8 @@ const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate) => {
     const saveBtn = document.createElement("button");
     saveBtn.textContent = "save";
     saveBtn.addEventListener("click", () => {
-        const todoBarDiv = parent.parentNode.querySelector(".todoBar");
-        const btnDiv = parent.parentNode.querySelector(".btnrow");
+        // const todoBarDiv = parent.parentNode.querySelector(".todoBar");
+        // const btnDiv = parent.parentNode.querySelector(".btnrow");
 
         updateTodo(todo,newName.value,newDescription.value,newDueDate.value);
         showTodoList(todo.project);

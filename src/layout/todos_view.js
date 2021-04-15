@@ -2,6 +2,7 @@ import {projectArray, getTodos} from "../application_logic/arrays";
 import {showTodoTitle, editTodoTitle, showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
 import {format} from "date-fns";
+import flatpickr from "flatpickr";
 
 const showTodoList = (project) => {
     if (!project) {project = projectArray[0];} //default to inbox
@@ -58,11 +59,6 @@ const showTodoBar = (todo) => {
     todoDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
     todoDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
     
-    // open todo
-    // function handler() {
-    //     showTodo(todo,todoDiv, project);
-    //     todoBarDiv.removeEventListener("click", handler);
-    // }
     todoBarDiv.addEventListener("click", () => {showTodoDetails(todo,todoDiv, todo.project);}, { once: true });
     
     initialPage.todoArea.appendChild(todoDiv);
@@ -70,9 +66,7 @@ const showTodoBar = (todo) => {
 
 const showTodoDetails = (todo, todoDiv) => {
     todoDiv.classList.add("active");
-    // function handler() {showTodo(todo,todoDiv, project)};
-    // todoDiv.querySelector(".todoBar").removeEventListener("click", handler);
-    
+
     // make title editable
     const nameInput = editTodoTitle(todo, todoDiv);
     nameInput.focus();
@@ -114,33 +108,32 @@ const showTodoDetails = (todo, todoDiv) => {
         descriptionInput,
         dueDateInput,
     );
-
-    // const cancelBtn = document.createElement("button");
-    // cancelBtn.textContent = "cancel";
-    // cancelBtn.addEventListener("click", () => {showTodoList(project)});
-    // todoDivOpen.appendChild(cancelBtn);
     
     todoDiv.appendChild(todoDivOpen);
+
+    const datepicker = flatpickr(dueDateInput, {});
 }
 
 export {showTodoList, showTodoDetails}
 
 // overall todoArea
-// TODO focus immediately in title
-// TODO put each element in own function
-// TODO create function to close todo
-// TODO opening a todo closes all other todos (only one open at a time)
-// TODO clicking anywhere else in todoArea closes open todo
+// [x] focus immediately in title
+// [] put each element in own function
+// [] review button.js & clean up structure
+// [x] create function to close todo
+// [] BONUS opening a todo closes all other todos (only one open at a time)
+// [] BONUS clicking anywhere else in todoArea closes open todo
 
 // dueDate
-// TODO add datepicker
-// TODO add dueDate icons
+// [x] add datepicker
+// [] add dueDate icons
 
 // complete todo
-// put completed todos in "done" list
-// add transition period before checked todo is moved there
-// have done list closed by default
+// [] completed todos should have checked checkbox
+// [] put completed todos in "done" list
+// [] add transition period before checked todo is moved there
+// [] have done list closed by default
 
 // projectArea
-// add today view
-// add upcoming view
+// [] add today view
+// [] add upcoming view
