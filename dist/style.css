@@ -31,6 +31,16 @@ body {
   border-bottom: 1px white dashed;
 }
 
+.todoHeader {
+  display: grid;
+  grid-template-columns: auto fit-content(100%);
+  padding: 20px 0;
+}
+
+.todoHeader h2 {
+  margin:0;
+}
+
 .projectarea {
     padding-left: 10px;
     border-right: 1px white dashed;
@@ -48,9 +58,13 @@ body {
     color: #5a5243;
 }
 
+.todoarea {
+  width:80%
+}
+
 .todo {
   border-bottom: 1px white dashed;
-  width: 80%;
+  /* width: 80%; */
   display: grid;
   grid-template-columns: 29px 26px auto;
 }

@@ -84,6 +84,21 @@ const priorityBtn = (todo, parent, newPriority) => {
     })
 }
 
+const completedTodosBtn = (project, parent) => {
+    const btn = document.createElement("span");
+    btn.classList.add("completedTodosBtn");
+    btn.classList.add("icon");
+    btn.classList.add("material-icons");
+    // btn.classList.add("md-18");
+    btn.textContent = "restore";
+    btn.addEventListener("click", () => {
+        document.querySelector(".completedTodoHeader")
+                ? showTodoList(project,false)
+                : showTodoList(project,true)
+    });
+    parent.appendChild(btn);
+}
+
 const showTodoTitle = (todo, parent) => {
     const todoTitleDiv = document.createElement("span");
     todoTitleDiv.classList.add("todoTitle");
@@ -143,4 +158,4 @@ const createDeleteBtn = (parent, type, item) => {
     parent.appendChild(deleteBtn);
 }
 
-export {showTodoTitle, editTodoTitle, createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}
+export {completedTodosBtn, showTodoTitle, editTodoTitle, createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}

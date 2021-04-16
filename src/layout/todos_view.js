@@ -1,5 +1,5 @@
 import {projectArray, getTodos} from "../application_logic/arrays";
-import {showTodoTitle, editTodoTitle, showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
+import {completedTodosBtn, showTodoTitle, editTodoTitle, showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
 import {format} from "date-fns";
 import flatpickr from "flatpickr";
@@ -7,14 +7,22 @@ import flatpickr from "flatpickr";
 const showTodoList = (project,filterCompleted) => {    
     if (!filterCompleted) {
 
-        if (!project) {project = projectArray[0];} //default to inbox
+        //default to inbox
+        if (!project) {project = projectArray[0];} 
         clearTodoList();
 
         // show project header
+        const todoHeaderDiv = document.createElement("div");
+        todoHeaderDiv.classList.add("todoHeader");
         const todoHeader = document.createElement("h2");
         todoHeader.textContent = project.name;
-        initialPage.todoArea.appendChild(todoHeader);
-   
+        todoHeaderDiv.appendChild(todoHeader);
+
+        completedTodosBtn(project, todoHeaderDiv);
+
+        initialPage.todoArea.appendChild(todoHeaderDiv);
+        
+        // only show uncompleted todos
         const todos = getTodos(project).filter(todo => !todo.complete);
 
         todos.forEach(todo => {
@@ -23,13 +31,13 @@ const showTodoList = (project,filterCompleted) => {
 
         createNewItemBtn(initialPage.todoArea,"todo",project);
 
-        showTodoList(project,true);
     }
 
     else {
 
         // show project header
         const todoHeader = document.createElement("h2");
+        todoHeader.classList.add("todoHeader", "completedTodoHeader");
         todoHeader.textContent = "Completed Todos";
         initialPage.todoArea.appendChild(todoHeader);
 
@@ -149,9 +157,9 @@ export {showTodoList, showTodoDetails}
 // [] add dueDate icons
 
 // complete todo
-// [] completed todos should have checked checkbox
-// [] put completed todos in "done" list
-// [] add transition period before checked todo is moved there
+// [x] completed todos should have checked checkbox
+// [x] put completed todos in "done" list
+// [x] add transition period before checked todo is moved there
 // [] have done list closed by default
 
 // projectArea
