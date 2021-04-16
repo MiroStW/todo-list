@@ -32,8 +32,8 @@ const updateTodo = (todo, newName,newDescription,newDueDate) => {
     updateStorage();
 }
 
-const updateCompleted = (todo,isCompleted) => {
-    todo.complete = isCompleted;
+const updateCompleted = (todo) => {
+    todo.complete = !todo.complete;
     updateStorage();
 }
 

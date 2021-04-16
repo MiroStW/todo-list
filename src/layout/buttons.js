@@ -45,7 +45,8 @@ const completeTodoCheckbox = (todo, parent) => {
     todoComplete.classList.add("todoComplete");
     if (todo.complete) todoComplete.setAttribute("checked",null);
     todoComplete.addEventListener("click", () => {
-        updateCompleted(todo, true);
+        updateCompleted(todo);
+        if (!document.querySelector(".todoOpen")) {showTodoList(todo.project);}
     });
     parent.appendChild(todoComplete);
 }

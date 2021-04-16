@@ -22,7 +22,7 @@ const showTodoList = (project,filterCompleted) => {
         });
 
         createNewItemBtn(initialPage.todoArea,"todo",project);
-    
+
         showTodoList(project,true);
     }
 
