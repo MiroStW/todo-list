@@ -99,9 +99,8 @@ const completedTodosBtn = (project, parent) => {
 }
 
 const todoDueDateIcon = (todo, parent) => {
+    const icon = document.createElement("div");
     if (todo.dueDate) {
-        const icon = document.createElement("div");
-        // if dueDate <= today
         const daysToToday = differenceInCalendarDays(parseISO(todo.dueDate),new Date());
         const yearsToToday = differenceInCalendarYears(parseISO(todo.dueDate),new Date());
         
@@ -121,12 +120,9 @@ const todoDueDateIcon = (todo, parent) => {
             icon.classList.add("todoDueDateIcon");
             icon.textContent = format(parseISO(todo.dueDate),"MMM yyyy");
         }
-        // next 6 days: E
-        // later & this year: d. MMM
-        // next year+: MMM yyyy
-    
-        parent.appendChild(icon);
     }
+
+    parent.appendChild(icon);
 }
 
 const showTodoTitle = (todo, parent) => {
