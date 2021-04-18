@@ -1,5 +1,5 @@
-@import '../node_modules/flatpickr/dist/flatpickr.min.css';
-@import '../node_modules/flatpickr/dist/themes/dark.css';
+@import '~flatpickr/dist/flatpickr.min.css';
+@import '~flatpickr/dist/themes/dark.css';
 
 
 html, body {
