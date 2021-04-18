@@ -99,32 +99,34 @@ const completedTodosBtn = (project, parent) => {
 }
 
 const todoDueDateIcon = (todo, parent) => {
-    const icon = document.createElement("div");
-    // if dueDate <= today
-    const daysToToday = differenceInCalendarDays(parseISO(todo.dueDate),new Date());
-    const yearsToToday = differenceInCalendarYears(parseISO(todo.dueDate),new Date());
+    if (todo.dueDate) {
+        const icon = document.createElement("div");
+        // if dueDate <= today
+        const daysToToday = differenceInCalendarDays(parseISO(todo.dueDate),new Date());
+        const yearsToToday = differenceInCalendarYears(parseISO(todo.dueDate),new Date());
+        
+        if (daysToToday <= 0 ) {
+            icon.classList.add("material-icons", "md-18");
+            icon.textContent = "star";
+        }
+        else if (daysToToday < 7) {
+            icon.classList.add("todoDueDateIcon");
+            icon.textContent = format(parseISO(todo.dueDate),"E");
+        }
+        else if (yearsToToday <= 0) {
+            icon.classList.add("todoDueDateIcon");
+            icon.textContent = format(parseISO(todo.dueDate),"d. MMM");
+        }
+        else {
+            icon.classList.add("todoDueDateIcon");
+            icon.textContent = format(parseISO(todo.dueDate),"MMM yyyy");
+        }
+        // next 6 days: E
+        // later & this year: d. MMM
+        // next year+: MMM yyyy
     
-    if (daysToToday <= 0 ) {
-        icon.classList.add("material-icons", "md-18");
-        icon.textContent = "star";
+        parent.appendChild(icon);
     }
-    else if (daysToToday < 7) {
-        icon.classList.add("todoDueDateIcon");
-        icon.textContent = format(parseISO(todo.dueDate),"E");
-    }
-    else if (yearsToToday <= 0) {
-        icon.classList.add("todoDueDateIcon");
-        icon.textContent = format(parseISO(todo.dueDate),"d. MMM");
-    }
-    else {
-        icon.classList.add("todoDueDateIcon");
-        icon.textContent = format(parseISO(todo.dueDate),"MMM yyyy");
-    }
-    // next 6 days: E
-    // later & this year: d. MMM
-    // next year+: MMM yyyy
-    
-    parent.appendChild(icon);
 }
 
 const showTodoTitle = (todo, parent) => {
