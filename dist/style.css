@@ -122,6 +122,10 @@ body {
   font-size: 14px;
 }
 
+.todayIcon {
+  color:yellow;
+}
+
 .todo input, .todo textarea {
   background: black;
   color: white;

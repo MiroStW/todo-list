@@ -106,7 +106,7 @@ const todoDueDateIcon = (todo, parent) => {
         const yearsToToday = differenceInCalendarYears(parseISO(todo.dueDate),new Date());
         
         if (daysToToday <= 0 ) {
-            icon.classList.add("material-icons", "md-18");
+            icon.classList.add("material-icons", "md-18", "todayIcon");
             icon.textContent = "star";
         }
         else if (daysToToday < 7) {
