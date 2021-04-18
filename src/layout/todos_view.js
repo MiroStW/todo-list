@@ -2,6 +2,8 @@ import {projectArray, getTodos} from "../application_logic/arrays";
 import {todoDueDateIcon, completedTodosBtn, showTodoTitle, editTodoTitle, showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
 import flatpickr from "flatpickr";
+import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/themes/dark.css';
 
 const showTodoList = (project,filterCompleted) => {    
     if (!filterCompleted) {
