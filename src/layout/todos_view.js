@@ -158,8 +158,8 @@ export {showTodoList, showTodoDetails}
 
 // dueDate
 // [x] add datepicker
-// [] dueDate needs to be saved as real date, not string
-// [] add dueDate icons
+// [x] dueDate needs to be saved as real date, not string
+// [x] add dueDate icons
 
 // complete todo
 // [x] completed todos should have checked checkbox

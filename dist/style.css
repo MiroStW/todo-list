@@ -49,6 +49,8 @@ body {
 .project {
     border-bottom: 1px white dashed;
     width: 80%;
+    display: grid;
+    grid-template-columns: auto max-content;
     padding: 8px;
 }
 
