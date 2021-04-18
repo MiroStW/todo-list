@@ -64,15 +64,17 @@ body {
 
 .todo {
   border-bottom: 1px white dashed;
-  /* width: 80%; */
   display: grid;
-  grid-template-columns: 29px 26px auto;
+  grid-template-columns: repeat(2,min-content) auto;
 }
 
 .todoBar {
-  padding:8px 8px 8px 0;
+  padding: 8px 8px 8px 0;
   grid-row: 1 / 1;
   grid-column: 3 / 3;
+  gap: 6px;
+  display: grid;
+  grid-template-columns: max-content auto max-content;
 }
 
 .todoOpen {
@@ -111,6 +113,13 @@ body {
 
 .prio4 { 
   color: rgba(255, 255, 255, 0.3);
+}
+
+.todoDueDateIcon {  
+  background: #555;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 14px;
 }
 
 .todo input, .todo textarea {
@@ -156,7 +165,6 @@ body {
 }
 
 .btnrow {
-  float: right;
   display: none;
 }
 

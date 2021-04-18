@@ -1,6 +1,7 @@
 import {deleteItem, updateTodo, updatePriority, updateCompleted, renameItem, createItem} from "../application_logic/crud";
 import {showProjectList} from "./projects_view"
 import {showTodoList} from "./todos_view";
+import {format, differenceInCalendarDays, differenceInCalendarYears, parseISO} from "date-fns";
 
 const createNewItemBtn = (parent, type, project) => {
     const newBtn = document.createElement("button");
@@ -86,9 +87,7 @@ const priorityBtn = (todo, parent, newPriority) => {
 
 const completedTodosBtn = (project, parent) => {
     const btn = document.createElement("span");
-    btn.classList.add("completedTodosBtn");
-    btn.classList.add("icon");
-    btn.classList.add("material-icons");
+    btn.classList.add("completedTodosBtn","icon", "material-icons");
     // btn.classList.add("md-18");
     btn.textContent = "restore";
     btn.addEventListener("click", () => {
@@ -97,6 +96,35 @@ const completedTodosBtn = (project, parent) => {
                 : showTodoList(project,true)
     });
     parent.appendChild(btn);
+}
+
+const todoDueDateIcon = (todo, parent) => {
+    const icon = document.createElement("div");
+    // if dueDate <= today
+    const daysToToday = differenceInCalendarDays(parseISO(todo.dueDate),new Date());
+    const yearsToToday = differenceInCalendarYears(parseISO(todo.dueDate),new Date());
+    
+    if (daysToToday <= 0 ) {
+        icon.classList.add("material-icons", "md-18");
+        icon.textContent = "star";
+    }
+    else if (daysToToday < 7) {
+        icon.classList.add("todoDueDateIcon");
+        icon.textContent = format(parseISO(todo.dueDate),"E");
+    }
+    else if (yearsToToday <= 0) {
+        icon.classList.add("todoDueDateIcon");
+        icon.textContent = format(parseISO(todo.dueDate),"d. MMM");
+    }
+    else {
+        icon.classList.add("todoDueDateIcon");
+        icon.textContent = format(parseISO(todo.dueDate),"MMM yyyy");
+    }
+    // next 6 days: E
+    // later & this year: d. MMM
+    // next year+: MMM yyyy
+    
+    parent.appendChild(icon);
 }
 
 const showTodoTitle = (todo, parent) => {
@@ -158,4 +186,4 @@ const createDeleteBtn = (parent, type, item) => {
     parent.appendChild(deleteBtn);
 }
 
-export {completedTodosBtn, showTodoTitle, editTodoTitle, createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}
+export {todoDueDateIcon, completedTodosBtn, showTodoTitle, editTodoTitle, createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}

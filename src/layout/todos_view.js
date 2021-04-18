@@ -1,7 +1,6 @@
 import {projectArray, getTodos} from "../application_logic/arrays";
-import {completedTodosBtn, showTodoTitle, editTodoTitle, showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
+import {todoDueDateIcon, completedTodosBtn, showTodoTitle, editTodoTitle, showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
-import {format} from "date-fns";
 import flatpickr from "flatpickr";
 
 const showTodoList = (project,filterCompleted) => {    
@@ -74,6 +73,9 @@ const showTodoBar = (todo) => {
     const todoBarDiv = document.createElement("div");
     todoBarDiv.classList.add("todoBar");
     todoDiv.appendChild(todoBarDiv);
+
+    // dueDate icon
+    todoDueDateIcon(todo, todoBarDiv);
 
     // todo title
     showTodoTitle(todo, todoBarDiv);
@@ -154,13 +156,14 @@ export {showTodoList, showTodoDetails}
 
 // dueDate
 // [x] add datepicker
+// [] dueDate needs to be saved as real date, not string
 // [] add dueDate icons
 
 // complete todo
 // [x] completed todos should have checked checkbox
 // [x] put completed todos in "done" list
 // [x] add transition period before checked todo is moved there
-// [] have done list closed by default
+// [x] have done list closed by default
 
 // projectArea
 // [] add today view
