@@ -89,7 +89,7 @@ const priorityBtn = (todo, parent, newPriority) => {
     const btn = showPriority(parent, newPriority);
     btn.addEventListener("click", () => {
         updatePriority(todo,newPriority);
-        showTodoList("showCompleted",todo.project);
+        showTodoList("showProject",todo.project);
         parent.remove();
     })
 }
