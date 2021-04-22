@@ -1,52 +1,56 @@
-import {projectArray, getTodos} from "../application_logic/arrays";
+import {projectArray, getTodosByProject, getTodosByDate} from "../application_logic/arrays";
 import {todoDueDateIcon, completedTodosBtn, showTodoTitle, editTodoTitle, showPriority, openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
 import {initialPage} from "./initial_page";
 import flatpickr from "flatpickr";
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/dark.css';
 
-const showTodoList = (project,filterCompleted) => {    
-    if (!filterCompleted) {
+const showTodoList = (action,project) => {
+    if (action != "showCompleted") {clearTodoList()}
 
+    if (action == "showProject") {
         //default to inbox
         if (!project) {project = projectArray[0];} 
-        clearTodoList();
-
-        // show project header
-        const todoHeaderDiv = document.createElement("div");
-        todoHeaderDiv.classList.add("todoHeader");
-        const todoHeader = document.createElement("h2");
-        todoHeader.textContent = project.name;
-        todoHeaderDiv.appendChild(todoHeader);
-
-        completedTodosBtn(project, todoHeaderDiv);
-
-        initialPage.todoArea.appendChild(todoHeaderDiv);
-        
-        // only show uncompleted todos
-        const todos = getTodos(project).filter(todo => !todo.complete);
-
-        todos.forEach(todo => {
-            showTodoBar(todo);
-        });
-
-        createNewItemBtn(initialPage.todoArea,"todo",project);
-
     }
 
-    else {
+    // show project header
+    const todoHeaderDiv = document.createElement("div");
+    todoHeaderDiv.classList.add("todoHeader");
+    const todoHeader = document.createElement("h2");
+    switch (action) {
+        case "showProject":
+            todoHeader.textContent = project.name;
+            break;
+        case "showCompleted":
+            todoHeader.textContent = "Completed Todos";
+            break;
+        case "showToday":
+            todoHeader.textContent = "Today";
+            break;
+        case "showUpcoming":
+            todoHeader.textContent = "Upcoming";
+            break;
+    }
+    todoHeaderDiv.appendChild(todoHeader);
+    if (action == "showProject") completedTodosBtn(project, todoHeaderDiv);
+    initialPage.todoArea.appendChild(todoHeaderDiv);
 
-        // show project header
-        const todoHeader = document.createElement("h2");
-        todoHeader.classList.add("todoHeader", "completedTodoHeader");
-        todoHeader.textContent = "Completed Todos";
-        initialPage.todoArea.appendChild(todoHeader);
-
-        const todos = getTodos(project).filter(todo => todo.complete);
-        
-        todos.forEach(todo => {
-            showTodoBar(todo);
-        });
+    // show todos
+    if (action == "showToday") {
+        const todaysTodos = getTodosByDate("past");
+        todaysTodos.forEach(todo => {showTodoBar(todo)});
+    }
+    else if (action == "showUpcoming") {
+        const upcomingTodos = getTodosByDate("future");
+        upcomingTodos.forEach(todo => {showTodoBar(todo)});
+    }
+    else if (action == "showProject") {
+        const todos = getTodosByProject(project).filter(todo => !todo.complete);
+        todos.forEach(todo => {showTodoBar(todo)});
+    }
+    else if (action == "showCompleted") {
+        const completedTodos = getTodosByProject(project).filter(todo => todo.complete);
+        completedTodos.forEach(todo => {showTodoBar(todo)});
     }
 
 }

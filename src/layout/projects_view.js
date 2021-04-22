@@ -1,5 +1,5 @@
 import {projectArray} from "../application_logic/arrays";
-import {createRenameBtn, createDeleteBtn, createNewItemBtn} from "./buttons";
+import {createRenameBtn, createDeleteBtn, createNewItemBtn, showPriority} from "./buttons";
 import {showTodoList} from "./todos_view";
 import {initialPage} from "./initial_page";
 
@@ -11,33 +11,56 @@ const showProjectList = () => {
     projectsHeader.textContent = "Projects";
     initialPage.projectArea.appendChild(projectsHeader);
 
+    //special views
+    showProject("showToday");
+    showProject("showUpcoming");
+
     //project list
-    projectArray.forEach(project => {showProject(project)});
+    projectArray.forEach(project => {showProject("showProject",project)});
 
     createNewItemBtn(initialPage.projectArea,"project");    
 }
 
-const showProject = (project) => {
+const showProject = (action,project) => {
+
     const projectDiv = document.createElement("div");
     projectDiv.classList.add("project");
 
     const projectName = document.createElement("span");
-    projectName.textContent = project.name;
-    projectDiv.addEventListener("click", () => {showTodoList(project)});
+    switch (action) {
+        case "showProject":
+            projectName.textContent = project.name;
+            projectDiv.addEventListener("click", () => {
+            showTodoList("showProject",project)});
+            break;
+        case "showToday":
+            projectName.textContent = "Today";
+            projectDiv.addEventListener("click", () => {
+            showTodoList("showToday")});
+            break;
+        case "showUpcoming":
+            projectName.textContent = "Upcoming";
+            projectDiv.addEventListener("click", () => {
+            showTodoList("showUpcoming")});
+            break;
+    }
     projectDiv.appendChild(projectName);
 
-    // buttons only if != inbox
-    if (project !== projectArray[0]) {
+    // buttons only for projects & if != inbox
+    if (project && project !== projectArray[0]) {
         const btnDiv = document.createElement("div");
         btnDiv.classList.add("btnrow");
         createRenameBtn(btnDiv,"project",project);
         createDeleteBtn(btnDiv,"project",project);
-        projectDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
-        projectDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
+        projectDiv.addEventListener("mouseover", () => {
+            btnDiv.classList.add("active")});
+        projectDiv.addEventListener("mouseout", () => {
+            btnDiv.classList.remove("active")});
         projectDiv.appendChild(btnDiv);
     }
 
     initialPage.projectArea.appendChild(projectDiv);
+
 }
 
 const clearProjectList = () => {

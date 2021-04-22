@@ -1,3 +1,5 @@
+import {isToday, isBefore, isAfter, parseISO} from "date-fns";
+
 // factory for projects
 let project = (name) => {
     // maintain a todolist for every project
@@ -43,12 +45,23 @@ const restoreData = () => {
     console.log(todoArray);
 }
 
-const getTodos = (project) => {
-
+const getTodosByProject = (project) => {
     // TODO: find a way to assign an auto-incremental ID
-    const todos = todoArray.filter((todo) => {return todo.project.name == project.name})
+    return todoArray.filter((todo) => {return todo.project.name == project.name})
+}
 
-    return todos
+const getTodosByDate = (type, dateA, dateB) => {
+    switch (type) {
+        case "past":
+            return todoArray.filter((todo) => {
+                return isToday(parseISO(todo.dueDate)) || isBefore(parseISO(todo.dueDate), new Date()) 
+            });
+        case "future":
+            return todoArray.filter((todo) => {
+                return isAfter(parseISO(todo.dueDate), new Date()) 
+            });
+    }
+    
 }
 
 //initiate local storage
@@ -56,15 +69,10 @@ const initiateStorage = (() => {
     if(!localStorage.getItem('todoSystem-projects')) {
         // push default inbox project
         projectArray.push(project("Inbox"));
-        // add demo data
-        // myLibrary.push(new Book("The lean startup","Eric Ries",250,true));
-        // myLibrary.push(new Book("The hard thing about hard things","Ben
-        // Horowitz",300,true));
+        // TODO: add demo data?
         updateStorage();
     } 
     else restoreData();
 })();
 
-export {projectArray, todoArray, project, todo, updateStorage, getTodos}
-
-//TODO: fix updateStorage + add storage of todoArray
+export {getTodosByDate, projectArray, todoArray, project, todo, updateStorage, getTodosByProject}

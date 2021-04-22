@@ -25,4 +25,4 @@ export const initialPage = (() => {
 })();
 
 showProjectList();
-showTodoList();
+showTodoList("showProject");

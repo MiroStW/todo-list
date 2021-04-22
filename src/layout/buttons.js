@@ -17,7 +17,7 @@ const createNewItemBtn = (parent, type, project) => {
         newBtn.textContent = "new todo";
         newBtn.addEventListener("click", () => {
             createItem(type, project);
-            showTodoList(project);
+            showTodoList("showProject",project);
         });
         parent.appendChild(newBtn);
     }
@@ -34,7 +34,7 @@ const createRenameBtn = (parent, type, item) => {
             showProjectList();
         }
         if (type === "todo") {
-            showTodoList(item.project);
+            showTodoList("showProject",item.project);
         }
     });
     parent.appendChild(renameBtn);
@@ -47,7 +47,7 @@ const completeTodoCheckbox = (todo, parent) => {
     if (todo.complete) todoComplete.setAttribute("checked",null);
     todoComplete.addEventListener("click", () => {
         updateCompleted(todo);
-        if (!document.querySelector(".todoOpen")) {showTodoList(todo.project);}
+        if (!document.querySelector(".todoOpen")) {showTodoList("showProject",todo.project);}
     });
     parent.appendChild(todoComplete);
 }
@@ -80,7 +80,7 @@ const priorityBtn = (todo, parent, newPriority) => {
     const btn = showPriority(parent, newPriority);
     btn.addEventListener("click", () => {
         updatePriority(todo,newPriority);
-        showTodoList(todo.project);
+        showTodoList("showCompleted",todo.project);
         parent.remove();
     })
 }
@@ -92,8 +92,8 @@ const completedTodosBtn = (project, parent) => {
     btn.textContent = "restore";
     btn.addEventListener("click", () => {
         document.querySelector(".completedTodoHeader")
-                ? showTodoList(project,false)
-                : showTodoList(project,true)
+                ? showTodoList("showProject",project)
+                : showTodoList("showCompleted",project)
     });
     parent.appendChild(btn);
 }
@@ -151,7 +151,7 @@ const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate) => {
         // const btnDiv = parent.parentNode.querySelector(".btnrow");
 
         updateTodo(todo,newName.value,newDescription.value,newDueDate.value);
-        showTodoList(todo.project);
+        showTodoList("showProject",todo.project);
         // // & remove editableTitle & showTitle
         // newName.remove();
         // showTodoTitle(todo, todoBarDiv);
@@ -178,7 +178,7 @@ const createDeleteBtn = (parent, type, item) => {
             //TODO: if open project is deleted project: showTodoList()
         }
         if (type === "todo") {
-            showTodoList(item.project);
+            showTodoList("showProject",item.project);
         }
     });
     parent.appendChild(deleteBtn);

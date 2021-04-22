@@ -53,7 +53,7 @@ const deleteItem = (item, type) => {
         if (type === "todo") {
             todoArray.splice(todoArray.indexOf(item),1);
             updateStorage();
-            showTodoList();
+            showTodoList("showProject");
         }
     }
 }
