@@ -53,6 +53,8 @@ const showTodoList = (action,project) => {
         completedTodos.forEach(todo => {showTodoBar(todo)});
     }
 
+    createNewItemBtn(initialPage.todoArea,"todo",project);
+
 }
 
 const clearTodoList = () => {
@@ -108,6 +110,7 @@ const showTodoDetails = (todo, todoDiv) => {
     todoDivOpen.classList.add("todoOpen");
 
     // todo description
+    // [] expand textarea when reopening todo
     const descriptionInput = document.createElement("textarea");
     descriptionInput.value = todo.description;
     descriptionInput.placeholder = "Description";
@@ -168,6 +171,9 @@ export {showTodoList, showTodoDetails}
 // [x] add transition period before checked todo is moved there
 // [x] have done list closed by default
 
+// [] add ability to move todos between projects
+
 // projectArea
-// [] add today view
-// [] add upcoming view
+// [x] add today view
+// [x] add upcoming view
+// [] highlight open project
