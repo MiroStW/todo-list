@@ -1,7 +1,8 @@
 import {projectArray} from "../application_logic/arrays";
-import {createRenameBtn, createDeleteBtn, createNewItemBtn, showPriority} from "./buttons";
+import {addIcon, createRenameBtn, createDeleteBtn, createNewItemBtn, createSeparator} from "./buttons";
 import {showTodoList} from "./todos_view";
 import {initialPage} from "./initial_page";
+import { addMilliseconds } from "date-fns";
 
 const showProjectList = () => {
     clearProjectList();
@@ -11,12 +12,23 @@ const showProjectList = () => {
     projectsHeader.textContent = "Projects";
     initialPage.projectArea.appendChild(projectsHeader);
 
+    //inbox view
+    showProject("showProject",projectArray[0]);
+
+    createSeparator(initialPage.projectArea);
+
     //special views
     showProject("showToday");
     showProject("showUpcoming");
+    
+    createSeparator(initialPage.projectArea);
 
-    //project list
-    projectArray.forEach(project => {showProject("showProject",project)});
+    //project list without inbox
+    projectArray
+        .slice(1)
+        .forEach(project => {
+            showProject("showProject",project)
+        });
 
     createNewItemBtn(initialPage.projectArea,"project");    
 }
@@ -24,21 +36,28 @@ const showProjectList = () => {
 const showProject = (action,project) => {
 
     const projectDiv = document.createElement("div");
-    projectDiv.classList.add("project");
 
     const projectName = document.createElement("span");
     switch (action) {
         case "showProject":
+            if (project === projectArray[0]) {
+                const inboxIcon = addIcon(projectDiv,"inbox");
+                inboxIcon.classList.add("inboxIcon");
+            }
             projectName.textContent = project.name;
             projectDiv.addEventListener("click", () => {
             showTodoList("showProject",project)});
             break;
         case "showToday":
+            const todayIcon = addIcon(projectDiv,"star");
+            todayIcon.classList.add("todayIcon");
             projectName.textContent = "Today";
             projectDiv.addEventListener("click", () => {
             showTodoList("showToday")});
             break;
         case "showUpcoming":
+            const upcomingIcon = addIcon(projectDiv,"date_range");
+            upcomingIcon.classList.add("upcomingIcon");
             projectName.textContent = "Upcoming";
             projectDiv.addEventListener("click", () => {
             showTodoList("showUpcoming")});
@@ -48,15 +67,17 @@ const showProject = (action,project) => {
 
     // buttons only for projects & if != inbox
     if (project && project !== projectArray[0]) {
-        const btnDiv = document.createElement("div");
-        btnDiv.classList.add("btnrow");
-        createRenameBtn(btnDiv,"project",project);
-        createDeleteBtn(btnDiv,"project",project);
+        projectDiv.classList.add("project");
+        createRenameBtn(projectDiv,"project",project);
+        createDeleteBtn(projectDiv,"project",project);
         projectDiv.addEventListener("mouseover", () => {
-            btnDiv.classList.add("active")});
+            projectDiv.classList.add("active")});
         projectDiv.addEventListener("mouseout", () => {
-            btnDiv.classList.remove("active")});
-        projectDiv.appendChild(btnDiv);
+            projectDiv.classList.remove("active")});
+    }
+
+    else {
+        projectDiv.classList.add("specialProject");
     }
 
     initialPage.projectArea.appendChild(projectDiv);

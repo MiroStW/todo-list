@@ -25,9 +25,8 @@ const createNewItemBtn = (parent, type, project) => {
 
 const createRenameBtn = (parent, type, item) => {
     //rename btn
-    const renameBtn = document.createElement("span");
-    renameBtn.classList.add("icon");
-    renameBtn.textContent = "✎";
+    const renameBtn = addIcon(parent,"edit","outlined");
+    renameBtn.classList.add("icon", "hiddenIcon");
     renameBtn.addEventListener("click", () => {
         renameItem(item, type);
         if (type === "project") {
@@ -63,17 +62,27 @@ const openPrioPicker = (todo, parent) => {
 }
 
 const showPriority = (parent, priority) => {
-    const flag = document.createElement("span");
-    priority == 4 ? 
-                flag.classList.add("material-icons-outlined") :
-                flag.classList.add("material-icons") ;
+    const style = (priority) => {
+        if (priority == 4) {return "outlined"}
+    }
+    const flag = addIcon(parent,"flag",style(priority));
     flag.classList.add("prio" + priority);
     flag.classList.add("todoPriority");
     flag.classList.add("md-18");
-    flag.textContent = "flag";
-    parent.appendChild(flag);
 
     return flag
+}
+
+const addIcon = (parent, iconName, style) => {
+    const icon = document.createElement("span");
+    style == "outlined"
+        ? icon.classList.add("material-icons-outlined")
+        : icon.classList.add("material-icons");
+    icon.classList.add("md-18");
+    icon.textContent = iconName;
+    parent.appendChild(icon);
+    
+    return icon
 }
 
 const priorityBtn = (todo, parent, newPriority) => {
@@ -88,7 +97,6 @@ const priorityBtn = (todo, parent, newPriority) => {
 const completedTodosBtn = (project, parent) => {
     const btn = document.createElement("span");
     btn.classList.add("completedTodosBtn","icon", "material-icons");
-    // btn.classList.add("md-18");
     btn.textContent = "restore";
     btn.addEventListener("click", () => {
         document.querySelector(".completedTodoHeader")
@@ -147,30 +155,15 @@ const createUpdateTodoBtn = (todo,parent,newName,newDescription,newDueDate) => {
     const saveBtn = document.createElement("button");
     saveBtn.textContent = "save";
     saveBtn.addEventListener("click", () => {
-        // const todoBarDiv = parent.parentNode.querySelector(".todoBar");
-        // const btnDiv = parent.parentNode.querySelector(".btnrow");
-
         updateTodo(todo,newName.value,newDescription.value,newDueDate.value);
         showTodoList("showProject",todo.project);
-        // // & remove editableTitle & showTitle
-        // newName.remove();
-        // showTodoTitle(todo, todoBarDiv);
-        // // remove active class
-        // btnDiv.remove("active");
-        // parent.parentNode.classList.remove("active");
-        // // add eventlistener to reopen todo
-        // todoBarDiv.addEventListener("click", () => {showTodoDetails(todo, parent.parentNode);}, { once: true });
-        // // remove openTodoDiv
-        // parent.remove();
     });
     parent.appendChild(saveBtn);
 }
 
 const createDeleteBtn = (parent, type, item) => {
-    //delete btn
-    const deleteBtn = document.createElement("span");
-    deleteBtn.classList.add("icon");
-    deleteBtn.textContent = "❌";
+    const deleteBtn = addIcon(parent,"clear");
+    deleteBtn.classList.add("icon", "hiddenIcon");
     deleteBtn.addEventListener("click", () => {
         deleteItem(item, type);
         if (type === "project") {
@@ -184,4 +177,10 @@ const createDeleteBtn = (parent, type, item) => {
     parent.appendChild(deleteBtn);
 }
 
-export {todoDueDateIcon, completedTodosBtn, showTodoTitle, editTodoTitle, createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}
+const createSeparator = (parent) => {
+    const separator = document.createElement("div");
+    separator.classList.add("separator");
+    parent.appendChild(separator);
+}
+
+export {addIcon, createSeparator, todoDueDateIcon, completedTodosBtn, showTodoTitle, editTodoTitle, createDeleteBtn, createUpdateTodoBtn, completeTodoCheckbox, createRenameBtn, createNewItemBtn, showPriority, openPrioPicker}

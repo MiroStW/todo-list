@@ -47,10 +47,19 @@ body {
 }
 
 .project {
-    border-bottom: 1px white dashed;
+    /* border-bottom: 1px white dashed; */
     width: 80%;
     display: grid;
-    grid-template-columns: auto max-content;
+    grid-template-columns: auto repeat(2, max-content);
+    padding: 8px;
+}
+
+.specialProject {
+    /* border-bottom: 1px white dashed; */
+    width: 80%;
+    display: grid;
+    gap: 6px;
+    grid-template-columns: max-content auto;
     padding: 8px;
 }
 
@@ -127,12 +136,18 @@ body {
   color:yellow;
 }
 
+.upcomingIcon {
+  color:red;
+}
+
+.inboxIcon {
+  color:lightskyblue;
+}
+
 .todo input, .todo textarea {
   background: black;
   color: white;
   font-size: 16px;
-  /* display: block;
-  width: -webkit-fill-available; */
   border: none;
   outline: none;
 }
@@ -145,7 +160,7 @@ body {
   padding: 8px 0;
 }
 
-.projectarea div:hover, .todoarea .todo:hover {
+.project:hover, .specialProject:hover, .todo:hover {
   background: #444;
   cursor: pointer;
 }
@@ -169,11 +184,11 @@ body {
   cursor: initial;
 }
 
-.btnrow {
+.hiddenIcon {
   display: none;
 }
 
-.btnrow.active, .active .btnrow {
+.hiddenIcon.active, .active .hiddenIcon {
   display: initial;
 }
 
@@ -189,10 +204,18 @@ button {
 
 .icon {
   cursor: pointer;
-  margin-left: 7px;
-  line-height: 100%;
+  /* margin-left: 7px;
+  line-height: 100%; */
 }
 
 .material-icons.md-18, .material-icons-outlined.md-18 { 
   font-size: 18px;
+}
+
+.material-icons.md-20, .material-icons-outlined.md-20 { 
+  font-size: 20px;
+}
+
+.separator {
+  height: 20px;
 }

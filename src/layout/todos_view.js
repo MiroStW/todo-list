@@ -87,13 +87,10 @@ const showTodoBar = (todo) => {
     showTodoTitle(todo, todoBarDiv);
 
     // remove button
-    const btnDiv = document.createElement("div");
-    btnDiv.classList.add("btnrow");
-    createDeleteBtn(btnDiv, "todo", todo);
-    todoBarDiv.appendChild(btnDiv);
+    createDeleteBtn(todoBarDiv, "todo", todo);
 
-    todoDiv.addEventListener("mouseover", () => {btnDiv.classList.add("active")});
-    todoDiv.addEventListener("mouseout", () => {btnDiv.classList.remove("active")});
+    todoDiv.addEventListener("mouseover", () => {todoBarDiv.classList.add("active")});
+    todoDiv.addEventListener("mouseout", () => {todoBarDiv.classList.remove("active")});
     
     todoBarDiv.addEventListener("click", () => {showTodoDetails(todo,todoDiv, todo.project);}, { once: true });
     
