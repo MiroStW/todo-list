@@ -1,28 +1,23 @@
-import {showProjectList} from "./projects_view";
-import {showTodoList} from "./todos_view";
+import showProjectList from './projects_view';
+import { showTodoList } from './todos_view';
 
-export const initialPage = (() => {
-    const container = document.querySelector("#content");
+const container = document.querySelector('#content');
 
-    //header
-    const header = document.createElement("div");
-    header.classList.add("header");
-    header.textContent = "Todo system";
-    container.appendChild(header);
+// header
+const header = document.createElement('div');
+header.classList.add('header');
+header.textContent = 'Todo system';
+container.appendChild(header);
 
-    //project list
-    const projectArea = document.createElement("div");
-    projectArea.classList.add("projectarea");
-    container.appendChild(projectArea);
-    
-    //Todo list
-    const todoArea = document.createElement("div");
-    todoArea.classList.add("todoarea");
-    container.appendChild(todoArea);
+// project list
+const projectArea = document.createElement('div');
+projectArea.classList.add('projectarea');
+container.appendChild(projectArea);
 
-    return {projectArea, todoArea}
-
-})();
+// Todo list
+const todoArea = document.createElement('div');
+todoArea.classList.add('todoarea');
+container.appendChild(todoArea);
 
 showProjectList();
-showTodoList("showProject");
+showTodoList('showProject');
