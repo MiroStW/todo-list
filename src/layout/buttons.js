@@ -72,7 +72,7 @@ const completeTodoCheckbox = (todo, parent) => {
 const showPriority = (parent, priority) => {
   const style = () => {
     if (priority === 4) { return 'outlined'; }
-    return 'outlined';
+    return undefined;
   };
   const flag = addIcon(parent, 'flag', style(priority));
   flag.classList.add(`prio${priority}`);

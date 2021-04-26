@@ -1,4 +1,4 @@
-import { projectArray } from '../application_logic/arrays';
+import { isInbox, getProjects } from '../application_logic/crud';
 import {
   addIcon, createRenameBtn, createDeleteBtn, createNewItemBtn, createSeparator,
 } from './buttons';
@@ -38,7 +38,7 @@ const showProject = (action, project) => {
       break;
     }
     default: {
-      if (project === projectArray[0]) {
+      if (isInbox(project)) {
         const icon = addIcon(projectDiv, 'inbox');
         icon.classList.add('inboxIcon');
       }
@@ -52,7 +52,7 @@ const showProject = (action, project) => {
   projectDiv.appendChild(projectName);
 
   // buttons only for projects & if != inbox
-  if (project && project !== projectArray[0]) {
+  if (project && !isInbox(project)) {
     projectDiv.classList.add('project');
     createRenameBtn(projectDiv, 'project', project);
     createDeleteBtn(projectDiv, 'project', project);
@@ -79,7 +79,7 @@ const showProjectList = () => {
   projectArea.appendChild(projectsHeader);
 
   // inbox view
-  showProject('showProject', projectArray[0]);
+  showProject('showProject', getProjects('inbox'));
 
   createSeparator(projectArea);
 
@@ -90,11 +90,9 @@ const showProjectList = () => {
   createSeparator(projectArea);
 
   // project list without inbox
-  projectArray
-    .slice(1)
-    .forEach((project) => {
-      showProject('showProject', project);
-    });
+  getProjects('noInbox').forEach((project) => {
+    showProject('showProject', project);
+  });
 
   createNewItemBtn(projectArea, 'project');
 };

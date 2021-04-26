@@ -1,12 +1,12 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-param-reassign */
 import flatpickr from 'flatpickr';
-import { projectArray, getTodosByProject, getTodosByDate } from '../application_logic/arrays';
+import { projectArray } from '../application_logic/arrays';
+import { getTodosByProject, getTodosByDate } from '../application_logic/crud';
 import {
   todoDueDateIcon, completedTodosBtn, showTodoTitle, editTodoTitle, showPriority,
   openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn,
 } from './buttons';
-import { initialPage } from './initial_page';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/dark.css';
 
