@@ -1,4 +1,4 @@
-import { isInbox, getProjects } from '../application_logic/crud';
+import { isInbox, getProjects } from '../application_logic/storage';
 import {
   addIcon, createRenameBtn, createDeleteBtn, createNewItemBtn, createSeparator,
 } from './buttons';

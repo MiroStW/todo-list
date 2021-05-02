@@ -1,8 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-param-reassign */
 import flatpickr from 'flatpickr';
-import { projectArray } from '../application_logic/arrays';
-import { getTodosByProject, getTodosByDate } from '../application_logic/crud';
+import { getTodosByProject, getTodosByDate, getProjects } from '../application_logic/storage';
 import {
   todoDueDateIcon, completedTodosBtn, showTodoTitle, editTodoTitle, showPriority,
   openPrioPicker, completeTodoCheckbox, createUpdateTodoBtn, createDeleteBtn, createNewItemBtn,
@@ -110,7 +109,7 @@ const showTodoList = (action, project) => {
 
   if (action === 'showProject') {
     // default to inbox
-    if (!project) { project = projectArray[0]; }
+    if (!project) { project = getProjects('inbox'); }
   }
 
   // show project header

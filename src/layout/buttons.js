@@ -3,7 +3,7 @@ import {
 } from 'date-fns';
 import {
   deleteItem, updateTodo, updatePriority, updateCompleted, renameItem, createItem,
-} from '../application_logic/crud';
+} from '../application_logic/storage';
 import showProjectList from './projects_view';
 import { showTodoList } from './todos_view';
 
