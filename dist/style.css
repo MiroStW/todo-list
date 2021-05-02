@@ -1,13 +1,14 @@
 /* @import '~flatpickr/dist/flatpickr.min.css';
 @import '~flatpickr/dist/themes/dark.css'; */
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
-  background:black;
-  color:white;
+  background: black;
+  color: white;
   font-family: sans-serif;
   font-size: 16px;
 }
@@ -37,45 +38,45 @@ body {
 }
 
 .todoHeader h2 {
-  margin:0;
+  margin: 0;
 }
 
 .projectarea {
-    padding-left: 10px;
-    border-right: 1px white dashed;
-    height: 100%;
+  padding-left: 10px;
+  border-right: 1px white dashed;
+  height: 100%;
 }
 
 .project {
-    /* border-bottom: 1px white dashed; */
-    width: 80%;
-    display: grid;
-    grid-template-columns: auto repeat(2, max-content);
-    padding: 8px;
+  /* border-bottom: 1px white dashed; */
+  width: 80%;
+  display: grid;
+  grid-template-columns: auto repeat(2, max-content);
+  padding: 8px;
 }
 
 .specialProject {
-    /* border-bottom: 1px white dashed; */
-    width: 80%;
-    display: grid;
-    gap: 6px;
-    grid-template-columns: max-content auto;
-    padding: 8px;
+  /* border-bottom: 1px white dashed; */
+  width: 80%;
+  display: grid;
+  gap: 6px;
+  grid-template-columns: max-content auto;
+  padding: 8px;
 }
 
-.projectarea div:checked+label {
-    background: #fff;
-    color: #5a5243;
+.projectarea div:checked + label {
+  background: #fff;
+  color: #5a5243;
 }
 
 .todoarea {
-  width:80%
+  width: 80%;
 }
 
 .todo {
   border-bottom: 1px white dashed;
   display: grid;
-  grid-template-columns: repeat(2,min-content) auto;
+  grid-template-columns: repeat(2, min-content) auto;
 }
 
 .todoBar {
@@ -92,12 +93,12 @@ body {
 }
 
 .todoComplete {
-  margin:10.5px 8px;
+  margin: 10.5px 8px;
   grid-row: 1 / 8;
 }
 
 .todoPriority {
-  padding:7px 3px;
+  padding: 7px 3px;
   grid-row: 1 / 1;
   grid-column: 2 / 2;
 }
@@ -109,23 +110,23 @@ body {
   width: max-content;
 }
 
-.prio1 { 
+.prio1 {
   color: #ff0000;
 }
 
-.prio2 { 
-  color: #FB8C00;
+.prio2 {
+  color: #fb8c00;
 }
 
-.prio3 { 
+.prio3 {
   color: #b0fb00;
 }
 
-.prio4 { 
+.prio4 {
   color: rgba(255, 255, 255, 0.3);
 }
 
-.todoDueDateIcon {  
+.todoDueDateIcon {
   background: #555;
   padding: 1px 4px;
   border-radius: 2px;
@@ -133,18 +134,19 @@ body {
 }
 
 .todayIcon {
-  color:yellow;
+  color: yellow;
 }
 
 .upcomingIcon {
-  color:red;
+  color: red;
 }
 
 .inboxIcon {
-  color:lightskyblue;
+  color: lightskyblue;
 }
 
-.todo input, .todo textarea {
+.todo input,
+.todo textarea {
   background: black;
   color: white;
   font-size: 16px;
@@ -155,17 +157,22 @@ body {
 .todo textarea {
   width: -webkit-fill-available;
   resize: none;
-  overflow-y:hidden;
+  overflow-y: hidden;
   font-family: sans-serif;
   padding: 8px 0;
 }
 
-.project:hover, .specialProject:hover, .todo:hover {
+.project:hover,
+.specialProject:hover,
+.todo:hover {
   background: #444;
   cursor: pointer;
 }
 
-.flatpickr-calendar, .flatpickr-months .flatpickr-month, .flatpickr-current-month .flatpickr-monthDropdown-months, span.flatpickr-weekday {
+.flatpickr-calendar,
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+span.flatpickr-weekday {
   background: black;
 }
 
@@ -188,7 +195,8 @@ body {
   display: none;
 }
 
-.hiddenIcon.active, .active .hiddenIcon {
+.hiddenIcon.active,
+.active .hiddenIcon {
   display: initial;
 }
 
@@ -208,11 +216,13 @@ button {
   line-height: 100%; */
 }
 
-.material-icons.md-18, .material-icons-outlined.md-18 { 
+.material-icons.md-18,
+.material-icons-outlined.md-18 {
   font-size: 18px;
 }
 
-.material-icons.md-20, .material-icons-outlined.md-20 { 
+.material-icons.md-20,
+.material-icons-outlined.md-20 {
   font-size: 20px;
 }
 

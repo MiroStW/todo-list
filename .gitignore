@@ -1,4 +1,5 @@
 .vscode
+.prettierignore
 node_modules
 
 ### macOS ###

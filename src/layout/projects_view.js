@@ -1,8 +1,12 @@
-import { isInbox, getProjects } from '../application_logic/storage';
+import { isInbox, getProjects } from "../application_logic/storage";
 import {
-  addIcon, createRenameBtn, createDeleteBtn, createNewItemBtn, createSeparator,
-} from './buttons';
-import { showTodoList } from './todos_view';
+  addIcon,
+  createRenameBtn,
+  createDeleteBtn,
+  createNewItemBtn,
+  createSeparator,
+} from "./buttons";
+import { showTodoList } from "./todos_view";
 
 const clearProjectList = (projectArea) => {
   // clear displayed project Area
@@ -14,37 +18,37 @@ const clearProjectList = (projectArea) => {
 };
 
 const showProject = (action, project) => {
-  const projectArea = document.querySelector('.projectarea');
-  const projectDiv = document.createElement('div');
+  const projectArea = document.querySelector(".projectarea");
+  const projectDiv = document.createElement("div");
 
-  const projectName = document.createElement('span');
+  const projectName = document.createElement("span");
   switch (action) {
-    case 'showToday': {
-      const icon = addIcon(projectDiv, 'star');
-      icon.classList.add('todayIcon');
-      projectName.textContent = 'Today';
-      projectDiv.addEventListener('click', () => {
-        showTodoList('showToday');
+    case "showToday": {
+      const icon = addIcon(projectDiv, "star");
+      icon.classList.add("todayIcon");
+      projectName.textContent = "Today";
+      projectDiv.addEventListener("click", () => {
+        showTodoList("showToday");
       });
       break;
     }
-    case 'showUpcoming': {
-      const icon = addIcon(projectDiv, 'date_range');
-      icon.classList.add('upcomingIcon');
-      projectName.textContent = 'Upcoming';
-      projectDiv.addEventListener('click', () => {
-        showTodoList('showUpcoming');
+    case "showUpcoming": {
+      const icon = addIcon(projectDiv, "date_range");
+      icon.classList.add("upcomingIcon");
+      projectName.textContent = "Upcoming";
+      projectDiv.addEventListener("click", () => {
+        showTodoList("showUpcoming");
       });
       break;
     }
     default: {
       if (isInbox(project)) {
-        const icon = addIcon(projectDiv, 'inbox');
-        icon.classList.add('inboxIcon');
+        const icon = addIcon(projectDiv, "inbox");
+        icon.classList.add("inboxIcon");
       }
       projectName.textContent = project.name;
-      projectDiv.addEventListener('click', () => {
-        showTodoList('showProject', project);
+      projectDiv.addEventListener("click", () => {
+        showTodoList("showProject", project);
       });
       break;
     }
@@ -53,48 +57,48 @@ const showProject = (action, project) => {
 
   // buttons only for projects & if != inbox
   if (project && !isInbox(project)) {
-    projectDiv.classList.add('project');
-    createRenameBtn(projectDiv, 'project', project);
-    createDeleteBtn(projectDiv, 'project', project);
-    projectDiv.addEventListener('mouseover', () => {
-      projectDiv.classList.add('active');
+    projectDiv.classList.add("project");
+    createRenameBtn(projectDiv, "project", project);
+    createDeleteBtn(projectDiv, "project", project);
+    projectDiv.addEventListener("mouseover", () => {
+      projectDiv.classList.add("active");
     });
-    projectDiv.addEventListener('mouseout', () => {
-      projectDiv.classList.remove('active');
+    projectDiv.addEventListener("mouseout", () => {
+      projectDiv.classList.remove("active");
     });
   } else {
-    projectDiv.classList.add('specialProject');
+    projectDiv.classList.add("specialProject");
   }
 
   projectArea.appendChild(projectDiv);
 };
 
 const showProjectList = () => {
-  const projectArea = document.querySelector('.projectarea');
+  const projectArea = document.querySelector(".projectarea");
   clearProjectList(projectArea);
 
   // header
-  const projectsHeader = document.createElement('h2');
-  projectsHeader.textContent = 'Projects';
+  const projectsHeader = document.createElement("h2");
+  projectsHeader.textContent = "Projects";
   projectArea.appendChild(projectsHeader);
 
   // inbox view
-  showProject('showProject', getProjects('inbox'));
+  showProject("showProject", getProjects("inbox"));
 
   createSeparator(projectArea);
 
   // special views
-  showProject('showToday');
-  showProject('showUpcoming');
+  showProject("showToday");
+  showProject("showUpcoming");
 
   createSeparator(projectArea);
 
   // project list without inbox
-  getProjects('noInbox').forEach((project) => {
-    showProject('showProject', project);
+  getProjects("noInbox").forEach((project) => {
+    showProject("showProject", project);
   });
 
-  createNewItemBtn(projectArea, 'project');
+  createNewItemBtn(projectArea, "project");
 };
 
 export default showProjectList;
