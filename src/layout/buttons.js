@@ -4,6 +4,7 @@ import {
   differenceInCalendarYears,
   parseISO,
 } from "date-fns";
+import styles from "../style.module.css";
 import {
   deleteItem,
   updateTodo,
@@ -52,7 +53,7 @@ const createNewItemBtn = (parent, type, project) => {
 const createRenameBtn = (parent, type, item) => {
   // rename btn
   const renameBtn = addIcon(parent, "edit", "outlined");
-  renameBtn.classList.add("icon", "hiddenIcon");
+  renameBtn.classList.add(styles.icon, styles.hiddenIcon);
   renameBtn.addEventListener("click", () => {
     renameItem(item, type);
     if (type === "project") {
@@ -68,11 +69,11 @@ const createRenameBtn = (parent, type, item) => {
 const completeTodoCheckbox = (todo, parent) => {
   const todoComplete = document.createElement("input");
   todoComplete.type = "checkbox";
-  todoComplete.classList.add("todoComplete");
+  todoComplete.classList.add(styles.todoComplete);
   if (todo.complete) todoComplete.setAttribute("checked", null);
   todoComplete.addEventListener("click", () => {
     updateCompleted(todo);
-    if (!document.querySelector(".todoOpen")) {
+    if (!document.querySelector(`.${styles.todoOpen}`)) {
       showTodoList("showProject", todo.project);
     }
   });
@@ -87,8 +88,8 @@ const showPriority = (parent, priority) => {
     return undefined;
   };
   const flag = addIcon(parent, "flag", style(priority));
-  flag.classList.add(`prio${priority}`);
-  flag.classList.add("todoPriority");
+  flag.classList.add(styles[`prio${priority}`]);
+  flag.classList.add(styles.todoPriority);
   flag.classList.add("md-18");
 
   return flag;
@@ -105,7 +106,7 @@ const priorityBtn = (todo, parent, newPriority) => {
 
 const openPrioPicker = (todo, parent) => {
   const pickerContainer = document.createElement("div");
-  pickerContainer.classList.add("priorityPicker");
+  pickerContainer.classList.add(styles.priorityPicker);
   priorityBtn(todo, pickerContainer, 1);
   priorityBtn(todo, pickerContainer, 2);
   priorityBtn(todo, pickerContainer, 3);
@@ -115,10 +116,10 @@ const openPrioPicker = (todo, parent) => {
 
 const completedTodosBtn = (project, parent) => {
   const btn = document.createElement("span");
-  btn.classList.add("completedTodosBtn", "icon", "material-icons");
+  btn.classList.add(styles.completedTodosBtn, styles.icon, "material-icons");
   btn.textContent = "restore";
   btn.addEventListener("click", () => {
-    document.querySelector(".completedTodoHeader")
+    document.querySelector(`.${styles.completedTodoHeader}`)
       ? showTodoList("showProject", project)
       : showTodoList("showCompleted", project);
   });
@@ -138,16 +139,16 @@ const todoDueDateIcon = (todo, parent) => {
     );
 
     if (daysToToday <= 0) {
-      icon.classList.add("material-icons", "md-18", "todayIcon");
+      icon.classList.add("material-icons", "md-18", styles.todayIcon);
       icon.textContent = "star";
     } else if (daysToToday < 7) {
-      icon.classList.add("todoDueDateIcon");
+      icon.classList.add(styles.todoDueDateIcon);
       icon.textContent = format(parseISO(todo.dueDate), "E");
     } else if (yearsToToday <= 0) {
-      icon.classList.add("todoDueDateIcon");
+      icon.classList.add(styles.todoDueDateIcon);
       icon.textContent = format(parseISO(todo.dueDate), "d. MMM");
     } else {
-      icon.classList.add("todoDueDateIcon");
+      icon.classList.add(styles.todoDueDateIcon);
       icon.textContent = format(parseISO(todo.dueDate), "MMM yyyy");
     }
   }
@@ -157,17 +158,17 @@ const todoDueDateIcon = (todo, parent) => {
 
 const showTodoTitle = (todo, parent) => {
   const todoTitleDiv = document.createElement("span");
-  todoTitleDiv.classList.add("todoTitle");
+  todoTitleDiv.classList.add(styles.todoTitle);
   todoTitleDiv.textContent = todo.name;
   parent.appendChild(todoTitleDiv);
 };
 
 const editTodoTitle = (todo, parent) => {
   const nameInput = document.createElement("input");
-  nameInput.classList.add("todoTitle");
+  nameInput.classList.add(styles.todoTitle);
   nameInput.value = todo.name;
   nameInput.placeholder = "Title";
-  parent.querySelector(".todoTitle").replaceWith(nameInput);
+  parent.querySelector(`.${styles.todoTitle}`).replaceWith(nameInput);
 
   return nameInput;
 };
@@ -190,7 +191,7 @@ const createUpdateTodoBtn = (
 
 const createDeleteBtn = (parent, type, item) => {
   const deleteBtn = addIcon(parent, "clear");
-  deleteBtn.classList.add("icon", "hiddenIcon");
+  deleteBtn.classList.add(styles.icon, styles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
     deleteItem(item, type);
     if (type === "project") {
@@ -206,7 +207,7 @@ const createDeleteBtn = (parent, type, item) => {
 
 const createSeparator = (parent) => {
   const separator = document.createElement("div");
-  separator.classList.add("separator");
+  separator.classList.add(styles.separator);
   parent.appendChild(separator);
 };
 

@@ -1,4 +1,5 @@
 import { isInbox, getProjects } from "../application_logic/storage";
+import styles from "../style.module.css";
 import {
   addIcon,
   createRenameBtn,
@@ -18,14 +19,14 @@ const clearProjectList = (projectArea) => {
 };
 
 const showProject = (action, project) => {
-  const projectArea = document.querySelector(".projectarea");
+  const projectArea = document.querySelector(`.${styles.projectarea}`);
   const projectDiv = document.createElement("div");
 
   const projectName = document.createElement("span");
   switch (action) {
     case "showToday": {
       const icon = addIcon(projectDiv, "star");
-      icon.classList.add("todayIcon");
+      icon.classList.add(styles.todayIcon);
       projectName.textContent = "Today";
       projectDiv.addEventListener("click", () => {
         showTodoList("showToday");
@@ -34,7 +35,7 @@ const showProject = (action, project) => {
     }
     case "showUpcoming": {
       const icon = addIcon(projectDiv, "date_range");
-      icon.classList.add("upcomingIcon");
+      icon.classList.add(styles.upcomingIcon);
       projectName.textContent = "Upcoming";
       projectDiv.addEventListener("click", () => {
         showTodoList("showUpcoming");
@@ -44,7 +45,7 @@ const showProject = (action, project) => {
     default: {
       if (isInbox(project)) {
         const icon = addIcon(projectDiv, "inbox");
-        icon.classList.add("inboxIcon");
+        icon.classList.add(styles.inboxIcon);
       }
       projectName.textContent = project.name;
       projectDiv.addEventListener("click", () => {
@@ -57,24 +58,24 @@ const showProject = (action, project) => {
 
   // buttons only for projects & if != inbox
   if (project && !isInbox(project)) {
-    projectDiv.classList.add("project");
+    projectDiv.classList.add(styles.project);
     createRenameBtn(projectDiv, "project", project);
     createDeleteBtn(projectDiv, "project", project);
     projectDiv.addEventListener("mouseover", () => {
-      projectDiv.classList.add("active");
+      projectDiv.classList.add(styles.active);
     });
     projectDiv.addEventListener("mouseout", () => {
-      projectDiv.classList.remove("active");
+      projectDiv.classList.remove(styles.active);
     });
   } else {
-    projectDiv.classList.add("specialProject");
+    projectDiv.classList.add(styles.specialProject);
   }
 
   projectArea.appendChild(projectDiv);
 };
 
 const showProjectList = () => {
-  const projectArea = document.querySelector(".projectarea");
+  const projectArea = document.querySelector(`.${styles.projectarea}`);
   clearProjectList(projectArea);
 
   // header

@@ -1,5 +1,6 @@
-/* @import '~flatpickr/dist/flatpickr.min.css';
-@import '~flatpickr/dist/themes/dark.css'; */
+/* @import "~flatpickr/dist/flatpickr.min.css";
+@import "~flatpickr/dist/themes/dark.css"; */
+@import "https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined";
 
 html,
 body {
@@ -13,7 +14,7 @@ body {
   font-size: 16px;
 }
 
-#content {
+:global(#root) {
   display: grid;
   grid-template-columns: 200px auto;
   grid-template-rows: max-content auto;

@@ -1,11 +1,14 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-param-reassign */
 import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
+import "flatpickr/dist/themes/dark.css";
 import {
   getTodosByProject,
   getTodosByDate,
   getProjects,
 } from "../application_logic/storage";
+import styles from "../style.module.css";
 import {
   todoDueDateIcon,
   completedTodosBtn,
@@ -18,8 +21,6 @@ import {
   createDeleteBtn,
   createNewItemBtn,
 } from "./buttons";
-import "flatpickr/dist/flatpickr.min.css";
-import "flatpickr/dist/themes/dark.css";
 
 const clearTodoList = (todoArea) => {
   // clear displayed todo Area
@@ -31,14 +32,14 @@ const clearTodoList = (todoArea) => {
 };
 
 const showTodoDetails = (todo, todoDiv) => {
-  todoDiv.classList.add("active");
+  todoDiv.classList.add(styles.active);
 
   // make title editable
   const nameInput = editTodoTitle(todo, todoDiv);
   nameInput.focus();
 
   const todoDivOpen = document.createElement("div");
-  todoDivOpen.classList.add("todoOpen");
+  todoDivOpen.classList.add(styles.todoOpen);
 
   // todo description
   // [] expand textarea when reopening todo
@@ -57,9 +58,9 @@ const showTodoDetails = (todo, todoDiv) => {
 
   // todo duedate
   const dueDateInput = document.createElement("input");
-  dueDateInput.classList.add("todoDueDate");
+  dueDateInput.classList.add(styles.todoDueDate);
   dueDateInput.value = todo.dueDate;
-  dueDateInput.placeholder = "Duedate";
+  dueDateInput.placeholder = "Due date";
   todoDivOpen.appendChild(dueDateInput);
 
   // show created date
@@ -82,9 +83,9 @@ const showTodoDetails = (todo, todoDiv) => {
 };
 
 const showTodoBar = (todo) => {
-  const todoArea = document.querySelector(".todoarea");
+  const todoArea = document.querySelector(`.${styles.todoarea}`);
   const todoDiv = document.createElement("div");
-  todoDiv.classList.add("todo");
+  todoDiv.classList.add(styles.todo);
 
   // complete checkbox
   completeTodoCheckbox(todo, todoDiv);
@@ -97,7 +98,7 @@ const showTodoBar = (todo) => {
 
   // todo bar
   const todoBarDiv = document.createElement("div");
-  todoBarDiv.classList.add("todoBar");
+  todoBarDiv.classList.add(styles.todoBar);
   todoDiv.appendChild(todoBarDiv);
 
   // dueDate icon
@@ -110,10 +111,10 @@ const showTodoBar = (todo) => {
   createDeleteBtn(todoBarDiv, "todo", todo);
 
   todoDiv.addEventListener("mouseover", () => {
-    todoBarDiv.classList.add("active");
+    todoBarDiv.classList.add(styles.active);
   });
   todoDiv.addEventListener("mouseout", () => {
-    todoBarDiv.classList.remove("active");
+    todoBarDiv.classList.remove(styles.active);
   });
 
   todoBarDiv.addEventListener(
@@ -128,7 +129,7 @@ const showTodoBar = (todo) => {
 };
 
 const showTodoList = (action, project) => {
-  const todoArea = document.querySelector(".todoarea");
+  const todoArea = document.querySelector(`.${styles.todoarea}`);
   if (action !== "showCompleted") {
     clearTodoList(todoArea);
   }
@@ -142,7 +143,7 @@ const showTodoList = (action, project) => {
 
   // show project header
   const todoHeaderDiv = document.createElement("div");
-  todoHeaderDiv.classList.add("todoHeader");
+  todoHeaderDiv.classList.add(styles.todoHeader);
   const todoHeader = document.createElement("h2");
   switch (action) {
     case "showCompleted":
@@ -194,11 +195,11 @@ export { showTodoList, showTodoDetails };
 
 // overall todoArea
 // [x] focus immediately in title
-// [] put each element in own function
-// [] review button.js & clean up structure
+// [ ] put each element in own function
+// [ ] review button.js & clean up structure
 // [x] create function to close todo
-// [] BONUS opening a todo closes all other todos (only one open at a time)
-// [] BONUS clicking anywhere else in todoArea closes open todo
+// [ ] BONUS opening a todo closes all other todos (only one open at a time)
+// [ ] BONUS clicking anywhere else in todoArea closes open todo
 
 // dueDate
 // [x] add datepicker
@@ -211,9 +212,9 @@ export { showTodoList, showTodoDetails };
 // [x] add transition period before checked todo is moved there
 // [x] have done list closed by default
 
-// [] add ability to move todos between projects
+// [ ] add ability to move todos between projects
 
 // projectArea
 // [x] add today view
 // [x] add upcoming view
-// [] highlight open project
+// [ ] highlight open project
