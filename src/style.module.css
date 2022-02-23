@@ -217,13 +217,11 @@ button {
   line-height: 100%; */
 }
 
-.material-icons.md-18,
-.material-icons-outlined.md-18 {
+.md-18 {
   font-size: 18px;
 }
 
-.material-icons.md-20,
-.material-icons-outlined.md-20 {
+.md-20 {
   font-size: 20px;
 }
 

@@ -23,7 +23,7 @@ const addIcon = (parent, iconName, style) => {
   } else {
     icon.classList.add("material-icons");
   }
-  icon.classList.add("md-18");
+  icon.classList.add(styles["md-18"]);
   icon.textContent = iconName;
   parent.appendChild(icon);
 
@@ -90,7 +90,7 @@ const showPriority = (parent, priority) => {
   const flag = addIcon(parent, "flag", style(priority));
   flag.classList.add(styles[`prio${priority}`]);
   flag.classList.add(styles.todoPriority);
-  flag.classList.add("md-18");
+  flag.classList.add(styles["md-18"]);
 
   return flag;
 };
@@ -139,7 +139,7 @@ const todoDueDateIcon = (todo, parent) => {
     );
 
     if (daysToToday <= 0) {
-      icon.classList.add("material-icons", "md-18", styles.todayIcon);
+      icon.classList.add("material-icons", styles["md-18"], styles.todayIcon);
       icon.textContent = "star";
     } else if (daysToToday < 7) {
       icon.classList.add(styles.todoDueDateIcon);
