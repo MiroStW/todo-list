@@ -1,10 +1,10 @@
+import { signOut, getAuth } from "firebase/auth";
 import {
   format,
   differenceInCalendarDays,
   differenceInCalendarYears,
   parseISO,
 } from "date-fns";
-import styles from "../style.module.css";
 import {
   deleteItem,
   updateTodo,
@@ -13,6 +13,7 @@ import {
   renameItem,
   createItem,
 } from "../application_logic/storage";
+import styles from "../style.module.css";
 import showProjectList from "./projects_view";
 import { showTodoList } from "./todos_view";
 
@@ -211,6 +212,13 @@ const createSeparator = (parent) => {
   parent.appendChild(separator);
 };
 
+const createSignOutBtn = (parent) => {
+  const signOutBtn = document.createElement("button");
+  signOutBtn.textContent = "sign out";
+  parent.appendChild(signOutBtn);
+  signOutBtn.addEventListener("click", () => signOut(getAuth()));
+};
+
 export {
   addIcon,
   createSeparator,
@@ -225,4 +233,5 @@ export {
   createNewItemBtn,
   showPriority,
   openPrioPicker,
+  createSignOutBtn,
 };
