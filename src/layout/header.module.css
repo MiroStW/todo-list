@@ -1,0 +1,28 @@
+.header {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 8px;
+  height: 35px;
+  font-size: x-large;
+  border-bottom: 1px white dashed;
+  display: flex;
+}
+
+.headerTitle {
+  flex: 1;
+}
+
+.userWidget {
+  margin-left: auto;
+  overflow: hidden;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px white dashed;
+}
+
+.userWidget img {
+  width: 100%;
+}
