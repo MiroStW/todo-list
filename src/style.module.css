@@ -24,14 +24,6 @@ body {
   height: 100%;
 }
 
-.header {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 15px;
-  font-size: xx-large;
-  border-bottom: 1px white dashed;
-}
-
 .todoHeader {
   display: grid;
   grid-template-columns: auto fit-content(100%);

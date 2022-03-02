@@ -4,17 +4,17 @@ import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import firebaseConfig from "./firebase-config";
 import uiConfig from "./firebaseUI-config";
+import showHeader from "./layout/header";
 import showProjectList from "./layout/projects_view";
 import { showTodoList } from "./layout/todos_view";
 import styles from "./style.module.css";
 
+const app = initializeApp(firebaseConfig);
+
 const root = document.querySelector("#root");
 
 // header
-const header = document.createElement("div");
-header.classList.add(styles.header);
-header.textContent = "Todo system";
-root.appendChild(header);
+showHeader();
 
 // project list
 const projectArea = document.createElement("div");
@@ -38,7 +38,6 @@ loader.setAttribute("id", "loader");
 loader.textContent = "Loading...";
 root.appendChild(loader);
 
-const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const fbAuthUi = new firebaseui.auth.AuthUI(auth);
 
