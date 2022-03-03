@@ -28,11 +28,16 @@ body {
 .todoHeader {
   display: grid;
   grid-template-columns: auto fit-content(100%);
-  padding: 20px 0;
+  align-items: center;
 }
 
 .todoHeader h2 {
   margin: 0;
+  padding-left: 8px;
+}
+
+.projectarea h2 {
+  padding-left: 8px;
 }
 
 .projectarea {
@@ -196,6 +201,12 @@ span.flatpickr-weekday {
 
 [hidden] {
   display: none;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px 0;
 }
 
 button {
