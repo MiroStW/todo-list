@@ -6,7 +6,6 @@ import {
   createDeleteBtn,
   createNewItemBtn,
   createSeparator,
-  createSignOutBtn,
 } from "./buttons";
 import { showTodoList } from "./todos_view";
 
@@ -101,8 +100,6 @@ const showProjectList = () => {
   });
 
   createNewItemBtn(projectArea, "project");
-
-  createSignOutBtn(projectArea);
 };
 
 export default showProjectList;

@@ -1,5 +1,6 @@
 /* @import "~flatpickr/dist/flatpickr.min.css";
 @import "~flatpickr/dist/themes/dark.css"; */
+@import url("reset.css");
 @import "https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined";
 
 html,
@@ -193,6 +194,10 @@ span.flatpickr-weekday {
   display: initial;
 }
 
+[hidden] {
+  display: none;
+}
+
 button {
   background-color: black;
   border: white 1px solid;
@@ -200,6 +205,7 @@ button {
   color: wheat;
   line-height: 25px;
   margin: 10px;
+  padding: 0 5px;
   cursor: pointer;
 }
 

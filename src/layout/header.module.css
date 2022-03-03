@@ -3,26 +3,39 @@
   text-align: center;
   padding: 8px;
   height: 35px;
-  font-size: x-large;
   border-bottom: 1px white dashed;
   display: flex;
 }
 
 .headerTitle {
+  font-size: x-large;
   flex: 1;
 }
 
 .userWidget {
+  position: relative;
   margin-left: auto;
-  overflow: hidden;
-  width: 35px;
+  width: 37px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  border: 1px white dashed;
+  cursor: pointer;
 }
 
-.userWidget img {
+.userImage {
+  overflow: hidden;
   width: 100%;
+  height: 100%;
+  border: 1px white dashed;
+  border-radius: 50%;
+}
+
+.userMenu {
+  position: absolute;
+  right: -1px;
+  top: 42px;
+  padding: 7px;
+  width: 78px;
+  background: black;
+  border: 1px white dashed;
 }

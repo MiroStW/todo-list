@@ -1,4 +1,3 @@
-import { signOut, getAuth } from "firebase/auth";
 import {
   format,
   differenceInCalendarDays,
@@ -212,13 +211,6 @@ const createSeparator = (parent) => {
   parent.appendChild(separator);
 };
 
-const createSignOutBtn = (parent) => {
-  const signOutBtn = document.createElement("button");
-  signOutBtn.textContent = "sign out";
-  parent.appendChild(signOutBtn);
-  signOutBtn.addEventListener("click", () => signOut(getAuth()));
-};
-
 export {
   addIcon,
   createSeparator,
@@ -233,5 +225,4 @@ export {
   createNewItemBtn,
   showPriority,
   openPrioPicker,
-  createSignOutBtn,
 };
