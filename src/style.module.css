@@ -25,6 +25,11 @@ body {
   height: 100%;
 }
 
+:global(#firebaseui-auth-container) {
+  grid-column-end: -1;
+  grid-column-start: 1;
+}
+
 .todoHeader {
   display: grid;
   grid-template-columns: auto fit-content(100%);
