@@ -1,6 +1,6 @@
 import {
   GoogleAuthProvider,
-  GithubAuthProvider,
+  // GithubAuthProvider,
   EmailAuthProvider,
 } from "firebase/auth";
 
@@ -27,7 +27,7 @@ const uiConfig = {
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     GoogleAuthProvider.PROVIDER_ID,
-    GithubAuthProvider.PROVIDER_ID,
+    // GithubAuthProvider.PROVIDER_ID,
     EmailAuthProvider.PROVIDER_ID,
     // firebase.auth.AnonymousAuthProvider.PROVIDER_ID,
   ],
