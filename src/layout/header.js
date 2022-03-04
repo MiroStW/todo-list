@@ -44,17 +44,17 @@ const showHeader = () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log(user);
-      const username =
-        user.displayName.slice(0, 1).toUpperCase() +
-        user.displayName.slice(1, user.displayName.length);
-      headerTitle.textContent = `${username}'s todo system`;
+      headerTitle.textContent = `${user.displayName}'s todo system`;
       userWidget.removeAttribute("hidden");
       if (user.photoURL) {
         const userImageTag = document.createElement("img");
         userImageTag.setAttribute("src", user.photoURL);
         userImage.appendChild(userImageTag);
       } else {
-        userImage.textContent = username.slice(0, 1);
+        userImage.textContent = user.displayName
+          .split(" ")
+          .map((n) => n[0])
+          .join("");
       }
     } else {
       headerTitle.textContent = "Todo system";

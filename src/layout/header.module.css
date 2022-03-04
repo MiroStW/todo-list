@@ -24,6 +24,7 @@
 
 .userImage {
   overflow: hidden;
+  line-height: 35px;
   width: 100%;
   height: 100%;
   border: 1px white dashed;
