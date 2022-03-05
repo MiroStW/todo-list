@@ -1,15 +1,12 @@
-import { initializeApp } from "firebase/app";
+import "./firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
-import firebaseConfig from "./firebase-config";
 import uiConfig from "./firebaseUI-config";
 import showHeader from "./layout/header";
 import showProjectList from "./layout/projects_view";
 import { showTodoList } from "./layout/todos_view";
 import styles from "./style.module.css";
-
-const app = initializeApp(firebaseConfig);
 
 const root = document.querySelector("#root");
 
