@@ -1,3 +1,9 @@
+:global(.brokenImg) {
+  position: relative;
+  top: -17px;
+  right: 0px;
+}
+
 .header {
   grid-column: 1 / -1;
   text-align: center;

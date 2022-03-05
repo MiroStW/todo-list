@@ -46,15 +46,18 @@ const showHeader = () => {
       console.log(user);
       headerTitle.textContent = `${user.displayName}'s todo system`;
       userWidget.removeAttribute("hidden");
+      const userInitials = user.displayName
+        .split(" ")
+        .map((n) => n[0])
+        .join("");
       if (user.photoURL) {
         const userImageTag = document.createElement("img");
         userImageTag.setAttribute("src", user.photoURL);
+        userImageTag.setAttribute("alt", userInitials);
+        userImageTag.setAttribute("onerror", "this.classList.add('brokenImg')");
         userImage.appendChild(userImageTag);
       } else {
-        userImage.textContent = user.displayName
-          .split(" ")
-          .map((n) => n[0])
-          .join("");
+        userImage.textContent = userInitials;
       }
     } else {
       headerTitle.textContent = "Todo system";
