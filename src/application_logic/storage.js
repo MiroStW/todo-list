@@ -1,8 +1,11 @@
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { isToday, isBefore, isAfter, parseISO } from "date-fns";
 
+const db = getFirestore();
+
 // project & todo array to hold all the data
-let projectArray = [];
-let todoArray = [];
+const projectArray = [];
+const todoArray = [];
 
 // factory for projects
 const Project = (name) => {
@@ -29,30 +32,69 @@ const Todo = (name, parentProject) => {
   };
 };
 
-const restoreData = () => {
-  projectArray = JSON.parse(localStorage.getItem("todoSystem-projects"));
-  todoArray = JSON.parse(localStorage.getItem("todoSystem-todos"));
-  //   console.log('projects loaded: ');
-  //   console.log(projectArray);
-  //   console.log('todos loaded: ');
-  //   console.log(todoArray);
+const getProjects = async (type) => {
+  const projects = [];
+  const querySnapshot = await getDocs(collection(db, "projects"));
+  querySnapshot.forEach((doc) => {
+    projects.push(doc.data());
+  });
+  console.log(projects);
+
+  switch (type) {
+    case "inbox":
+      return projects[0];
+    case "noInbox":
+      return projects.slice(1);
+    default:
+      return projects;
+  }
+};
+
+const getTodosByProject = async (project) => {
+  const todos = [];
+  const querySnapshot = await getDocs(collection(db, "todos"));
+  querySnapshot.forEach((doc) => {
+    todos.push(doc.data());
+  });
+  console.log(todos);
+
+  // const projectTodos = todos.filter(
+  //   (todo) => todo.project.name === project.name
+  // );
+  return todos;
+};
+
+const getTodosByDate = (type) => {
+  switch (type) {
+    case "past":
+      return todoArray.filter(
+        (todo) =>
+          isToday(parseISO(todo.dueDate)) ||
+          isBefore(parseISO(todo.dueDate), new Date())
+      );
+    case "future":
+      return todoArray.filter((todo) =>
+        isAfter(parseISO(todo.dueDate), new Date())
+      );
+    default:
+      return false;
+  }
 };
 
 const updateStorage = () => {
   localStorage.setItem("todoSystem-projects", JSON.stringify(projectArray));
   localStorage.setItem("todoSystem-todos", JSON.stringify(todoArray));
-  restoreData();
 };
 
 // initiate local storage
-(() => {
-  if (!localStorage.getItem("todoSystem-projects")) {
-    // push default inbox project
-    projectArray.push(Project("Inbox"));
-    // TODO: add demo data?
-    updateStorage();
-  } else restoreData();
-})();
+// (async () => {
+//   if (!localStorage.getItem("todoSystem-projects")) {
+//     // push default inbox project
+//     projectArray.push(Project("Inbox"));
+//     // TODO: add demo data?
+//     updateStorage();
+//   } else await restoreData();
+// })();
 
 const createItem = (type, parentProject) => {
   const name = prompt(`What is the title of the new ${type}?`);
@@ -108,42 +150,6 @@ const deleteItem = (item, type) => {
 };
 
 const isInbox = (project) => project === projectArray[0];
-
-const getProjects = (type) => {
-  switch (type) {
-    case "inbox":
-      return projectArray[0];
-    case "noInbox":
-      return projectArray.slice(1);
-    default:
-      return projectArray;
-  }
-};
-
-const getTodosByProject = (project) => {
-  // TODO: find a way to assign an auto-incremental ID
-  const projectTodos = todoArray.filter(
-    (todo) => todo.project.name === project.name
-  );
-  return projectTodos;
-};
-
-const getTodosByDate = (type) => {
-  switch (type) {
-    case "past":
-      return todoArray.filter(
-        (todo) =>
-          isToday(parseISO(todo.dueDate)) ||
-          isBefore(parseISO(todo.dueDate), new Date())
-      );
-    case "future":
-      return todoArray.filter((todo) =>
-        isAfter(parseISO(todo.dueDate), new Date())
-      );
-    default:
-      return false;
-  }
-};
 
 export {
   getTodosByDate,

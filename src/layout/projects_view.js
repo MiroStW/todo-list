@@ -84,7 +84,7 @@ const showProjectList = () => {
   projectArea.appendChild(projectsHeader);
 
   // inbox view
-  showProject("showProject", getProjects("inbox"));
+  getProjects("inbox").then((inbox) => showProject("showProject", inbox));
 
   createSeparator(projectArea);
 
@@ -95,9 +95,11 @@ const showProjectList = () => {
   createSeparator(projectArea);
 
   // project list without inbox
-  getProjects("noInbox").forEach((project) => {
-    showProject("showProject", project);
-  });
+  getProjects("noInbox").then((projects) =>
+    projects.forEach((project) => {
+      showProject("showProject", project);
+    })
+  );
 
   createNewItemBtn(projectArea, "project");
 };
