@@ -3,6 +3,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import "flatpickr/dist/themes/dark.css";
+import { fromUnixTime, format } from "date-fns";
 import {
   getTodosByProject,
   getTodosByDate,
@@ -59,14 +60,16 @@ const showTodoDetails = (todo, todoDiv) => {
   // todo duedate
   const dueDateInput = document.createElement("input");
   dueDateInput.classList.add(styles.todoDueDate);
-  dueDateInput.value = todo.dueDate;
   dueDateInput.placeholder = "Due date";
   todoDivOpen.appendChild(dueDateInput);
 
   // show created date
-  const createdDate = document.createElement("div");
-  createdDate.value = todo.createdDate;
-  todoDivOpen.appendChild(createdDate);
+  // const createdDate = document.createElement("div");
+  // createdDate.textContent = format(
+  //   fromUnixTime(todo.createdDate),
+  //   "yyyy-mm-dd"
+  // );
+  // todoDivOpen.appendChild(createdDate);
 
   // buttons
   createUpdateTodoBtn(
@@ -79,7 +82,7 @@ const showTodoDetails = (todo, todoDiv) => {
 
   todoDiv.appendChild(todoDivOpen);
 
-  flatpickr(dueDateInput, {});
+  flatpickr(dueDateInput, { defaultDate: fromUnixTime(todo.dueDate.seconds) });
 };
 
 const showTodoBar = (todo) => {
@@ -165,20 +168,26 @@ const showTodoList = (action, project) => {
 
   // show todos
   if (action === "showToday") {
-    const todaysTodos = getTodosByDate("past");
-    todaysTodos.forEach((todo) => {
-      showTodoBar(todo);
-    });
+    getTodosByDate("past").then((todos) =>
+      todos.forEach((todo) => {
+        showTodoBar(todo);
+      })
+    );
   } else if (action === "showUpcoming") {
-    const upcomingTodos = getTodosByDate("future");
-    upcomingTodos.forEach((todo) => {
-      showTodoBar(todo);
-    });
+    getTodosByDate("future").then((todos) =>
+      todos.forEach((todo) => {
+        showTodoBar(todo);
+      })
+    );
   } else if (action === "showProject") {
-    const todos = getTodosByProject(project).filter((todo) => !todo.complete);
-    todos.forEach((todo) => {
-      showTodoBar(todo);
-    });
+    getTodosByProject(project)
+      .then((todos) => todos.filter((todo) => !todo.complete))
+      .then((openTodos) =>
+        openTodos.forEach((todo) => {
+          console.log(todo);
+          showTodoBar(todo);
+        })
+      );
   } else if (action === "showCompleted") {
     const completedTodos = getTodosByProject(project).filter(
       (todo) => todo.complete

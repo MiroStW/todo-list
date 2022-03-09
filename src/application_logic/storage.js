@@ -1,5 +1,13 @@
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  collectionGroup,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { isToday, isBefore, isAfter, parseISO } from "date-fns";
+import { id } from "date-fns/locale";
 
 const db = getFirestore();
 
@@ -32,53 +40,44 @@ const Todo = (name, parentProject) => {
   };
 };
 
-const getProjects = async (type) => {
-  const projects = [];
-  const querySnapshot = await getDocs(collection(db, "projects"));
-  querySnapshot.forEach((doc) => {
-    projects.push(doc.data());
+const getProjects = (type) =>
+  // const projects = [];
+  getDocs(collection(db, "projects")).then((querySnapshot) => {
+    const projects = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    switch (type) {
+      case "inbox":
+        return projects[0];
+      case "noInbox":
+        return projects.slice(1);
+      default:
+        return projects;
+    }
   });
-  console.log(projects);
+// TODO: make more concise by moving to standard promise pattern
+// const projects = [];
+// const querySnapshot = await getDocs(collection(db, "projects"));
+// querySnapshot.forEach((doc) => {
+//   projects.push({ id: doc.id, ...doc.data() });
+// });
 
-  switch (type) {
-    case "inbox":
-      return projects[0];
-    case "noInbox":
-      return projects.slice(1);
-    default:
-      return projects;
-  }
-};
-
-const getTodosByProject = async (project) => {
-  const todos = [];
-  const querySnapshot = await getDocs(collection(db, "todos"));
-  querySnapshot.forEach((doc) => {
-    todos.push(doc.data());
-  });
-  console.log(todos);
-
-  // const projectTodos = todos.filter(
-  //   (todo) => todo.project.name === project.name
-  // );
-  return todos;
-};
+const getTodosByProject = (project) =>
+  getDocs(
+    collection(db, `projects/${project.id}/todos`)
+  ).then((querySnapshot) => querySnapshot.docs.map((doc) => doc.data()));
 
 const getTodosByDate = (type) => {
-  switch (type) {
-    case "past":
-      return todoArray.filter(
-        (todo) =>
-          isToday(parseISO(todo.dueDate)) ||
-          isBefore(parseISO(todo.dueDate), new Date())
-      );
-    case "future":
-      return todoArray.filter((todo) =>
-        isAfter(parseISO(todo.dueDate), new Date())
-      );
-    default:
-      return false;
-  }
+  const q = query(
+    collectionGroup(db, "todos"),
+    where("dueDate", type === "past" ? "<=" : ">", new Date())
+  );
+
+  return getDocs(q).then((querySnapshot) =>
+    querySnapshot.docs.map((doc) => doc.data())
+  );
 };
 
 const updateStorage = () => {

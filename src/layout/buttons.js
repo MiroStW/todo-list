@@ -2,7 +2,7 @@ import {
   format,
   differenceInCalendarDays,
   differenceInCalendarYears,
-  parseISO,
+  fromUnixTime,
 } from "date-fns";
 import {
   deleteItem,
@@ -130,11 +130,11 @@ const todoDueDateIcon = (todo, parent) => {
   const icon = document.createElement("div");
   if (todo.dueDate) {
     const daysToToday = differenceInCalendarDays(
-      parseISO(todo.dueDate),
+      fromUnixTime(todo.dueDate.seconds),
       new Date()
     );
     const yearsToToday = differenceInCalendarYears(
-      parseISO(todo.dueDate),
+      fromUnixTime(todo.dueDate.seconds),
       new Date()
     );
 
@@ -143,13 +143,13 @@ const todoDueDateIcon = (todo, parent) => {
       icon.textContent = "star";
     } else if (daysToToday < 7) {
       icon.classList.add(styles.todoDueDateIcon);
-      icon.textContent = format(parseISO(todo.dueDate), "E");
+      icon.textContent = format(fromUnixTime(todo.dueDate.seconds), "E");
     } else if (yearsToToday <= 0) {
       icon.classList.add(styles.todoDueDateIcon);
-      icon.textContent = format(parseISO(todo.dueDate), "d. MMM");
+      icon.textContent = format(fromUnixTime(todo.dueDate.seconds), "d. MMM");
     } else {
       icon.classList.add(styles.todoDueDateIcon);
-      icon.textContent = format(parseISO(todo.dueDate), "MMM yyyy");
+      icon.textContent = format(fromUnixTime(todo.dueDate.seconds), "MMM yyyy");
     }
   }
 
