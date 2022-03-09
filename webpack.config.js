@@ -39,9 +39,9 @@ module.exports = {
         ],
       },
       {
-        test: /\.tsx?$/,
+        test: /\.ts?$/,
         include: path.resolve("src"),
-        use: ["babel-loader", "ts-loader"],
+        use: "ts-loader",
       },
     ],
   },
