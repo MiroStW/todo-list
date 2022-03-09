@@ -1,4 +1,4 @@
-import { isInbox, getProjects } from "../application_logic/storage";
+import { isInbox, getProjects } from "../application_logic/storage.ts";
 import styles from "../style.module.css";
 import {
   addIcon,

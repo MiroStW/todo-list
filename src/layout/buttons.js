@@ -11,7 +11,7 @@ import {
   updateCompleted,
   renameItem,
   createItem,
-} from "../application_logic/storage";
+} from "../application_logic/storage.ts";
 import styles from "../style.module.css";
 import showProjectList from "./projects_view";
 import { showTodoList } from "./todos_view";

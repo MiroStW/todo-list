@@ -8,7 +8,7 @@ import {
   getTodosByProject,
   getTodosByDate,
   getProjects,
-} from "../application_logic/storage";
+} from "../application_logic/storage.ts";
 import styles from "../style.module.css";
 import {
   todoDueDateIcon,

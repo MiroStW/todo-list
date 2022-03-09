@@ -43,7 +43,6 @@ const showHeader = () => {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(user);
       headerTitle.textContent = `${user.displayName}'s todo system`;
       userWidget.removeAttribute("hidden");
       const userInitials = user.displayName
