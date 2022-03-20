@@ -4,7 +4,7 @@ import styles from "./header.module.css";
 const showHeader = () => {
   const auth = getAuth();
 
-  const root = document.querySelector("#root");
+  const root = document.querySelector("#root")!;
 
   const header = document.createElement("div");
   header.classList.add(styles.header);
@@ -45,8 +45,8 @@ const showHeader = () => {
     if (user) {
       headerTitle.textContent = `${user.displayName}'s todo system`;
       userWidget.removeAttribute("hidden");
-      const userInitials = user.displayName
-        .split(" ")
+      const userInitials = user
+        .displayName!.split(" ")
         .map((n) => n[0])
         .join("");
       if (user.photoURL) {
@@ -61,7 +61,7 @@ const showHeader = () => {
     } else {
       headerTitle.textContent = "Todo system";
       if (document.querySelector(`.${styles.userImageTag}>img`))
-        document.querySelector(`.${styles.userImageTag}>img`).remove();
+        document.querySelector(`.${styles.userImageTag}>img`)!.remove();
       userWidget.setAttribute("hidden", "");
     }
   });

@@ -1,4 +1,5 @@
-import { isInbox, getProjects } from "../application_logic/storage.ts";
+import { Project } from "types";
+import { isInbox, getProjects } from "../application_logic/storage";
 import styles from "../style.module.css";
 import {
   addIcon,
@@ -9,17 +10,20 @@ import {
 } from "./buttons";
 import { showTodoList } from "./todos_view";
 
-const clearProjectList = (projectArea) => {
+const clearProjectList = (projectArea: Element) => {
   // clear displayed project Area
-  if (projectArea && projectArea.childNodes.length > 0) {
-    while (projectArea.firstChild) {
-      projectArea.removeChild(projectArea.lastChild);
+  if (projectArea) {
+    while (projectArea.childNodes.length > 0) {
+      projectArea.removeChild(projectArea.childNodes[0]);
     }
   }
 };
 
-const showProject = (action, project) => {
-  const projectArea = document.querySelector(`.${styles.projectarea}`);
+const showProject = (
+  action: "showProject" | "showToday" | "showUpcoming",
+  project?: Project
+) => {
+  const projectArea = document.querySelector(`.${styles.projectarea}`)!;
   const projectDiv = document.createElement("div");
 
   const projectName = document.createElement("span");
@@ -43,14 +47,16 @@ const showProject = (action, project) => {
       break;
     }
     default: {
-      if (isInbox(project)) {
-        const icon = addIcon(projectDiv, "inbox");
-        icon.classList.add(styles.inboxIcon);
+      if (project) {
+        if (isInbox(project)) {
+          const icon = addIcon(projectDiv, "inbox");
+          icon.classList.add(styles.inboxIcon);
+        }
+        projectName.textContent = project.data.name;
+        projectDiv.addEventListener("click", () => {
+          showTodoList("showProject", project);
+        });
       }
-      projectName.textContent = project.name;
-      projectDiv.addEventListener("click", () => {
-        showTodoList("showProject", project);
-      });
       break;
     }
   }
@@ -59,7 +65,7 @@ const showProject = (action, project) => {
   // buttons only for projects & if != inbox
   if (project && !isInbox(project)) {
     projectDiv.classList.add(styles.project);
-    createRenameBtn(projectDiv, "project", project);
+    createRenameBtn(projectDiv, project);
     createDeleteBtn(projectDiv, "project", project);
     projectDiv.addEventListener("mouseover", () => {
       projectDiv.classList.add(styles.active);
@@ -75,16 +81,16 @@ const showProject = (action, project) => {
 };
 
 const showProjectList = () => {
-  const projectArea = document.querySelector(`.${styles.projectarea}`);
+  const projectArea = document.querySelector(`.${styles.projectarea}`)!;
   clearProjectList(projectArea);
 
   // header
   const projectsHeader = document.createElement("h2");
   projectsHeader.textContent = "Projects";
-  projectArea.appendChild(projectsHeader);
+  projectArea!.appendChild(projectsHeader);
 
   // inbox view
-  getProjects("inbox").then((inbox) => showProject("showProject", inbox));
+  getProjects("inbox").then((inbox) => showProject("showProject", inbox[0]));
 
   createSeparator(projectArea);
 

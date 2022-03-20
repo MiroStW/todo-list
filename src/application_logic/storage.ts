@@ -9,67 +9,57 @@ import {
   where,
   setDoc,
   Timestamp,
+  updateDoc,
+  DocumentReference,
+  getDoc,
 } from "firebase/firestore";
-import { isToday, isBefore, isAfter, parseISO } from "date-fns";
-import { id } from "date-fns/locale";
+import { Project, ProjectData, Todo, TodoData } from "types";
+import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 
 const db = getFirestore();
-
-interface project {
-  id: string | null;
-  name: string;
-  createdDate: Timestamp;
-}
-
-interface todo {
-  name: string;
-  project?: project;
-  complete: boolean;
-  description: string;
-  dueDate: Timestamp | null;
-  priority: number;
-  createdDate: Timestamp;
-}
 
 // project & todo array to hold all the data
 const projectArray: {}[] = [];
 const todoArray: {}[] = [];
 
 // factory for projects
-const Project = (name: string): project => {
-  const createdDate = Timestamp.now();
-  const id = null;
-  return { id, name, createdDate };
-};
+const Project = (name: string): ProjectData => ({
+  name,
+  createdDate: Timestamp.now(),
+});
 
 // factory for todos
-const Todo = (name: string, parentProject: project): todo => {
-  const complete = false;
-  const description = "";
-  const dueDate = null;
-  const priority = 4;
-  const createdDate = Timestamp.now();
-  return {
-    name,
-    complete,
-    description,
-    dueDate,
-    priority,
-    createdDate,
-  };
-};
+// TODO: parentProject not saved yet!
+const Todo = (name: string, parentProject: Project): TodoData => ({
+  name,
+  complete: false,
+  description: "",
+  dueDate: null,
+  priority: 4,
+  createdDate: Timestamp.now(),
+});
 
-const getProjects = (type: "inbox" | "noInbox") =>
+const getProjectOfTodo = (todo: Todo) =>
+  getDoc(todo.ref.parent.parent as DocumentReference).then(
+    (doc) =>
+      ({
+        ref: doc.ref,
+        data: doc.data(),
+      } as Project)
+  );
+
+const getProjects = (type?: "inbox" | "noInbox") =>
   // const projects = [];
-  getDocs(collection(db, "projects")).then((querySnapshot) => {
+  getDocs(projectsCol).then((querySnapshot) => {
     const projects = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+      ref: doc.ref,
+      data: doc.data(),
+    })) as Project[];
 
     switch (type) {
       case "inbox":
-        return projects[0];
+        console.log(projects);
+        return [projects[0]];
       case "noInbox":
         return projects.slice(1);
       default:
@@ -77,19 +67,28 @@ const getProjects = (type: "inbox" | "noInbox") =>
     }
   });
 
-const getTodosByProject = (project: project) =>
-  getDocs(
-    collection(db, `projects/${project.id}/todos`)
-  ).then((querySnapshot) => querySnapshot.docs.map((doc) => doc.data()));
+const getTodosByProject = (project: Project) =>
+  getDocs(projectTodosCol(project)).then(
+    (querySnapshot) =>
+      querySnapshot.docs.map((doc) => ({
+        ref: doc.ref,
+        data: doc.data(),
+      })) as Todo[]
+  );
 
 const getTodosByDate = (type: "past" | "future") => {
   const q = query(
-    collectionGroup(db, "todos"),
+    todosCol,
+    // collectionGroup(db, "todos"),
     where("dueDate", type === "past" ? "<=" : ">", new Date())
   );
 
-  return getDocs(q).then((querySnapshot) =>
-    querySnapshot.docs.map((doc) => doc.data())
+  return getDocs(q).then(
+    (querySnapshot) =>
+      querySnapshot.docs.map((doc) => ({
+        ref: doc.ref,
+        data: doc.data(),
+      })) as Todo[]
   );
 };
 
@@ -99,53 +98,57 @@ const updateStorage = () => {
 };
 
 // TODO: add initial inbox project
+// TODO: on open, open inbox
+// TODO: fix order of buttons & inbox project on page
 
-const createItem = (type: "project" | "todo", parentProject: project) => {
+const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);
   if (name && type === "project") {
     addDoc(collection(db, "projects"), Project(name));
   }
   if (name && parentProject && type === "todo") {
     addDoc(
-      collection(db, `projects/${parentProject.id}/todos`),
+      collection(db, `projects/${parentProject.ref.id}/todos`),
       Todo(name, parentProject)
     );
   }
 };
 
-const renameItem = (item: project | todo) => {
-  const newName = prompt(`What is the new name of ${item.name}?`);
+const renameItem = (item: Project) => {
+  const newName = prompt(`What is the new name of ${item.data.name}?`);
+  // TODO:  differentiate between project & todo updates
   if (newName) {
-    item.name = newName;
-    updateStorage();
+    updateDoc(item.ref, {
+      name: newName,
+    });
   }
 };
 
 const updateTodo = (
-  todo: todo,
+  todo: Todo,
   newName: string,
   newDescription: string,
-  newDueDate: Timestamp
+  newDueDate?: Timestamp
 ) => {
   // TODO add change project
-  todo.name = newName;
-  todo.description = newDescription;
-  todo.dueDate = newDueDate;
+  todo.data.name = newName;
+  todo.data.description = newDescription;
+  if (newDueDate) todo.data.dueDate = newDueDate;
   updateStorage();
 };
 
-const updateCompleted = (todo: todo) => {
-  todo.complete = !todo.complete;
+const updateCompleted = (todo: Todo) => {
+  todo.data.complete = !todo.data.complete;
   updateStorage();
 };
 
-const updatePriority = (todo: todo, priority: number) => {
-  todo.priority = priority;
+const updatePriority = (todo: Todo, priority: number) => {
+  todo.data.priority = priority;
   updateStorage();
 };
 
-const deleteItem = (item: project | todo, type: "project" | "todo") => {
-  if (confirm(`really remove ${item.name}?`)) {
+const deleteItem = (item: Project | Todo, type: "project" | "todo") => {
+  if (confirm(`really remove ${item.data.name}?`)) {
     if (type === "project") {
       projectArray.splice(projectArray.indexOf(item), 1);
       updateStorage();
@@ -157,12 +160,30 @@ const deleteItem = (item: project | todo, type: "project" | "todo") => {
   }
 };
 
-const isInbox = (project: project) => project === projectArray[0];
+const isInbox = (project: Project) => project === projectArray[0];
+
+function withConverter(
+  arg0: any
+): {
+  <U>(
+    converter: import("@firebase/firestore").FirestoreDataConverter<U>
+  ): DocumentReference<U>;
+  (converter: null): DocumentReference<
+    import("@firebase/firestore").DocumentData
+  >;
+} {
+  throw new Error("Function not implemented.");
+}
+
+function converter(arg0: null): any {
+  throw new Error("Function not implemented.");
+}
 
 export {
   getTodosByDate,
   getTodosByProject,
   getProjects,
+  getProjectOfTodo,
   isInbox,
   deleteItem,
   renameItem,

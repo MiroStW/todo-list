@@ -3,12 +3,12 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import "flatpickr/dist/themes/dark.css";
-import { fromUnixTime, format } from "date-fns";
+import { fromUnixTime } from "date-fns";
 import {
   getTodosByProject,
   getTodosByDate,
   getProjects,
-} from "../application_logic/storage.ts";
+} from "../application_logic/storage";
 import styles from "../style.module.css";
 import {
   todoDueDateIcon,
@@ -22,17 +22,19 @@ import {
   createDeleteBtn,
   createNewItemBtn,
 } from "./buttons";
+import { Project, Todo } from "types";
+import { Timestamp } from "firebase/firestore";
 
-const clearTodoList = (todoArea) => {
+const clearTodoList = (todoArea: Element) => {
   // clear displayed todo Area
-  if (todoArea && todoArea.childNodes.length > 0) {
-    while (todoArea.firstChild) {
-      todoArea.removeChild(todoArea.lastChild);
+  if (todoArea) {
+    while (todoArea.childNodes.length > 0) {
+      todoArea.removeChild(todoArea.childNodes[0]);
     }
   }
 };
 
-const showTodoDetails = (todo, todoDiv) => {
+const showTodoDetails = (todo: Todo, todoDiv: Element) => {
   todoDiv.classList.add(styles.active);
 
   // make title editable
@@ -45,10 +47,10 @@ const showTodoDetails = (todo, todoDiv) => {
   // todo description
   // [] expand textarea when reopening todo
   const descriptionInput = document.createElement("textarea");
-  descriptionInput.value = todo.description;
+  descriptionInput.value = todo.data.description;
   descriptionInput.placeholder = "Description";
 
-  function OnInput() {
+  function OnInput(this: HTMLElement) {
     // console.log('height changed;');
     this.style.height = "auto";
     this.style.height = `${this.scrollHeight}px`;
@@ -75,18 +77,22 @@ const showTodoDetails = (todo, todoDiv) => {
   createUpdateTodoBtn(
     todo,
     todoDivOpen,
-    nameInput,
-    descriptionInput,
-    dueDateInput
+    nameInput.value,
+    descriptionInput.value,
+    new Timestamp(dueDateInput.valueAsDate!.getSeconds(), 0)
   );
 
   todoDiv.appendChild(todoDivOpen);
 
-  flatpickr(dueDateInput, { defaultDate: fromUnixTime(todo.dueDate.seconds) });
+  flatpickr(dueDateInput, {
+    defaultDate: todo.data.dueDate
+      ? fromUnixTime(todo.data.dueDate.seconds)
+      : undefined,
+  });
 };
 
-const showTodoBar = (todo) => {
-  const todoArea = document.querySelector(`.${styles.todoarea}`);
+const showTodoBar = (todo: Todo) => {
+  const todoArea = document.querySelector(`.${styles.todoarea}`)!;
   const todoDiv = document.createElement("div");
   todoDiv.classList.add(styles.todo);
 
@@ -94,7 +100,7 @@ const showTodoBar = (todo) => {
   completeTodoCheckbox(todo, todoDiv);
 
   // priority flag
-  const priority = showPriority(todoDiv, todo.priority);
+  const priority = showPriority(todoDiv, todo.data.priority);
   priority.addEventListener("click", () => {
     openPrioPicker(todo, todoDiv);
   });
@@ -123,7 +129,7 @@ const showTodoBar = (todo) => {
   todoBarDiv.addEventListener(
     "click",
     () => {
-      showTodoDetails(todo, todoDiv, todo.project);
+      showTodoDetails(todo, todoDiv);
     },
     { once: true }
   );
@@ -131,20 +137,16 @@ const showTodoBar = (todo) => {
   todoArea.appendChild(todoDiv);
 };
 
-const showTodoList = (action, project) => {
-  const todoArea = document.querySelector(`.${styles.todoarea}`);
+const showTodoList = async (
+  action: "showCompleted" | "showProject" | "showToday" | "showUpcoming",
+  project?: Project
+) => {
+  const todoArea = document.querySelector(`.${styles.todoarea}`)!;
   if (action !== "showCompleted") {
     clearTodoList(todoArea);
   }
 
-  if (action === "showProject") {
-    // default to inbox
-    if (!project) {
-      project = getProjects("inbox");
-    }
-  }
-
-  // show project header
+  // show todolist header
   const todoHeaderDiv = document.createElement("div");
   todoHeaderDiv.classList.add(styles.todoHeader);
   const todoHeader = document.createElement("h2");
@@ -158,12 +160,21 @@ const showTodoList = (action, project) => {
     case "showUpcoming":
       todoHeader.textContent = "Upcoming";
       break;
+    case "showProject":
+      if (!project) {
+        getProjects("inbox").then((inbox) => {
+          todoHeader.textContent = inbox[0].data.name;
+        });
+      } else {
+        todoHeader.textContent = project.data.name;
+      }
+      break;
     default:
-      todoHeader.textContent = project.name;
       break;
   }
   todoHeaderDiv.appendChild(todoHeader);
-  if (action === "showProject") completedTodosBtn(project, todoHeaderDiv);
+  if (action === "showProject" && project)
+    completedTodosBtn(project, todoHeaderDiv);
   todoArea.appendChild(todoHeaderDiv);
 
   // show todos
@@ -179,25 +190,25 @@ const showTodoList = (action, project) => {
         showTodoBar(todo);
       })
     );
-  } else if (action === "showProject") {
+  } else if (action === "showProject" && project) {
     getTodosByProject(project)
-      .then((todos) => todos.filter((todo) => !todo.complete))
+      .then((todos) => todos.filter((todo) => !todo.data.complete))
       .then((openTodos) =>
         openTodos.forEach((todo) => {
           console.log(todo);
           showTodoBar(todo);
         })
       );
-  } else if (action === "showCompleted") {
-    const completedTodos = getTodosByProject(project).filter(
-      (todo) => todo.complete
+    createNewItemBtn(todoArea, "todo", project);
+  } else if (action === "showCompleted" && project) {
+    getTodosByProject(project).then((todos) =>
+      todos
+        .filter((todo) => todo.data.complete)
+        .forEach((todo) => {
+          showTodoBar(todo);
+        })
     );
-    completedTodos.forEach((todo) => {
-      showTodoBar(todo);
-    });
   }
-
-  createNewItemBtn(todoArea, "todo", project);
 };
 
 export { showTodoList, showTodoDetails };

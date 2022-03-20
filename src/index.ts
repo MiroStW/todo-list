@@ -2,13 +2,13 @@ import "./firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
-import uiConfig from "./firebaseUI-config";
+import uiConfig from "./firebaseUI-config.js";
 import showHeader from "./layout/header";
 import showProjectList from "./layout/projects_view";
 import { showTodoList } from "./layout/todos_view";
 import styles from "./style.module.css";
 
-const root = document.querySelector("#root");
+const root = document.querySelector("#root")!;
 
 // header
 showHeader();
