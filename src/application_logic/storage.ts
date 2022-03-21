@@ -124,13 +124,18 @@ const updateTodo = (
   todo: Todo,
   newName: string,
   newDescription: string,
-  newDueDate?: Timestamp
+  newDueDate?: Timestamp | null
 ) => {
   // TODO add change project
-  todo.data.name = newName;
-  todo.data.description = newDescription;
-  if (newDueDate) todo.data.dueDate = newDueDate;
-  updateStorage();
+  // todo.data.name = newName;
+  // todo.data.description = newDescription;
+  // if (newDueDate) todo.data.dueDate = newDueDate;
+  console.log(newDueDate);
+  updateDoc(todo.ref, {
+    name: newName,
+    description: newDescription,
+    ...(newDueDate !== undefined && { dueDate: newDueDate }),
+  });
 };
 
 const updateCompleted = (todo: Todo) => {

@@ -189,12 +189,16 @@ const createUpdateTodoBtn = (
   const saveBtn = document.createElement("button");
   saveBtn.textContent = "save";
   saveBtn.addEventListener("click", () => {
-    updateTodo(
-      todo,
-      newName.value,
-      newDescription.value,
-      new Timestamp(newDueDate.valueAsDate?.getSeconds() || 0, 0) || null
-    );
+    if (newDueDate.value) {
+      updateTodo(
+        todo,
+        newName.value,
+        newDescription.value,
+        new Timestamp(Date.parse(newDueDate.value) / 1000 || 0, 0)
+      );
+    } else {
+      updateTodo(todo, newName.value, newDescription.value, null);
+    }
     getProjectOfTodo(todo).then((project) => {
       showTodoList("showProject", project);
     });
