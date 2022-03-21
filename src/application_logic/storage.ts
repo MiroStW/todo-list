@@ -29,8 +29,7 @@ const Project = (name: string): ProjectData => ({
 });
 
 // factory for todos
-// TODO: parentProject not saved yet!
-const Todo = (name: string, parentProject: Project): TodoData => ({
+const Todo = (name: string): TodoData => ({
   name,
   complete: false,
   description: "",
@@ -48,8 +47,8 @@ const getProjectOfTodo = (todo: Todo) =>
       } as Project)
   );
 
+// TODO: get projects/data in right order or sort them
 const getProjects = (type?: "inbox" | "noInbox") =>
-  // const projects = [];
   getDocs(projectsCol).then((querySnapshot) => {
     const projects = querySnapshot.docs.map((doc) => ({
       ref: doc.ref,
@@ -104,13 +103,10 @@ const updateStorage = () => {
 const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);
   if (name && type === "project") {
-    addDoc(collection(db, "projects"), Project(name));
+    addDoc(projectsCol, Project(name));
   }
   if (name && parentProject && type === "todo") {
-    addDoc(
-      collection(db, `projects/${parentProject.ref.id}/todos`),
-      Todo(name, parentProject)
-    );
+    addDoc(projectTodosCol(parentProject), Todo(name));
   }
 };
 
