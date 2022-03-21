@@ -135,17 +135,15 @@ const updateTodo = (
 };
 
 const updateCompleted = (todo: Todo) => {
-  console.log("updated");
   updateDoc(todo.ref, {
     complete: !todo.data.complete,
   });
-  // todo.data.complete = !todo.data.complete;
-  // updateStorage();
 };
 
 const updatePriority = (todo: Todo, priority: number) => {
-  todo.data.priority = priority;
-  updateStorage();
+  updateDoc(todo.ref, {
+    priority: priority,
+  });
 };
 
 const deleteItem = (item: Project | Todo, type: "project" | "todo") => {
