@@ -182,14 +182,19 @@ const editTodoTitle = (todo: Todo, parent: Element) => {
 const createUpdateTodoBtn = (
   todo: Todo,
   parent: Element,
-  newName: string,
-  newDescription: string,
-  newDueDate?: Timestamp
+  newName: HTMLInputElement,
+  newDescription: HTMLTextAreaElement,
+  newDueDate: HTMLInputElement
 ) => {
   const saveBtn = document.createElement("button");
   saveBtn.textContent = "save";
   saveBtn.addEventListener("click", () => {
-    updateTodo(todo, newName, newDescription, newDueDate);
+    updateTodo(
+      todo,
+      newName.value,
+      newDescription.value,
+      new Timestamp(newDueDate.valueAsDate?.getSeconds() || 0, 0) || null
+    );
     getProjectOfTodo(todo).then((project) => {
       showTodoList("showProject", project);
     });

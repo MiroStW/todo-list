@@ -77,9 +77,9 @@ const showTodoDetails = (todo: Todo, todoDiv: Element) => {
   createUpdateTodoBtn(
     todo,
     todoDivOpen,
-    nameInput.value,
-    descriptionInput.value,
-    new Timestamp(dueDateInput.valueAsDate!.getSeconds(), 0)
+    nameInput,
+    descriptionInput,
+    dueDateInput
   );
 
   todoDiv.appendChild(todoDivOpen);
