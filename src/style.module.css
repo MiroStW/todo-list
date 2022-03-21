@@ -96,9 +96,34 @@ body {
   grid-column: 2 / -1;
 }
 
-.todoComplete {
+input[type="checkbox" i].todoComplete {
   margin: 10.5px 8px;
   grid-row: 1 / 8;
+  background: white;
+  width: 13px;
+  color: black;
+}
+
+[type="checkbox"] {
+  position: relative;
+  /* left: 15px; */
+  /* top: -4px; */
+  z-index: 0;
+  -webkit-appearance: none;
+}
+
+[type="checkbox"] + label {
+  position: absolute;
+}
+
+[type="checkbox"]:checked + label {
+  background-color: grey;
+  margin: 10.5px 8px;
+  font-size: 14px;
+}
+
+.completedTodoHeader {
+  display: block;
 }
 
 .todoPriority {

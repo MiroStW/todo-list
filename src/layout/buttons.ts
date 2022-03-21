@@ -4,7 +4,7 @@ import {
   differenceInCalendarYears,
   fromUnixTime,
 } from "date-fns";
-import { DocumentReference, Timestamp } from "firebase/firestore";
+import { doc, DocumentReference, Timestamp } from "firebase/firestore";
 import { Project, Todo } from "types";
 import {
   deleteItem,
@@ -71,6 +71,7 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
   const todoComplete = document.createElement("input");
   todoComplete.type = "checkbox";
   todoComplete.classList.add(styles.todoComplete);
+  todoComplete.id = `checkbox-${todo.ref.id}`;
   //TODO: does setAttribute checked work?
   if (todo.data.complete) todoComplete.setAttribute("checked", "");
   todoComplete.addEventListener("click", () => {
@@ -82,6 +83,12 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
     }
   });
   parent.appendChild(todoComplete);
+
+  const todoCompleteLabel = document.createElement("label");
+  todoCompleteLabel.setAttribute("for", `checkbox-${todo.ref.id}`);
+  todoCompleteLabel.classList.add("material-icons");
+  if (todo.data.complete) todoCompleteLabel.textContent = "done";
+  parent.appendChild(todoCompleteLabel);
 };
 
 const showPriority = (parent: Element, priority: number) => {

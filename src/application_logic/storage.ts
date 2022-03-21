@@ -127,10 +127,6 @@ const updateTodo = (
   newDueDate?: Timestamp | null
 ) => {
   // TODO add change project
-  // todo.data.name = newName;
-  // todo.data.description = newDescription;
-  // if (newDueDate) todo.data.dueDate = newDueDate;
-  console.log(newDueDate);
   updateDoc(todo.ref, {
     name: newName,
     description: newDescription,
@@ -139,8 +135,12 @@ const updateTodo = (
 };
 
 const updateCompleted = (todo: Todo) => {
-  todo.data.complete = !todo.data.complete;
-  updateStorage();
+  console.log("updated");
+  updateDoc(todo.ref, {
+    complete: !todo.data.complete,
+  });
+  // todo.data.complete = !todo.data.complete;
+  // updateStorage();
 };
 
 const updatePriority = (todo: Todo, priority: number) => {
