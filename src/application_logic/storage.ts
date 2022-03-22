@@ -12,6 +12,7 @@ import {
   updateDoc,
   DocumentReference,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
@@ -146,37 +147,11 @@ const updatePriority = (todo: Todo, priority: number) => {
   });
 };
 
-const deleteItem = (item: Project | Todo, type: "project" | "todo") => {
-  if (confirm(`really remove ${item.data.name}?`)) {
-    if (type === "project") {
-      projectArray.splice(projectArray.indexOf(item), 1);
-      updateStorage();
-    }
-    if (type === "todo") {
-      todoArray.splice(todoArray.indexOf(item), 1);
-      updateStorage();
-    }
-  }
+const deleteItem = (item: Project | Todo) => {
+  if (confirm(`really remove ${item.data.name}?`)) deleteDoc(item.ref);
 };
 
 const isInbox = (project: Project) => project === projectArray[0];
-
-function withConverter(
-  arg0: any
-): {
-  <U>(
-    converter: import("@firebase/firestore").FirestoreDataConverter<U>
-  ): DocumentReference<U>;
-  (converter: null): DocumentReference<
-    import("@firebase/firestore").DocumentData
-  >;
-} {
-  throw new Error("Function not implemented.");
-}
-
-function converter(arg0: null): any {
-  throw new Error("Function not implemented.");
-}
 
 export {
   getTodosByDate,

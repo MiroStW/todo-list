@@ -221,7 +221,7 @@ const createDeleteBtn = (
   const deleteBtn = addIcon(parent, "clear");
   deleteBtn.classList.add(styles.icon, styles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
-    deleteItem(item, type);
+    deleteItem(item);
     if (type === "project") {
       showProjectList();
       // TODO: if open project is deleted project: showTodoList()
