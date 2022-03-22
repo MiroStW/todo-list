@@ -80,7 +80,7 @@ const showProject = (
   projectArea.appendChild(projectDiv);
 };
 
-const showProjectList = () => {
+const showProjectList = async () => {
   const projectArea = document.querySelector(`.${styles.projectarea}`)!;
   clearProjectList(projectArea);
 
@@ -89,8 +89,13 @@ const showProjectList = () => {
   projectsHeader.textContent = "Projects";
   projectArea!.appendChild(projectsHeader);
 
+  const projects = await getProjects();
+
   // inbox view
-  getProjects("inbox").then((inbox) => showProject("showProject", inbox[0]));
+  showProject(
+    "showProject",
+    projects.find((project) => isInbox(project))
+  );
 
   createSeparator(projectArea);
 
@@ -101,11 +106,9 @@ const showProjectList = () => {
   createSeparator(projectArea);
 
   // project list without inbox
-  getProjects("noInbox").then((projects) =>
-    projects.forEach((project) => {
-      showProject("showProject", project);
-    })
-  );
+  projects.forEach((project) => {
+    if (!isInbox(project)) showProject("showProject", project);
+  });
 
   createNewItemBtn(projectArea, "project");
 };

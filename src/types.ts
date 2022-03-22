@@ -1,6 +1,7 @@
 import { DocumentData, DocumentReference, Timestamp } from "firebase/firestore";
 
 export interface ProjectData {
+  isInbox?: boolean;
   name: string;
   createdDate: Timestamp;
 }

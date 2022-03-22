@@ -1,13 +1,8 @@
 import {
   addDoc,
-  getFirestore,
-  collection,
-  collectionGroup,
-  doc,
   getDocs,
   query,
   where,
-  setDoc,
   Timestamp,
   updateDoc,
   DocumentReference,
@@ -16,12 +11,6 @@ import {
 } from "firebase/firestore";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
-
-const db = getFirestore();
-
-// project & todo array to hold all the data
-const projectArray: {}[] = [];
-const todoArray: {}[] = [];
 
 // factory for projects
 const Project = (name: string): ProjectData => ({
@@ -49,23 +38,14 @@ const getProjectOfTodo = (todo: Todo) =>
   );
 
 // TODO: get projects/data in right order or sort them
-const getProjects = (type?: "inbox" | "noInbox") =>
-  getDocs(projectsCol).then((querySnapshot) => {
-    const projects = querySnapshot.docs.map((doc) => ({
-      ref: doc.ref,
-      data: doc.data(),
-    })) as Project[];
-
-    switch (type) {
-      case "inbox":
-        console.log(projects);
-        return [projects[0]];
-      case "noInbox":
-        return projects.slice(1);
-      default:
-        return projects;
-    }
-  });
+const getProjects = () =>
+  getDocs(projectsCol).then(
+    (querySnapshot) =>
+      querySnapshot.docs.map((doc) => ({
+        ref: doc.ref,
+        data: doc.data(),
+      })) as Project[]
+  );
 
 const getTodosByProject = (project: Project) =>
   getDocs(projectTodosCol(project)).then(
@@ -90,11 +70,6 @@ const getTodosByDate = (type: "past" | "future") => {
         data: doc.data(),
       })) as Todo[]
   );
-};
-
-const updateStorage = () => {
-  localStorage.setItem("todoSystem-projects", JSON.stringify(projectArray));
-  localStorage.setItem("todoSystem-todos", JSON.stringify(todoArray));
 };
 
 // TODO: add initial inbox project
@@ -151,7 +126,7 @@ const deleteItem = (item: Project | Todo) => {
   if (confirm(`really remove ${item.data.name}?`)) deleteDoc(item.ref);
 };
 
-const isInbox = (project: Project) => project === projectArray[0];
+const isInbox = (project: Project) => project.data.isInbox === true;
 
 export {
   getTodosByDate,

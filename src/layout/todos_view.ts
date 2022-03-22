@@ -8,6 +8,7 @@ import {
   getTodosByProject,
   getTodosByDate,
   getProjects,
+  isInbox,
 } from "../application_logic/storage";
 import styles from "../style.module.css";
 import {
@@ -23,7 +24,6 @@ import {
   createNewItemBtn,
 } from "./buttons";
 import { Project, Todo } from "types";
-import { Timestamp } from "firebase/firestore";
 
 const clearTodoList = (todoArea: Element) => {
   // clear displayed todo Area
@@ -162,9 +162,9 @@ const showTodoList = async (
       break;
     case "showProject":
       if (!project) {
-        getProjects("inbox").then((inbox) => {
-          todoHeader.textContent = inbox[0].data.name;
-        });
+        project = (await getProjects()).find((project) => isInbox(project))!;
+
+        todoHeader.textContent = project.data.name;
       } else {
         todoHeader.textContent = project.data.name;
       }
