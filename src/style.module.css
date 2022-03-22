@@ -101,6 +101,7 @@ input[type="checkbox" i].todoComplete {
   grid-row: 1 / 8;
   background: white;
   width: 13px;
+  height: 13px;
   color: black;
 }
 
