@@ -13,9 +13,10 @@ import { Project, ProjectData, Todo, TodoData } from "types";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 
 // factory for projects
-const Project = (name: string): ProjectData => ({
+const Project = (name: string, isInbox?: boolean): ProjectData => ({
   name,
   createdDate: Timestamp.now(),
+  ...(isInbox && { isInbox: true }),
 });
 
 // factory for todos
@@ -38,14 +39,22 @@ const getProjectOfTodo = (todo: Todo) =>
   );
 
 // TODO: get projects/data in right order or sort them
-const getProjects = () =>
-  getDocs(projectsCol).then(
+const getProjects = async () => {
+  const projects = await getDocs(projectsCol).then(
     (querySnapshot) =>
       querySnapshot.docs.map((doc) => ({
         ref: doc.ref,
         data: doc.data(),
       })) as Project[]
   );
+
+  if (!projects) {
+    await addDoc(projectsCol, Project("Inbox", true));
+    getProjects();
+  }
+
+  return projects;
+};
 
 const getTodosByProject = (project: Project) =>
   getDocs(projectTodosCol(project)).then(
