@@ -22,6 +22,8 @@ import {
   createUpdateTodoBtn,
   createDeleteBtn,
   createNewItemBtn,
+  createCancelBtn,
+  createSeparator,
 } from "./buttons";
 import { Project, Todo } from "types";
 
@@ -59,11 +61,13 @@ const showTodoDetails = (todo: Todo, todoDiv: Element) => {
 
   todoDivOpen.appendChild(descriptionInput);
 
+  const todoBottomRow = document.createElement("div");
+  todoBottomRow.classList.add(styles.todoBottomRow);
   // todo duedate
   const dueDateInput = document.createElement("input");
   dueDateInput.classList.add(styles.todoDueDate);
   dueDateInput.placeholder = "Due date";
-  todoDivOpen.appendChild(dueDateInput);
+  todoBottomRow.appendChild(dueDateInput);
 
   // show created date
   // const createdDate = document.createElement("div");
@@ -74,14 +78,22 @@ const showTodoDetails = (todo: Todo, todoDiv: Element) => {
   // todoDivOpen.appendChild(createdDate);
 
   // buttons
+  const todoBtnBar = document.createElement("div");
+  todoBtnBar.classList.add(styles.todoBtnBar);
+
   createUpdateTodoBtn(
     todo,
-    todoDivOpen,
+    todoBtnBar,
     nameInput,
     descriptionInput,
     document.querySelector(`#checkbox-${todo.ref.id}`)!,
     dueDateInput
   );
+
+  createCancelBtn(todo, todoBtnBar);
+
+  todoBottomRow.appendChild(todoBtnBar);
+  todoDivOpen.appendChild(todoBottomRow);
 
   todoDiv.appendChild(todoDivOpen);
 

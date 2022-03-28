@@ -96,6 +96,11 @@ body {
   grid-column: 2 / -1;
 }
 
+.todoBottomRow {
+  display: flex;
+  justify-content: space-between;
+}
+
 input[type="checkbox" i].todoComplete {
   margin: 10.5px 8px;
   grid-row: 1 / 8;

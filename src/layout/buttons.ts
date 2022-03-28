@@ -224,12 +224,24 @@ const createUpdateTodoBtn = (
   parent.appendChild(saveBtn);
 };
 
+const createCancelBtn = (todo: Todo, parent: Element) => {
+  const cancelBtn = document.createElement("button");
+  cancelBtn.textContent = "cancel";
+  cancelBtn.addEventListener("click", () => {
+    if (confirm("discard changes?"))
+      getProjectOfTodo(todo).then((project) => {
+        showTodoList("showProject", project);
+      });
+  });
+  parent.appendChild(cancelBtn);
+};
+
 const createDeleteBtn = (
   parent: Element,
   type: "project" | "todo",
   item: Project | Todo
 ) => {
-  const deleteBtn = addIcon(parent, "clear");
+  const deleteBtn = addIcon(parent, "delete", "outlined");
   deleteBtn.classList.add(styles.icon, styles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
     deleteItem(item);
@@ -261,6 +273,7 @@ export {
   editTodoTitle,
   createDeleteBtn,
   createUpdateTodoBtn,
+  createCancelBtn,
   completeTodoCheckbox,
   createRenameBtn,
   createNewItemBtn,
