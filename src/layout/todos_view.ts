@@ -192,19 +192,19 @@ const showTodoList = async (
 
   // show todos
   if (action === "showToday") {
-    getTodosByDate("past").then((todos) =>
+    await getTodosByDate("past").then((todos) =>
       todos.forEach((todo) => {
         showTodoBar(todo);
       })
     );
   } else if (action === "showUpcoming") {
-    getTodosByDate("future").then((todos) =>
+    await getTodosByDate("future").then((todos) =>
       todos.forEach((todo) => {
         showTodoBar(todo);
       })
     );
   } else if (action === "showProject" && project) {
-    getTodosByProject(project)
+    await getTodosByProject(project)
       .then((todos) => todos.filter((todo) => !todo.data.complete))
       .then((openTodos) =>
         openTodos.forEach((todo) => {
@@ -214,7 +214,7 @@ const showTodoList = async (
       );
     createNewItemBtn(todoArea, "todo", project);
   } else if (action === "showCompleted" && project) {
-    getTodosByProject(project).then((todos) =>
+    await getTodosByProject(project).then((todos) =>
       todos
         .filter((todo) => todo.data.complete)
         .forEach((todo) => {
