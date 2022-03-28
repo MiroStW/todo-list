@@ -89,7 +89,9 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
       });
     } else {
       todoComplete.toggleAttribute("checked");
-      todoCompleteLabel.textContent = "done";
+      todoCompleteLabel.textContent === "done"
+        ? (todoCompleteLabel.textContent = "")
+        : (todoCompleteLabel.textContent = "done");
     }
   });
 };

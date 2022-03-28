@@ -116,6 +116,7 @@ input[type="checkbox" i].todoComplete {
   /* top: -4px; */
   z-index: 0;
   -webkit-appearance: none;
+  cursor: pointer;
 }
 
 [type="checkbox"] + label {
@@ -126,6 +127,7 @@ input[type="checkbox" i].todoComplete {
   background-color: grey;
   margin: 10.5px 8px;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .completedTodoHeader {
@@ -136,6 +138,7 @@ input[type="checkbox" i].todoComplete {
   padding: 7px 3px;
   grid-row: 1 / 1;
   grid-column: 2 / 2;
+  cursor: pointer;
 }
 
 .priorityPicker {
@@ -143,6 +146,7 @@ input[type="checkbox" i].todoComplete {
   grid-row: 1 / 1;
   grid-column: 2 / 4;
   width: max-content;
+  cursor: pointer;
 }
 
 .prio1 {
