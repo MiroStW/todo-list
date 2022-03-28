@@ -109,12 +109,14 @@ const updateTodo = (
   todo: Todo,
   newName: string,
   newDescription: string,
+  newCompleted: boolean,
   newDueDate?: Timestamp | null
 ) => {
   // TODO add change project
   updateDoc(todo.ref, {
     name: newName,
     description: newDescription,
+    complete: newCompleted,
     ...(newDueDate !== undefined && { dueDate: newDueDate }),
   });
 };

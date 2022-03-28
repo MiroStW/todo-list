@@ -72,16 +72,7 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
   todoComplete.type = "checkbox";
   todoComplete.classList.add(styles.todoComplete);
   todoComplete.id = `checkbox-${todo.ref.id}`;
-  //TODO: does setAttribute checked work?
   if (todo.data.complete) todoComplete.setAttribute("checked", "");
-  todoComplete.addEventListener("click", () => {
-    updateCompleted(todo);
-    if (!document.querySelector(`.${styles.todoOpen}`)) {
-      getProjectOfTodo(todo).then((project) => {
-        showTodoList("showProject", project);
-      });
-    }
-  });
   parent.appendChild(todoComplete);
 
   const todoCompleteLabel = document.createElement("label");
@@ -89,6 +80,18 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
   todoCompleteLabel.classList.add("material-icons");
   if (todo.data.complete) todoCompleteLabel.textContent = "done";
   parent.appendChild(todoCompleteLabel);
+
+  todoComplete.addEventListener("click", () => {
+    updateCompleted(todo);
+    if (!document.querySelector(`.${styles.todoOpen}`)) {
+      getProjectOfTodo(todo).then((project) => {
+        showTodoList("showProject", project);
+      });
+    } else {
+      todoComplete.toggleAttribute("checked");
+      todoCompleteLabel.textContent = "done";
+    }
+  });
 };
 
 const showPriority = (parent: Element, priority: number) => {
@@ -191,6 +194,7 @@ const createUpdateTodoBtn = (
   parent: Element,
   newName: HTMLInputElement,
   newDescription: HTMLTextAreaElement,
+  newCompleted: HTMLInputElement,
   newDueDate: HTMLInputElement
 ) => {
   const saveBtn = document.createElement("button");
@@ -201,10 +205,17 @@ const createUpdateTodoBtn = (
         todo,
         newName.value,
         newDescription.value,
+        newCompleted.hasAttribute("checked"),
         new Timestamp(Date.parse(newDueDate.value) / 1000 || 0, 0)
       );
     } else {
-      updateTodo(todo, newName.value, newDescription.value, null);
+      updateTodo(
+        todo,
+        newName.value,
+        newDescription.value,
+        newCompleted.hasAttribute("checked"),
+        null
+      );
     }
     getProjectOfTodo(todo).then((project) => {
       showTodoList("showProject", project);

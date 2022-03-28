@@ -79,6 +79,7 @@ const showTodoDetails = (todo: Todo, todoDiv: Element) => {
     todoDivOpen,
     nameInput,
     descriptionInput,
+    document.querySelector(`#checkbox-${todo.ref.id}`)!,
     dueDateInput
   );
 
