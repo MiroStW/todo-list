@@ -53,9 +53,18 @@ const getProjects = async () => {
       })) as Project[]
   );
 
-  if (!projects) {
-    await addDoc(projectsCol, Project("Inbox", true));
-    getProjects();
+  if (projects.length === 0) {
+    projects.push(
+      await addDoc(projectsCol, Project("Inbox", true)).then((newInbox) =>
+        getDoc(newInbox).then(
+          (documentSnapshot) =>
+            ({
+              ref: documentSnapshot.ref,
+              data: documentSnapshot.data(),
+            } as Project)
+        )
+      )
+    );
   }
 
   return projects;
