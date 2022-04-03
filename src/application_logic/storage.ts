@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import {
   addDoc,
   getDocs,
@@ -9,6 +10,7 @@ import {
   getDoc,
   deleteDoc,
 } from "firebase/firestore";
+import { auth } from "index";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 
@@ -16,6 +18,7 @@ import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 const Project = (name: string, isInbox?: boolean): ProjectData => ({
   name,
   createdDate: Timestamp.now(),
+  ownerID: getAuth().currentUser?.uid!,
   ...(isInbox && { isInbox: true }),
 });
 
@@ -40,7 +43,9 @@ const getProjectOfTodo = (todo: Todo) =>
 
 // TODO: get projects/data in right order or sort them
 const getProjects = async () => {
-  const projects = await getDocs(projectsCol).then(
+  const q = query(projectsCol, where("ownerID", "==", auth.currentUser?.uid));
+
+  const projects = await getDocs(q).then(
     (querySnapshot) =>
       querySnapshot.docs.map((doc) => ({
         ref: doc.ref,

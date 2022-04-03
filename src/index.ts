@@ -35,13 +35,13 @@ loader.setAttribute("id", "loader");
 loader.textContent = "Loading...";
 root.appendChild(loader);
 
-const auth = getAuth();
+export const auth = getAuth();
 const fbAuthUi = new firebaseui.auth.AuthUI(auth);
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log(user);
-    console.log(auth);
+    // console.log(auth);
     authArea.setAttribute("hidden", "true");
     loader.setAttribute("hidden", "true");
     projectArea.removeAttribute("hidden");

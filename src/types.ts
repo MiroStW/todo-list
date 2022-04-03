@@ -4,6 +4,7 @@ export interface ProjectData {
   isInbox?: boolean;
   name: string;
   createdDate: Timestamp;
+  ownerID: string;
 }
 
 export interface Project {
