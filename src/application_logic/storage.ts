@@ -41,6 +41,17 @@ const getProjectOfTodo = (todo: Todo) =>
       } as Project)
   );
 
+const addInboxProject = () =>
+  addDoc(projectsCol, Project("Inbox", true)).then((newInbox) =>
+    getDoc(newInbox).then(
+      (documentSnapshot) =>
+        ({
+          ref: documentSnapshot.ref,
+          data: documentSnapshot.data(),
+        } as Project)
+    )
+  );
+
 // TODO: get projects/data in right order or sort them
 const getProjects = async () => {
   const q = query(projectsCol, where("ownerID", "==", auth.currentUser?.uid));
@@ -54,17 +65,7 @@ const getProjects = async () => {
   );
 
   if (projects.length === 0) {
-    projects.push(
-      await addDoc(projectsCol, Project("Inbox", true)).then((newInbox) =>
-        getDoc(newInbox).then(
-          (documentSnapshot) =>
-            ({
-              ref: documentSnapshot.ref,
-              data: documentSnapshot.data(),
-            } as Project)
-        )
-      )
-    );
+    projects.push(await addInboxProject());
   }
 
   return projects;
