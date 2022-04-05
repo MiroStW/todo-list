@@ -80,7 +80,7 @@ const showProject = (
   projectArea.appendChild(projectDiv);
 };
 
-const showProjectList = async () => {
+const showProjectList = (projects: Project[]) => {
   const projectArea = document.querySelector(`.${styles.projectarea}`)!;
   clearProjectList(projectArea);
 
@@ -88,8 +88,6 @@ const showProjectList = async () => {
   const projectsHeader = document.createElement("h2");
   projectsHeader.textContent = "Projects";
   projectArea!.appendChild(projectsHeader);
-
-  const projects = await getProjects();
 
   // inbox view
   showProject(

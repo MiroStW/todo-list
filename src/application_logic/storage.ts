@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import {
   addDoc,
   getDocs,
@@ -9,6 +8,7 @@ import {
   DocumentReference,
   getDoc,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { auth } from "index";
 import { Project, ProjectData, Todo, TodoData } from "types";
@@ -18,7 +18,7 @@ import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 const Project = (name: string, isInbox?: boolean): ProjectData => ({
   name,
   createdDate: Timestamp.now(),
-  ownerID: getAuth().currentUser?.uid!,
+  ownerID: auth.currentUser?.uid!,
   ...(isInbox && { isInbox: true }),
 });
 
@@ -41,6 +41,7 @@ const getProjectOfTodo = (todo: Todo) =>
       } as Project)
   );
 
+// add inbox project for new users
 const addInboxProject = () =>
   addDoc(projectsCol, Project("Inbox", true)).then((newInbox) =>
     getDoc(newInbox).then(
@@ -52,23 +53,63 @@ const addInboxProject = () =>
     )
   );
 
+const getInboxProject = async () => {
+  const q = query(
+    projectsCol,
+    where("ownerID", "==", auth.currentUser?.uid),
+    where("isInbox", "==", true)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((inbox) => ({
+    ref: inbox.ref,
+    data: inbox.data(),
+  }))[0];
+};
+
 // TODO: get projects/data in right order or sort them
-const getProjects = async () => {
+const getProjects = (renderer: (projects: Project[]) => void) => {
   const q = query(projectsCol, where("ownerID", "==", auth.currentUser?.uid));
 
-  const projects = await getDocs(q).then(
-    (querySnapshot) =>
-      querySnapshot.docs.map((doc) => ({
+  const unsubscripeProjects = onSnapshot(q, (snapshot) => {
+    const projects: Project[] = [];
+    snapshot.forEach((doc) => {
+      projects.push({
         ref: doc.ref,
         data: doc.data(),
-      })) as Project[]
-  );
+      });
+    });
+    renderer(projects);
+    // snapshot.docChanges().map((change) => {
+    //   if (change.type === "added") {
+    //     projects.push({
+    //       ref: change.doc.ref,
+    //       data: change.doc.data(),
+    //     } as Project);
+    //   }
 
-  if (projects.length === 0) {
-    projects.push(await addInboxProject());
-  }
+    //   if (change.type === "modified") {
+    //     const i = projects.findIndex(
+    //       (project) => project.ref.id === change.doc.id
+    //     );
+    //     projects[i] = {
+    //       ref: change.doc.ref,
+    //       data: change.doc.data(),
+    //     };
+    //   }
 
-  return projects;
+    //   if (change.type === "removed") {
+    //     const i = projects.findIndex(
+    //       (project) => project.ref.id === change.doc.id
+    //     );
+    //     projects.splice(i);
+    //   }
+    // });
+
+    if (!snapshot.size) {
+      addInboxProject();
+      // .then((inbox) => projects.push(inbox));
+    }
+  });
 };
 
 const getTodosByProject = (project: Project) =>
@@ -98,7 +139,6 @@ const getTodosByDate = (type: "past" | "future") => {
 
 // TODO: add initial inbox project
 // TODO: on open, open inbox
-// TODO: fix order of buttons & inbox project on page
 
 const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);
@@ -157,6 +197,7 @@ const isInbox = (project: Project) => project.data.isInbox === true;
 export {
   getTodosByDate,
   getTodosByProject,
+  getInboxProject,
   getProjects,
   getProjectOfTodo,
   isInbox,

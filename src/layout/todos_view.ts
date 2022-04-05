@@ -9,6 +9,7 @@ import {
   getTodosByDate,
   getProjects,
   isInbox,
+  getInboxProject,
 } from "../application_logic/storage";
 import styles from "../style.module.css";
 import {
@@ -175,9 +176,9 @@ const showTodoList = async (
       break;
     case "showProject":
       if (!project) {
-        project = (await getProjects()).find((project) => isInbox(project))!;
-
-        todoHeader.textContent = project.data.name;
+        getInboxProject().then(
+          (inbox) => (todoHeader.textContent = inbox.data.name)
+        );
       } else {
         todoHeader.textContent = project.data.name;
       }

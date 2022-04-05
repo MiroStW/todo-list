@@ -7,6 +7,7 @@ import showHeader from "./layout/header";
 import showProjectList from "./layout/projects_view";
 import { showTodoList } from "./layout/todos_view";
 import styles from "./style.module.css";
+import { getProjects } from "application_logic/storage";
 
 const root = document.querySelector("#root")!;
 
@@ -47,7 +48,7 @@ onAuthStateChanged(auth, (user) => {
     projectArea.removeAttribute("hidden");
     todoArea.removeAttribute("hidden");
 
-    showProjectList();
+    getProjects(showProjectList);
     showTodoList("showProject");
   } else {
     fbAuthUi.start("#firebaseui-auth-container", uiConfig);

@@ -43,7 +43,6 @@ const createNewItemBtn = (
     newBtn.textContent = "new project";
     newBtn.addEventListener("click", () => {
       createItem(type);
-      showProjectList();
     });
     parent.appendChild(newBtn);
   }
@@ -62,7 +61,6 @@ const createRenameBtn = (parent: Element, project: Project) => {
   renameBtn.classList.add(styles.icon, styles.hiddenIcon);
   renameBtn.addEventListener("click", () => {
     renameItem(project);
-    showProjectList();
   });
   parent.appendChild(renameBtn);
 };
@@ -247,10 +245,6 @@ const createDeleteBtn = (
   deleteBtn.classList.add(styles.icon, styles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
     deleteItem(item);
-    if (type === "project") {
-      showProjectList();
-      // TODO: if open project is deleted project: showTodoList()
-    }
     if (type === "todo") {
       getProjectOfTodo(item as Todo).then((project) => {
         showTodoList("showProject", project);
