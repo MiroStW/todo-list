@@ -105,40 +105,49 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
     //   }
     // });
 
-    if (!snapshot.size) {
-      addInboxProject();
-      // .then((inbox) => projects.push(inbox));
-    }
+    if (!snapshot.size) addInboxProject();
   });
 };
 
-const getTodosByProject = (project: Project) =>
-  getDocs(projectTodosCol(project)).then(
-    (querySnapshot) =>
-      querySnapshot.docs.map((doc) => ({
+const getTodosByProject = (
+  project: Project,
+  renderer: (todo: Todo) => void,
+  completed: boolean = false
+) => {
+  const q = query(projectTodosCol(project), where("complete", "==", completed));
+
+  const unsubscripeTodos = onSnapshot(q, (snapshot) => {
+    const todos: Todo[] = [];
+    snapshot.forEach((doc) => {
+      todos.push({
         ref: doc.ref,
         data: doc.data(),
-      })) as Todo[]
-  );
+      });
+    });
+    todos.forEach((todo) => renderer(todo));
+  });
+};
 
-const getTodosByDate = (type: "past" | "future") => {
+const getTodosByDate = (
+  type: "past" | "future",
+  renderer: (todo: Todo) => void
+) => {
   const q = query(
     todosCol,
-    // collectionGroup(db, "todos"),
     where("dueDate", type === "past" ? "<=" : ">", new Date())
   );
 
-  return getDocs(q).then(
-    (querySnapshot) =>
-      querySnapshot.docs.map((doc) => ({
+  const unsubscripeTodos = onSnapshot(q, (snapshot) => {
+    const todos: Todo[] = [];
+    snapshot.forEach((doc) => {
+      todos.push({
         ref: doc.ref,
         data: doc.data(),
-      })) as Todo[]
-  );
+      });
+    });
+    todos.forEach((todo) => renderer(todo));
+  });
 };
-
-// TODO: add initial inbox project
-// TODO: on open, open inbox
 
 const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);

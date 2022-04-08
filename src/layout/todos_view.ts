@@ -160,27 +160,39 @@ const showTodoList = async (
     clearTodoList(todoArea);
   }
 
-  // show todolist header
+  // show todolist
   const todoHeaderDiv = document.createElement("div");
   todoHeaderDiv.classList.add(styles.todoHeader);
   const todoHeader = document.createElement("h2");
   switch (action) {
     case "showCompleted":
       todoHeader.textContent = "Completed Todos";
+      if (!project) {
+        getInboxProject().then((inbox) => {
+          todoHeader.textContent = inbox.data.name;
+          getTodosByProject(inbox, showTodoBar, true);
+        });
+      } else getTodosByProject(project, showTodoBar, true);
       break;
     case "showToday":
       todoHeader.textContent = "Today";
+      getTodosByDate("past", showTodoBar);
       break;
     case "showUpcoming":
       todoHeader.textContent = "Upcoming";
+      getTodosByDate("future", showTodoBar);
       break;
     case "showProject":
       if (!project) {
-        getInboxProject().then(
-          (inbox) => (todoHeader.textContent = inbox.data.name)
-        );
+        getInboxProject().then((inbox) => {
+          todoHeader.textContent = inbox.data.name;
+          getTodosByProject(inbox, showTodoBar, false);
+          createNewItemBtn(todoArea, "todo", project);
+        });
       } else {
         todoHeader.textContent = project.data.name;
+        getTodosByProject(project, showTodoBar, false);
+        createNewItemBtn(todoArea, "todo", project);
       }
       break;
     default:
@@ -190,41 +202,7 @@ const showTodoList = async (
   if (action === "showProject" && project)
     completedTodosBtn(project, todoHeaderDiv);
   todoArea.appendChild(todoHeaderDiv);
-
-  // show todos
-  if (action === "showToday") {
-    await getTodosByDate("past").then((todos) =>
-      todos.forEach((todo) => {
-        showTodoBar(todo);
-      })
-    );
-  } else if (action === "showUpcoming") {
-    await getTodosByDate("future").then((todos) =>
-      todos.forEach((todo) => {
-        showTodoBar(todo);
-      })
-    );
-  } else if (action === "showProject" && project) {
-    await getTodosByProject(project)
-      .then((todos) => todos.filter((todo) => !todo.data.complete))
-      .then((openTodos) =>
-        openTodos.forEach((todo) => {
-          console.log(todo);
-          showTodoBar(todo);
-        })
-      );
-    createNewItemBtn(todoArea, "todo", project);
-  } else if (action === "showCompleted" && project) {
-    await getTodosByProject(project).then((todos) =>
-      todos
-        .filter((todo) => todo.data.complete)
-        .forEach((todo) => {
-          showTodoBar(todo);
-        })
-    );
-  }
 };
-
 export { showTodoList, showTodoDetails };
 
 // overall todoArea

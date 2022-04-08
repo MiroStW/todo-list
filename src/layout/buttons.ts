@@ -4,7 +4,7 @@ import {
   differenceInCalendarYears,
   fromUnixTime,
 } from "date-fns";
-import { doc, DocumentReference, Timestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 import { Project, Todo } from "types";
 import {
   deleteItem,
@@ -16,7 +16,6 @@ import {
   getProjectOfTodo,
 } from "../application_logic/storage";
 import styles from "../style.module.css";
-import showProjectList from "./projects_view";
 import { showTodoList } from "./todos_view";
 
 const addIcon = (parent: Element, iconName: string, style?: "outlined") => {
@@ -50,7 +49,6 @@ const createNewItemBtn = (
     newBtn.textContent = "new todo";
     newBtn.addEventListener("click", () => {
       createItem(type, project);
-      showTodoList("showProject", project);
     });
     parent.appendChild(newBtn);
   }
@@ -245,11 +243,11 @@ const createDeleteBtn = (
   deleteBtn.classList.add(styles.icon, styles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
     deleteItem(item);
-    if (type === "todo") {
-      getProjectOfTodo(item as Todo).then((project) => {
-        showTodoList("showProject", project);
-      });
-    }
+    // if (type === "todo") {
+    //   getProjectOfTodo(item as Todo).then((project) => {
+    //     showTodoList("showProject", project);
+    //   });
+    // }
   });
   parent.appendChild(deleteBtn);
 };
