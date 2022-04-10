@@ -111,7 +111,7 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
 
 const getTodosByProject = (
   project: Project,
-  renderer: (todo: Todo) => void,
+  renderer: (todos: Todo[]) => void,
   completed: boolean = false
 ) => {
   const q = query(projectTodosCol(project), where("complete", "==", completed));
@@ -124,7 +124,7 @@ const getTodosByProject = (
         data: doc.data(),
       });
     });
-    todos.forEach((todo) => renderer(todo));
+    renderer(todos);
   });
 };
 

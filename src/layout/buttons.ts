@@ -16,7 +16,7 @@ import {
   getProjectOfTodo,
 } from "../application_logic/storage";
 import styles from "../style.module.css";
-import { showTodoList } from "./todos_view";
+import { showTodoArea } from "./todos_view";
 
 const addIcon = (parent: Element, iconName: string, style?: "outlined") => {
   const icon = document.createElement("span");
@@ -81,7 +81,7 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
     updateCompleted(todo);
     if (!document.querySelector(`.${styles.todoOpen}`)) {
       getProjectOfTodo(todo).then((project) => {
-        showTodoList("showProject", project);
+        showTodoArea("showProject", project);
       });
     } else {
       todoComplete.toggleAttribute("checked");
@@ -106,7 +106,7 @@ const priorityBtn = (todo: Todo, parent: Element, newPriority: number) => {
   btn.addEventListener("click", () => {
     updatePriority(todo, newPriority);
     getProjectOfTodo(todo).then((project) => {
-      showTodoList("showProject", project);
+      showTodoArea("showProject", project);
     });
     parent.remove();
   });
@@ -128,8 +128,8 @@ const completedTodosBtn = (project: Project, parent: Element) => {
   btn.textContent = "restore";
   btn.addEventListener("click", () => {
     document.querySelector(`.${styles.completedTodoHeader}`)
-      ? showTodoList("showProject", project)
-      : showTodoList("showCompleted", project);
+      ? showTodoArea("showProject", project)
+      : showTodoArea("showCompleted", project);
   });
   parent.appendChild(btn);
 };
@@ -216,7 +216,7 @@ const createUpdateTodoBtn = (
       );
     }
     getProjectOfTodo(todo).then((project) => {
-      showTodoList("showProject", project);
+      showTodoArea("showProject", project);
     });
   });
   parent.appendChild(saveBtn);
@@ -228,7 +228,7 @@ const createCancelBtn = (todo: Todo, parent: Element) => {
   cancelBtn.addEventListener("click", () => {
     if (confirm("discard changes?"))
       getProjectOfTodo(todo).then((project) => {
-        showTodoList("showProject", project);
+        showTodoArea("showProject", project);
       });
   });
   parent.appendChild(cancelBtn);

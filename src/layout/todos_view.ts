@@ -27,13 +27,12 @@ import {
   createSeparator,
 } from "./buttons";
 import { Project, Todo } from "types";
+import { doc } from "firebase/firestore";
 
-const clearTodoList = (todoArea: Element) => {
+const clearTodoList = (todoList: Element) => {
   // clear displayed todo Area
-  if (todoArea) {
-    while (todoArea.childNodes.length > 0) {
-      todoArea.removeChild(todoArea.childNodes[0]);
-    }
+  while (todoList.childNodes.length > 0) {
+    todoList.removeChild(todoList.childNodes[0]);
   }
 };
 
@@ -106,7 +105,7 @@ const showTodoDetails = (todo: Todo, todoDiv: Element) => {
 };
 
 const showTodoBar = (todo: Todo) => {
-  const todoArea = document.querySelector(`.${styles.todoarea}`)!;
+  const todoList = document.querySelector(`.${styles.todoList}`)!;
   const todoDiv = document.createElement("div");
   todoDiv.classList.add(styles.todo);
 
@@ -148,31 +147,49 @@ const showTodoBar = (todo: Todo) => {
     { once: true }
   );
 
-  todoArea.appendChild(todoDiv);
+  todoList.appendChild(todoDiv);
 };
 
-const showTodoList = async (
+const showTodoList = (todos: Todo[]) => {
+  const todoList = document.querySelector(`.${styles.todoList}`)!;
+  while (todoList.childNodes.length > 0) {
+    todoList.removeChild(todoList.childNodes[0]);
+  }
+
+  todos.forEach((todo) => showTodoBar(todo));
+};
+
+const showTodoArea = async (
   action: "showCompleted" | "showProject" | "showToday" | "showUpcoming",
   project?: Project
 ) => {
   const todoArea = document.querySelector(`.${styles.todoarea}`)!;
-  if (action !== "showCompleted") {
-    clearTodoList(todoArea);
+  while (todoArea.childNodes.length > 0) {
+    todoArea.removeChild(todoArea.childNodes[0]);
   }
 
-  // show todolist
+  // show header
   const todoHeaderDiv = document.createElement("div");
   todoHeaderDiv.classList.add(styles.todoHeader);
   const todoHeader = document.createElement("h2");
+  todoHeaderDiv.appendChild(todoHeader);
+  if (action === "showProject" && project)
+    completedTodosBtn(project, todoHeaderDiv);
+  todoArea.appendChild(todoHeaderDiv);
+
+  // show todo list
+  const todoList = document.createElement("div");
+  todoList.classList.add(styles.todoList);
+  todoArea.appendChild(todoList);
+
   switch (action) {
     case "showCompleted":
       todoHeader.textContent = "Completed Todos";
       if (!project) {
         getInboxProject().then((inbox) => {
-          todoHeader.textContent = inbox.data.name;
-          getTodosByProject(inbox, showTodoBar, true);
+          getTodosByProject(inbox, showTodoList, true);
         });
-      } else getTodosByProject(project, showTodoBar, true);
+      } else getTodosByProject(project, showTodoList, true);
       break;
     case "showToday":
       todoHeader.textContent = "Today";
@@ -186,24 +203,20 @@ const showTodoList = async (
       if (!project) {
         getInboxProject().then((inbox) => {
           todoHeader.textContent = inbox.data.name;
-          getTodosByProject(inbox, showTodoBar, false);
+          getTodosByProject(inbox, showTodoList, false);
           createNewItemBtn(todoArea, "todo", project);
         });
       } else {
         todoHeader.textContent = project.data.name;
-        getTodosByProject(project, showTodoBar, false);
+        getTodosByProject(project, showTodoList, false);
         createNewItemBtn(todoArea, "todo", project);
       }
       break;
     default:
       break;
   }
-  todoHeaderDiv.appendChild(todoHeader);
-  if (action === "showProject" && project)
-    completedTodosBtn(project, todoHeaderDiv);
-  todoArea.appendChild(todoHeaderDiv);
 };
-export { showTodoList, showTodoDetails };
+export { showTodoArea, showTodoDetails };
 
 // overall todoArea
 // [x] focus immediately in title

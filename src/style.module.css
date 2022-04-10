@@ -77,6 +77,10 @@ body {
   width: 80%;
 }
 
+.todoList {
+  width: 100%;
+}
+
 .todo {
   border-bottom: 1px white dashed;
   display: grid;

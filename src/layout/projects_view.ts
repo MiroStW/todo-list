@@ -1,5 +1,5 @@
 import { Project } from "types";
-import { isInbox, getProjects } from "../application_logic/storage";
+import { isInbox } from "../application_logic/storage";
 import styles from "../style.module.css";
 import {
   addIcon,
@@ -8,7 +8,7 @@ import {
   createNewItemBtn,
   createSeparator,
 } from "./buttons";
-import { showTodoList } from "./todos_view";
+import { showTodoArea } from "./todos_view";
 
 const clearProjectList = (projectArea: Element) => {
   // clear displayed project Area
@@ -33,7 +33,7 @@ const showProject = (
       icon.classList.add(styles.todayIcon);
       projectName.textContent = "Today";
       projectDiv.addEventListener("click", () => {
-        showTodoList("showToday");
+        showTodoArea("showToday");
       });
       break;
     }
@@ -42,7 +42,7 @@ const showProject = (
       icon.classList.add(styles.upcomingIcon);
       projectName.textContent = "Upcoming";
       projectDiv.addEventListener("click", () => {
-        showTodoList("showUpcoming");
+        showTodoArea("showUpcoming");
       });
       break;
     }
@@ -54,7 +54,7 @@ const showProject = (
         }
         projectName.textContent = project.data.name;
         projectDiv.addEventListener("click", () => {
-          showTodoList("showProject", project);
+          showTodoArea("showProject", project);
         });
       }
       break;
