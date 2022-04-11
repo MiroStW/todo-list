@@ -150,12 +150,15 @@ const showTodoBar = (todo: Todo) => {
   todoList.appendChild(todoDiv);
 };
 
-const showTodoList = (todos: Todo[]) => {
+const showTodoList = (todos: Todo[], showCompleted: boolean) => {
   const todoList = document.querySelector(`.${styles.todoList}`)!;
-  while (todoList.childNodes.length > 0) {
-    todoList.removeChild(todoList.childNodes[0]);
-  }
-
+  const todoListCompleted = document.querySelector(
+    `.${styles.todoListCompleted}`
+  )!;
+  if (!showCompleted)
+    while (todoList.childNodes.length > 0) {
+      todoList.removeChild(todoList.childNodes[0]);
+    }
   todos.forEach((todo) => showTodoBar(todo));
 };
 
@@ -164,9 +167,10 @@ const showTodoArea = async (
   project?: Project
 ) => {
   const todoArea = document.querySelector(`.${styles.todoarea}`)!;
-  while (todoArea.childNodes.length > 0) {
-    todoArea.removeChild(todoArea.childNodes[0]);
-  }
+  if (action !== "showCompleted")
+    while (todoArea.childNodes.length > 0) {
+      todoArea.removeChild(todoArea.childNodes[0]);
+    }
 
   // show header
   const todoHeaderDiv = document.createElement("div");
@@ -181,6 +185,9 @@ const showTodoArea = async (
   const todoList = document.createElement("div");
   todoList.classList.add(styles.todoList);
   todoArea.appendChild(todoList);
+  const todoListCompleted = document.createElement("div");
+  todoListCompleted.classList.add(styles.todoListCompleted);
+  todoArea.appendChild(todoListCompleted);
 
   switch (action) {
     case "showCompleted":

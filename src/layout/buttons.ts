@@ -127,9 +127,8 @@ const completedTodosBtn = (project: Project, parent: Element) => {
   btn.classList.add(styles.completedTodosBtn, styles.icon, "material-icons");
   btn.textContent = "restore";
   btn.addEventListener("click", () => {
-    document.querySelector(`.${styles.completedTodoHeader}`)
-      ? showTodoArea("showProject", project)
-      : showTodoArea("showCompleted", project);
+    showTodoArea("showCompleted", project);
+    btn.remove();
   });
   parent.appendChild(btn);
 };

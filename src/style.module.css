@@ -77,8 +77,9 @@ body {
   width: 80%;
 }
 
-.todoList {
-  width: 100%;
+.todoList,
+.todoListCompleted {
+  display: block;
 }
 
 .todo {
