@@ -265,6 +265,10 @@ button {
   cursor: pointer;
 }
 
+.md-inactive {
+  color: rgba(255, 255, 255, 0.3);
+}
+
 .icon {
   cursor: pointer;
   /* margin-left: 7px;

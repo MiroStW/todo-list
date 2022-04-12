@@ -122,13 +122,19 @@ const openPrioPicker = (todo: Todo, parent: Element) => {
   parent.appendChild(pickerContainer);
 };
 
-const completedTodosBtn = (project: Project, parent: Element) => {
+const completedTodosBtn = (
+  project: Project,
+  todoListCompleted: Element,
+  parent: Element
+) => {
   const btn = document.createElement("span");
   btn.classList.add(styles.completedTodosBtn, styles.icon, "material-icons");
   btn.textContent = "restore";
   btn.addEventListener("click", () => {
-    showTodoArea("showCompleted", project);
-    btn.remove();
+    if (todoListCompleted.childElementCount === 0)
+      showTodoArea("showCompleted", project);
+    todoListCompleted.toggleAttribute("hidden");
+    btn.classList.toggle(styles["md-inactive"]);
   });
   parent.appendChild(btn);
 };

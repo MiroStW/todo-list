@@ -105,7 +105,9 @@ const showTodoDetails = (todo: Todo, todoDiv: Element) => {
 };
 
 const showTodoBar = (todo: Todo) => {
-  const todoList = document.querySelector(`.${styles.todoList}`)!;
+  const todoList = todo.data.complete
+    ? document.querySelector(`.${styles.todoListCompleted}`)!
+    : document.querySelector(`.${styles.todoList}`)!;
   const todoDiv = document.createElement("div");
   todoDiv.classList.add(styles.todo);
 
@@ -152,9 +154,7 @@ const showTodoBar = (todo: Todo) => {
 
 const showTodoList = (todos: Todo[], showCompleted: boolean) => {
   const todoList = document.querySelector(`.${styles.todoList}`)!;
-  const todoListCompleted = document.querySelector(
-    `.${styles.todoListCompleted}`
-  )!;
+
   if (!showCompleted)
     while (todoList.childNodes.length > 0) {
       todoList.removeChild(todoList.childNodes[0]);
@@ -177,21 +177,21 @@ const showTodoArea = async (
   todoHeaderDiv.classList.add(styles.todoHeader);
   const todoHeader = document.createElement("h2");
   todoHeaderDiv.appendChild(todoHeader);
-  if (action === "showProject" && project)
-    completedTodosBtn(project, todoHeaderDiv);
   todoArea.appendChild(todoHeaderDiv);
 
   // show todo list
   const todoList = document.createElement("div");
   todoList.classList.add(styles.todoList);
   todoArea.appendChild(todoList);
+
+  // show completed todos
   const todoListCompleted = document.createElement("div");
   todoListCompleted.classList.add(styles.todoListCompleted);
+  todoListCompleted.setAttribute("hidden", "");
   todoArea.appendChild(todoListCompleted);
 
   switch (action) {
     case "showCompleted":
-      todoHeader.textContent = "Completed Todos";
       if (!project) {
         getInboxProject().then((inbox) => {
           getTodosByProject(inbox, showTodoList, true);
@@ -217,6 +217,7 @@ const showTodoArea = async (
         todoHeader.textContent = project.data.name;
         getTodosByProject(project, showTodoList, false);
         createNewItemBtn(todoArea, "todo", project);
+        completedTodosBtn(project, todoListCompleted, todoHeaderDiv);
       }
       break;
     default:
