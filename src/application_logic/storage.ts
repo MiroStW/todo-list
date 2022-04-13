@@ -139,11 +139,12 @@ const getTodosByProject = (
 
 const getTodosByDate = (
   type: "past" | "future",
-  renderer: (todo: Todo) => void
+  renderer: (todos: Todo[], showCompleted: boolean) => void
 ) => {
   const q = query(
     todosCol,
     where("dueDate", type === "past" ? "<=" : ">", new Date()),
+    where("complete", "==", false),
     orderBy("dueDate")
   );
 
@@ -155,7 +156,7 @@ const getTodosByDate = (
         data: doc.data(),
       });
     });
-    todos.forEach((todo) => renderer(todo));
+    renderer(todos, false);
   });
 };
 

@@ -24,17 +24,8 @@ import {
   createDeleteBtn,
   createNewItemBtn,
   createCancelBtn,
-  createSeparator,
 } from "./buttons";
 import { Project, Todo } from "types";
-import { doc } from "firebase/firestore";
-
-const clearTodoList = (todoList: Element) => {
-  // clear displayed todo Area
-  while (todoList.childNodes.length > 0) {
-    todoList.removeChild(todoList.childNodes[0]);
-  }
-};
 
 const showTodoDetails = (todo: Todo, todoDiv: Element) => {
   todoDiv.classList.add(styles.active);
@@ -200,11 +191,11 @@ const showTodoArea = async (
       break;
     case "showToday":
       todoHeader.textContent = "Today";
-      getTodosByDate("past", showTodoBar);
+      getTodosByDate("past", showTodoList);
       break;
     case "showUpcoming":
       todoHeader.textContent = "Upcoming";
-      getTodosByDate("future", showTodoBar);
+      getTodosByDate("future", showTodoList);
       break;
     case "showProject":
       if (!project) {
