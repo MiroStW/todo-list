@@ -9,6 +9,7 @@ import {
   getDoc,
   deleteDoc,
   onSnapshot,
+  orderBy,
 } from "firebase/firestore";
 import { auth } from "index";
 import { Project, ProjectData, Todo, TodoData } from "types";
@@ -68,7 +69,11 @@ const getInboxProject = async () => {
 
 // TODO: get projects/data in right order or sort them
 const getProjects = (renderer: (projects: Project[]) => void) => {
-  const q = query(projectsCol, where("ownerID", "==", auth.currentUser?.uid));
+  const q = query(
+    projectsCol,
+    where("ownerID", "==", auth.currentUser?.uid),
+    orderBy("createdDate")
+  );
 
   const unsubscripeProjects = onSnapshot(q, (snapshot) => {
     const projects: Project[] = [];
@@ -114,7 +119,11 @@ const getTodosByProject = (
   renderer: (todos: Todo[], showCompleted: boolean) => void,
   completed: boolean = false
 ) => {
-  const q = query(projectTodosCol(project), where("complete", "==", completed));
+  const q = query(
+    projectTodosCol(project),
+    where("complete", "==", completed),
+    orderBy("createdDate")
+  );
 
   const unsubscripeTodos = onSnapshot(q, (snapshot) => {
     const todos: Todo[] = [];
@@ -134,7 +143,8 @@ const getTodosByDate = (
 ) => {
   const q = query(
     todosCol,
-    where("dueDate", type === "past" ? "<=" : ">", new Date())
+    where("dueDate", type === "past" ? "<=" : ">", new Date()),
+    orderBy("dueDate")
   );
 
   const unsubscripeTodos = onSnapshot(q, (snapshot) => {
