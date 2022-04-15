@@ -12,6 +12,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { auth } from "index";
+import { showTodoArea } from "layout/todos_view";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 
@@ -67,7 +68,6 @@ const getInboxProject = async () => {
   }))[0];
 };
 
-// TODO: get projects/data in right order or sort them
 const getProjects = (renderer: (projects: Project[]) => void) => {
   const q = query(
     projectsCol,
@@ -163,7 +163,15 @@ const getTodosByDate = (
 const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);
   if (name && type === "project") {
-    addDoc(projectsCol, Project(name));
+    addDoc(projectsCol, Project(name))
+      .then((ref) => getDoc(ref))
+      .then((doc) => {
+        const project = {
+          ref: doc.ref,
+          data: doc.data()!,
+        };
+        showTodoArea("showProject", project);
+      });
   }
   if (name && parentProject && type === "todo") {
     addDoc(projectTodosCol(parentProject), Todo(name));
@@ -210,6 +218,7 @@ const updatePriority = (todo: Todo, priority: number) => {
 
 const deleteItem = (item: Project | Todo) => {
   if (confirm(`really remove ${item.data.name}?`)) deleteDoc(item.ref);
+  if ("ownerID" in item.data) showTodoArea("showProject");
 };
 
 const isInbox = (project: Project) => project.data.isInbox === true;
