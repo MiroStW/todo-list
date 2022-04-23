@@ -220,9 +220,9 @@ const createUpdateTodoBtn = (
         null
       );
     }
-    getProjectOfTodo(todo).then((project) => {
-      showTodoArea("showProject", project);
-    });
+    // getProjectOfTodo(todo).then((project) => {
+    //   showTodoArea("showProject", project);
+    // });
   });
   parent.appendChild(saveBtn);
 };

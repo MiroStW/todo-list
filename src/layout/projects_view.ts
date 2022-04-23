@@ -12,10 +12,8 @@ import { showTodoArea } from "./todos_view";
 
 const clearProjectList = (projectArea: Element) => {
   // clear displayed project Area
-  if (projectArea) {
-    while (projectArea.childNodes.length > 0) {
-      projectArea.removeChild(projectArea.childNodes[0]);
-    }
+  while (projectArea.childNodes.length > 0) {
+    projectArea.removeChild(projectArea.childNodes[0]);
   }
 };
 
@@ -87,7 +85,7 @@ const showProjectList = (projects: Project[]) => {
   // header
   const projectsHeader = document.createElement("h2");
   projectsHeader.textContent = "Projects";
-  projectArea!.appendChild(projectsHeader);
+  projectArea.appendChild(projectsHeader);
 
   // inbox view
   showProject(

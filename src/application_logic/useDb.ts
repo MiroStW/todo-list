@@ -8,7 +8,7 @@ import {
   collectionGroup,
 } from "firebase/firestore";
 import firebaseConfig from "../firebase-config.js";
-import { Todo, Project, ProjectData, TodoData } from "../types";
+import { Project, ProjectData, TodoData } from "../types";
 
 export const app = initializeApp(firebaseConfig);
 

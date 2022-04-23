@@ -7,8 +7,6 @@ import { fromUnixTime } from "date-fns";
 import {
   getTodosByProject,
   getTodosByDate,
-  getProjects,
-  isInbox,
   getInboxProject,
 } from "../application_logic/storage";
 import styles from "../style.module.css";
@@ -44,7 +42,6 @@ const showTodoDetails = (todo: Todo, todoDiv: Element) => {
   descriptionInput.placeholder = "Description";
 
   function OnInput(this: HTMLElement) {
-    // console.log('height changed;');
     this.style.height = "auto";
     this.style.height = `${this.scrollHeight}px`;
   }
