@@ -33,6 +33,7 @@ const Todo = (name: string): TodoData => ({
   dueDate: null,
   priority: 4,
   createdDate: Timestamp.now(),
+  ownerID: auth.currentUser?.uid!,
 });
 
 let currentProjects: Project[] = [];
@@ -140,6 +141,7 @@ const getTodosByProject = (
   const q = query(
     projectTodosCol(project),
     where("complete", "==", completed),
+    where("ownerID", "==", auth.currentUser?.uid),
     orderBy("createdDate")
   );
 
@@ -160,11 +162,10 @@ const getTodosByDate = (
   renderer: (todos: Todo[], showCompleted: boolean) => void
 ) => {
   const q = query(
-    todosCol, // collectionGroup
+    todosCol,
     where("dueDate", type === "past" ? "<=" : ">", new Date()),
     where("complete", "==", false),
-    // where("ownerID", "==", auth.currentUser?.uid) project.ownerID
-    // only seems to work if i copy owner ID to todos to --> https://firebase.google.com/docs/firestore/security/rules-query#secure_and_query_documents_based_on_collection_group_and_document_path
+    where("ownerID", "==", auth.currentUser?.uid),
     orderBy("dueDate")
   );
 

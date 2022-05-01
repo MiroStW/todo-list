@@ -19,6 +19,7 @@ export interface TodoData {
   dueDate: Timestamp | null;
   priority: number;
   createdDate: Timestamp;
+  ownerID: string;
 }
 
 export interface Todo {
