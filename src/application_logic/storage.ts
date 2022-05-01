@@ -11,6 +11,7 @@ import {
   onSnapshot,
   orderBy,
   Unsubscribe,
+  documentId,
 } from "firebase/firestore";
 import { auth } from "index";
 import { showTodoArea } from "layout/todos_view";
@@ -52,12 +53,12 @@ const getProjectById = async (id: string) => {
   const q = query(
     projectsCol,
     where("ownerID", "==", auth.currentUser?.uid),
-    where("id", "==", id)
+    where(documentId(), "==", id)
   );
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((inbox) => ({
-    ref: inbox.ref,
-    data: inbox.data(),
+  return snapshot.docs.map((project) => ({
+    ref: project.ref,
+    data: project.data(),
   }))[0];
 };
 
