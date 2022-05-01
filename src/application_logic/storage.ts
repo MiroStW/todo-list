@@ -10,6 +10,7 @@ import {
   deleteDoc,
   onSnapshot,
   orderBy,
+  Unsubscribe,
 } from "firebase/firestore";
 import { auth } from "index";
 import { showTodoArea } from "layout/todos_view";
@@ -34,6 +35,9 @@ const Todo = (name: string): TodoData => ({
   createdDate: Timestamp.now(),
 });
 
+let currentProjects: Project[] = [];
+let unsubscribe: Unsubscribe;
+
 const getProjectOfTodo = (todo: Todo) =>
   getDoc(todo.ref.parent.parent as DocumentReference).then(
     (doc) =>
@@ -42,6 +46,19 @@ const getProjectOfTodo = (todo: Todo) =>
         data: doc.data(),
       } as Project)
   );
+
+const getProjectById = async (id: string) => {
+  const q = query(
+    projectsCol,
+    where("ownerID", "==", auth.currentUser?.uid),
+    where("id", "==", id)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((inbox) => ({
+    ref: inbox.ref,
+    data: inbox.data(),
+  }))[0];
+};
 
 // add inbox project for new users
 const addInboxProject = () =>
@@ -75,7 +92,7 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
     orderBy("createdDate")
   );
 
-  const unsubscripeProjects = onSnapshot(q, (snapshot) => {
+  unsubscribe = onSnapshot(q, (snapshot) => {
     const projects: Project[] = [];
     snapshot.forEach((doc) => {
       projects.push({
@@ -84,6 +101,7 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
       });
     });
     renderer(projects);
+    currentProjects = projects;
     // snapshot.docChanges().map((change) => {
     //   if (change.type === "added") {
     //     projects.push({
@@ -125,7 +143,7 @@ const getTodosByProject = (
     orderBy("createdDate")
   );
 
-  const unsubscripeTodos = onSnapshot(q, (snapshot) => {
+  unsubscribe = onSnapshot(q, (snapshot) => {
     const todos: Todo[] = [];
     snapshot.forEach((doc) => {
       todos.push({
@@ -142,13 +160,15 @@ const getTodosByDate = (
   renderer: (todos: Todo[], showCompleted: boolean) => void
 ) => {
   const q = query(
-    todosCol,
+    todosCol, // collectionGroup
     where("dueDate", type === "past" ? "<=" : ">", new Date()),
     where("complete", "==", false),
+    // where("ownerID", "==", auth.currentUser?.uid) project.ownerID
+    // only seems to work if i copy owner ID to todos to --> https://firebase.google.com/docs/firestore/security/rules-query#secure_and_query_documents_based_on_collection_group_and_document_path
     orderBy("dueDate")
   );
 
-  const unsubscripeTodos = onSnapshot(q, (snapshot) => {
+  unsubscribe = onSnapshot(q, (snapshot) => {
     const todos: Todo[] = [];
     snapshot.forEach((doc) => {
       todos.push({
@@ -224,6 +244,9 @@ const deleteItem = (item: Project | Todo) => {
 const isInbox = (project: Project) => project.data.isInbox === true;
 
 export {
+  currentProjects,
+  unsubscribe,
+  getProjectById,
   getTodosByDate,
   getTodosByProject,
   getInboxProject,

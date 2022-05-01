@@ -7,9 +7,23 @@ import showHeader from "./layout/header";
 import showProjectList from "./layout/projects_view";
 import { showTodoArea } from "./layout/todos_view";
 import styles from "./style.module.css";
-import { getProjects } from "application_logic/storage";
+import {
+  currentProjects,
+  getProjectById,
+  getProjects,
+  unsubscribe,
+} from "application_logic/storage";
+import Navigo from "navigo";
 
 const root = document.querySelector("#root")!;
+const router = new Navigo("/");
+// unsubscribe last subscribtion before opening next
+router.hooks({
+  leave(done, match) {
+    unsubscribe();
+    done();
+  },
+});
 
 // header
 showHeader();
@@ -49,7 +63,30 @@ onAuthStateChanged(auth, (user) => {
     todoArea.removeAttribute("hidden");
 
     getProjects(showProjectList);
-    showTodoArea("showProject");
+    // showTodoArea("showProject");
+    router
+      .on("/projects/:id", (match) => {
+        const openedProject = currentProjects.find(
+          (project) => project.ref.id === match!.data!.id
+        );
+        if (openedProject) showTodoArea("showProject", openedProject);
+        else {
+          getProjectById(match!.data!.id).then((project) =>
+            showTodoArea("showProject", project)
+          );
+        }
+      })
+      .on("/today", () => {
+        // TODO: add hooks for subscription // unsubscription
+        showTodoArea("showToday");
+      })
+      .on("/upcoming", () => {
+        showTodoArea("showUpcoming");
+      })
+      .on(() => {
+        showTodoArea("showProject");
+      })
+      .resolve();
   } else {
     fbAuthUi.start("#firebaseui-auth-container", uiConfig);
     authArea.removeAttribute("hidden");
@@ -57,3 +94,5 @@ onAuthStateChanged(auth, (user) => {
     todoArea.setAttribute("hidden", "true");
   }
 });
+
+export default router;

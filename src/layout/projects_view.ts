@@ -1,3 +1,4 @@
+import router from "index";
 import { Project } from "types";
 import { isInbox } from "../application_logic/storage";
 import styles from "../style.module.css";
@@ -31,7 +32,8 @@ const showProject = (
       icon.classList.add(styles.todayIcon);
       projectName.textContent = "Today";
       projectDiv.addEventListener("click", () => {
-        showTodoArea("showToday");
+        router.navigate("today");
+        // showTodoArea("showToday");
       });
       break;
     }
@@ -40,7 +42,8 @@ const showProject = (
       icon.classList.add(styles.upcomingIcon);
       projectName.textContent = "Upcoming";
       projectDiv.addEventListener("click", () => {
-        showTodoArea("showUpcoming");
+        router.navigate("upcoming");
+        // showTodoArea("showUpcoming");
       });
       break;
     }
@@ -52,7 +55,8 @@ const showProject = (
         }
         projectName.textContent = project.data.name;
         projectDiv.addEventListener("click", () => {
-          showTodoArea("showProject", project);
+          router.navigate(`projects/${project.ref.id}`);
+          // showTodoArea("showProject", project);
         });
       }
       break;
