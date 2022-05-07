@@ -1,5 +1,3 @@
-// Get the imports
-import { initializeApp } from "firebase/app";
 import {
   getFirestore,
   CollectionReference,
@@ -8,7 +6,6 @@ import {
   collectionGroup,
   connectFirestoreEmulator,
 } from "firebase/firestore";
-import app from "../firebase.js";
 import { Project, ProjectData, TodoData } from "../types";
 
 // Export firestore incase we need to access it directly

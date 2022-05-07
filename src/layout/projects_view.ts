@@ -9,7 +9,6 @@ import {
   createNewItemBtn,
   createSeparator,
 } from "./buttons";
-import { showTodoArea } from "./todos_view";
 
 const clearProjectList = (projectArea: Element) => {
   // clear displayed project Area

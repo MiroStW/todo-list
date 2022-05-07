@@ -142,7 +142,7 @@ const showTodoBar = (todo: Todo) => {
 
 const showTodoList = (todos: Todo[], showCompleted: boolean) => {
   const todoList = document.querySelector(`.${styles.todoList}`)!;
-
+  if (todos.length === 0) todoList.textContent = "No todos yet.";
   if (!showCompleted)
     while (todoList.childNodes.length > 0) {
       todoList.removeChild(todoList.childNodes[0]);
