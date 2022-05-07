@@ -4,12 +4,15 @@
 
 After cloning the project locally follow these steps to set up firebase backend:
 
-1. Create a new firebase project at https://console.firebase.google.com/ by
-   clicking `add project`
-2. On the main project page click the `</>` button to add a web app
+1. Create a new firebase project
+   - go to https://console.firebase.google.com/
+   - click `add project`
+2. Create web app
+   - On the main project page click the `</>` button to add a web app
    - no firebase hosting required
-3. create a new file called `firebase-config.js` in the `src` directory and paste
-   your `firebaseConfig` like this:
+3. add firebase config to local repo
+   - create a new file called `firebase-config.js` in the `src` directory
+   - paste your `firebaseConfig` like this:
 
 ```
 const firebaseConfig = {
@@ -23,8 +26,16 @@ const firebaseConfig = {
 export default firebaseConfig;
 ```
 
-4. Go to Cloud Firestore and click `create database`, starting in test mode
-5. Go to Authentification and click `get started`
+4. Add database
+   - Go to Cloud Firestore
+   - click `create database`, choose test mode
+5. Add auth service
+
+   - Go to Authentification and click `get started`
    - enable sign-in providers `Email/Password` and if you like `Google`
 
-// todo: create indices in config file?
+6. Push security rules & indices
+   - cd into main directory
+   - run `npm install`
+   - run `npx firebase login`, enter your google credentials
+   - run `npx firebase deploy --only firestore`
