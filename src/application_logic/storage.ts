@@ -24,6 +24,7 @@ const Project = (name: string, isInbox?: boolean): ProjectData => ({
   createdDate: Timestamp.now(),
   ownerID: auth.currentUser?.uid!,
   ...(isInbox && { isInbox: true }),
+  isArchived: false,
 });
 
 // factory for todos
@@ -91,6 +92,7 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
   const q = query(
     projectsCol,
     where("ownerID", "==", auth.currentUser?.uid),
+    where("isArchived", "==", false), // doesnt filter for docs without the field
     orderBy("createdDate")
   );
 
@@ -238,9 +240,21 @@ const updatePriority = (todo: Todo, priority: number) => {
   });
 };
 
-const deleteItem = (item: Project | Todo) => {
-  if (confirm(`really remove ${item.data.name}?`)) deleteDoc(item.ref);
-  if ("ownerID" in item.data) showTodoArea("showProject");
+const deleteTodo = (todo: Todo) => {
+  if (confirm(`really remove ${todo.data.name}?`)) deleteDoc(todo.ref);
+};
+
+const archiveProject = (project: Project) => {
+  if (
+    confirm(
+      `CAREFUL - this will remove all todos in this project and can't be undone. Really remove ${project.data.name}?`
+    )
+  )
+    // Delete requires cloud functions, would need billing account
+    // --> instead archive projects, they don't even need to be visualised for now
+    updateDoc(project.ref, {
+      isArchived: true,
+    });
 };
 
 const isInbox = (project: Project) => project.data.isInbox === true;
@@ -255,7 +269,8 @@ export {
   getProjects,
   getProjectOfTodo,
   isInbox,
-  deleteItem,
+  deleteTodo,
+  archiveProject,
   renameItem,
   updateTodo,
   updateCompleted,

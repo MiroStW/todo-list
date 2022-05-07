@@ -7,13 +7,14 @@ import {
 import { Timestamp } from "firebase/firestore";
 import { Project, Todo } from "types";
 import {
-  deleteItem,
+  deleteTodo,
   updateTodo,
   updatePriority,
   updateCompleted,
   renameItem,
   createItem,
   getProjectOfTodo,
+  archiveProject,
 } from "../application_logic/storage";
 import styles from "../style.module.css";
 import { showTodoArea } from "./todos_view";
@@ -247,12 +248,10 @@ const createDeleteBtn = (
   const deleteBtn = addIcon(parent, "delete", "outlined");
   deleteBtn.classList.add(styles.icon, styles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
-    deleteItem(item);
-    // if (type === "todo") {
-    //   getProjectOfTodo(item as Todo).then((project) => {
-    //     showTodoList("showProject", project);
-    //   });
-    // }
+    type === "project"
+      ? // to reduce complexity projects can only be archived, recursive deleteTodo would be necessary
+        archiveProject(item as Project)
+      : deleteTodo(item as Todo);
   });
   parent.appendChild(deleteBtn);
 };
