@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    // function unchanged(key) {
+    //  return (key in resource.data) 
+    //    && (key in request.resource.data) 
+    //    && (resource.data[key] == request.resource.data[key]);
+    //}
+  
+    function isSignedIn(req) {
+      return req.auth != null
+    }
+  
+    function ownsNewResource(req) {
+      return req.auth.uid == req.resource.data.ownerID
+    }
+
+    function ownsExistingResource(req, res) {
+      return req.auth.uid == res.data.ownerID
+    }
+  
+  	match /{path=**}/todos/{todo} {
+     	allow read: if 
+        isSignedIn(request) && 
+        ownsExistingResource(request, resource)
+    }
+  
+    match /projects/{project} {
+    
+      allow create: if 
+         isSignedIn(request) && 
+         ownsNewResource(request)
+      allow update: if 
+         isSignedIn(request) && 
+         ownsNewResource(request) && 
+         ownsExistingResource(request, resource);
+      allow delete: if 
+         isSignedIn(request) &&
+         ownsExistingResource(request, resource);
+      allow read: if 
+         isSignedIn(request) && 
+         ownsExistingResource(request, resource);
+      
+      match /todos/{todo} {
+         allow create: if 
+            isSignedIn(request) && 
+            ownsNewResource(request)
+         allow update: if 
+            isSignedIn(request) && 
+            ownsNewResource(request) && 
+            ownsExistingResource(request, resource);
+         allow delete: if 
+            isSignedIn(request) &&
+            ownsExistingResource(request, resource);
+         allow read: if 
+            isSignedIn(request) && 
+            ownsExistingResource(request, resource);
+      }
+    }
+  }
+}
