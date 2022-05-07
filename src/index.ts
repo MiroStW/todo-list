@@ -1,5 +1,9 @@
 import "./firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  connectAuthEmulator,
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import uiConfig from "./firebaseUI-config.js";
@@ -51,6 +55,8 @@ loader.textContent = "Loading...";
 root.appendChild(loader);
 
 export const auth = getAuth();
+// comment out this line to switch to production db
+// connectAuthEmulator(auth, "http://localhost:9099");
 const fbAuthUi = new firebaseui.auth.AuthUI(auth);
 
 onAuthStateChanged(auth, (user) => {
@@ -63,7 +69,6 @@ onAuthStateChanged(auth, (user) => {
     todoArea.removeAttribute("hidden");
 
     getProjects(showProjectList);
-    // showTodoArea("showProject");
     router
       .on("/projects/:id", (match) => {
         const openedProject = currentProjects.find(
@@ -77,7 +82,6 @@ onAuthStateChanged(auth, (user) => {
         }
       })
       .on("/today", () => {
-        // TODO: add hooks for subscription // unsubscription
         showTodoArea("showToday");
       })
       .on("/upcoming", () => {

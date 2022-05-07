@@ -6,14 +6,15 @@ import {
   collection,
   DocumentData,
   collectionGroup,
+  connectFirestoreEmulator,
 } from "firebase/firestore";
-import firebaseConfig from "../firebase-config.js";
+import app from "../firebase.js";
 import { Project, ProjectData, TodoData } from "../types";
-
-export const app = initializeApp(firebaseConfig);
 
 // Export firestore incase we need to access it directly
 export const firestore = getFirestore();
+// comment out this line to switch to production db
+// connectFirestoreEmulator(firestore, "localhost", 8080);
 
 // This is just a helper to add the type to the db responses
 const createCollection = <T = DocumentData>(collectionName: string) => {
