@@ -49,10 +49,17 @@ const authArea = document.createElement("div");
 authArea.setAttribute("id", "firebaseui-auth-container");
 root.appendChild(authArea);
 
-const loader = document.createElement("div");
-loader.setAttribute("id", "loader");
-loader.textContent = "Loading...";
-root.appendChild(loader);
+const spinner = document.createElement("div");
+spinner.classList.add(styles.loadingSpinner);
+const spinnerSub1 = document.createElement("div");
+spinner.appendChild(spinnerSub1);
+const spinnerSub2 = document.createElement("div");
+spinner.appendChild(spinnerSub2);
+root.appendChild(spinner);
+
+const snackbar = document.createElement("div");
+snackbar.id = styles.snackbar;
+root.appendChild(snackbar);
 
 export const auth = getAuth();
 // comment out this line to switch to production db
@@ -64,7 +71,6 @@ onAuthStateChanged(auth, (user) => {
     console.log(user);
     // console.log(auth);
     authArea.setAttribute("hidden", "true");
-    loader.setAttribute("hidden", "true");
     projectArea.removeAttribute("hidden");
     todoArea.removeAttribute("hidden");
 
@@ -76,19 +82,25 @@ onAuthStateChanged(auth, (user) => {
         );
         if (openedProject) showTodoArea("showProject", openedProject);
         else {
-          getProjectById(match!.data!.id).then((project) =>
-            showTodoArea("showProject", project)
-          );
+          getProjectById(match!.data!.id)
+            .then((project) => showTodoArea("showProject", project))
+            .then(() => spinner.setAttribute("hidden", "true"));
         }
       })
       .on("/today", () => {
-        showTodoArea("showToday");
+        showTodoArea("showToday").then(() =>
+          spinner.setAttribute("hidden", "true")
+        );
       })
       .on("/upcoming", () => {
-        showTodoArea("showUpcoming");
+        showTodoArea("showUpcoming").then(() =>
+          spinner.setAttribute("hidden", "true")
+        );
       })
       .on(() => {
-        showTodoArea("showProject");
+        showTodoArea("showProject").then(() =>
+          spinner.setAttribute("hidden", "true")
+        );
       })
       .resolve();
   } else {
