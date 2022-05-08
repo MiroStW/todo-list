@@ -5,13 +5,24 @@ import {
   DocumentData,
   collectionGroup,
   connectFirestoreEmulator,
+  enableIndexedDbPersistence,
 } from "firebase/firestore";
+import snackbar from "layout/snackbar";
 import { Project, ProjectData, TodoData } from "../types";
 
 // Export firestore incase we need to access it directly
 export const firestore = getFirestore();
+
 // comment out this line to switch to production db
 // connectFirestoreEmulator(firestore, "localhost", 8080);
+
+enableIndexedDbPersistence(firestore).catch((err) => {
+  if (err.code == "failed-precondition") {
+    snackbar("please don't open multiple tabs", "red");
+  } else if (err.code == "unimplemented") {
+    snackbar("browser does not support offline mode", "red");
+  }
+});
 
 // This is just a helper to add the type to the db responses
 const createCollection = <T = DocumentData>(collectionName: string) => {
