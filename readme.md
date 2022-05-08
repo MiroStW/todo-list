@@ -1,5 +1,7 @@
 # Todo-list app: a demo project
 
+Live demo here: https://todo-list-app-5c488.web.app/
+
 ## clone or fork the project
 
 After cloning the project locally follow these steps to set up firebase backend:
