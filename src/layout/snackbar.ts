@@ -21,6 +21,8 @@ const useSnackbar = (message: string, color?: "red" | "green") => {
     container.className = container.className.replace(styles.show, "");
     if (color) container.classList.remove(styles[color]);
   }, 3000);
+
+  return container;
 };
 
 export { useSnackbar, showSnackbar };
