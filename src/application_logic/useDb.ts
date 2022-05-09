@@ -5,7 +5,7 @@ import {
   DocumentData,
   collectionGroup,
   connectFirestoreEmulator,
-  enableIndexedDbPersistence,
+  enableMultiTabIndexedDbPersistence,
 } from "firebase/firestore";
 import snackbar from "layout/snackbar";
 import { Project, ProjectData, TodoData } from "../types";
@@ -16,7 +16,7 @@ export const firestore = getFirestore();
 // comment out this line to switch to production db
 // connectFirestoreEmulator(firestore, "localhost", 8080);
 
-enableIndexedDbPersistence(firestore).catch((err) => {
+enableMultiTabIndexedDbPersistence(firestore).catch((err) => {
   if (err.code == "failed-precondition") {
     snackbar("please don't open multiple tabs", "red");
   } else if (err.code == "unimplemented") {
