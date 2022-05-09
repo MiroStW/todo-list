@@ -7,6 +7,7 @@ import {
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import uiConfig from "./firebaseUI-config.js";
+import { showSnackbar } from "./layout/snackbar";
 import showHeader from "./layout/header";
 import showProjectList from "./layout/projects_view";
 import { showTodoArea } from "./layout/todos_view";
@@ -57,9 +58,7 @@ const spinnerSub2 = document.createElement("div");
 spinner.appendChild(spinnerSub2);
 root.appendChild(spinner);
 
-const snackbar = document.createElement("div");
-snackbar.id = styles.snackbar;
-root.appendChild(snackbar);
+showSnackbar();
 
 export const auth = getAuth();
 // comment out this line to switch to production db

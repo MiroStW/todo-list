@@ -1,6 +1,13 @@
-import styles from "../style.module.css";
+import styles from "style.module.css";
 
-const snackbar = (message: string, color?: "red" | "green") => {
+const showSnackbar = () => {
+  const root = document.querySelector("#root")!;
+  const snackbar = document.createElement("div");
+  snackbar.id = styles.snackbar;
+  root.appendChild(snackbar);
+};
+
+const useSnackbar = (message: string, color?: "red" | "green") => {
   // Get the snackbar DIV
   const container = document.getElementById(styles.snackbar)!;
 
@@ -16,4 +23,4 @@ const snackbar = (message: string, color?: "red" | "green") => {
   }, 3000);
 };
 
-export default snackbar;
+export { useSnackbar, showSnackbar };
