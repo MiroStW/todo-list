@@ -16,6 +16,7 @@ import {
 import { auth } from "index";
 import { showTodoArea } from "layout/todos_view";
 import { Project, ProjectData, Todo, TodoData } from "types";
+import showOnlineStatus from "./showOnlineStatus";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 
 // factory for projects
@@ -96,7 +97,7 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
     orderBy("createdDate")
   );
 
-  unsubscribe = onSnapshot(q, (snapshot) => {
+  unsubscribe = onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
     const projects: Project[] = [];
     snapshot.forEach((doc) => {
       projects.push({
@@ -133,6 +134,7 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
     // });
 
     if (!snapshot.size) addInboxProject();
+    showOnlineStatus(snapshot);
   });
 };
 
