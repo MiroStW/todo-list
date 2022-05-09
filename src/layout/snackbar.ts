@@ -1,4 +1,4 @@
-import styles from "style.module.css";
+import styles from "./snackbar.module.css";
 
 const showSnackbar = () => {
   const root = document.querySelector("#root")!;
