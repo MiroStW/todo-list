@@ -44,7 +44,18 @@ export default firebaseConfig;
    - enable sign-in providers `Email/Password` and if you like `Google`
 
 6. Push security rules & indices
+
    - cd into main directory
    - run `npm install`
    - run `npx firebase login`, enter your google credentials
    - run `npx firebase deploy --only firestore`
+
+7. (optional) switch to local emulators for auth & firestore
+   - go to `useDb.ts` and uncomment the line
+   ```
+   connectFirestoreEmulator(firestore, "localhost", 8080);
+   ```
+   - go to `index.ts` and uncomment the line
+   ```
+   connectAuthEmulator(auth, "http://localhost:9099");
+   ```
