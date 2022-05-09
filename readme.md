@@ -2,6 +2,13 @@
 
 Live demo here: https://todo-list-app-5c488.web.app/
 
+**Key features**
+
+- google firebase backend, incl. nosql database and auth service
+- live updates & offline capability
+- fully typed app
+- no framework, plain javascript
+
 ## clone or fork the project
 
 After cloning the project locally follow these steps to set up firebase backend:
