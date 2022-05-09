@@ -19,6 +19,7 @@ import {
   unsubscribe,
 } from "application_logic/storage";
 import Navigo from "navigo";
+import showSpinner from "layout/spinner";
 
 const root = document.querySelector("#root")!;
 const router = new Navigo("/");
@@ -50,13 +51,7 @@ const authArea = document.createElement("div");
 authArea.setAttribute("id", "firebaseui-auth-container");
 root.appendChild(authArea);
 
-const spinner = document.createElement("div");
-spinner.classList.add(styles.loadingSpinner);
-const spinnerSub1 = document.createElement("div");
-spinner.appendChild(spinnerSub1);
-const spinnerSub2 = document.createElement("div");
-spinner.appendChild(spinnerSub2);
-root.appendChild(spinner);
+const spinner = showSpinner();
 
 showSnackbar();
 
