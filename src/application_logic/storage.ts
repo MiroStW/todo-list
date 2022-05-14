@@ -13,8 +13,8 @@ import {
   Unsubscribe,
   documentId,
 } from "firebase/firestore";
-import { auth } from "index";
-import { showTodoArea } from "layout/todos_view";
+import { auth } from "./auth";
+import { showTodoArea } from "layout/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import showOnlineStatus from "./showOnlineStatus";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
