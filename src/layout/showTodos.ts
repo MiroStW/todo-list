@@ -27,7 +27,7 @@ import {
 import { Project, Todo } from "types";
 
 const showTodoDetails = (todo: Todo, todoDiv: Element) => {
-  todoDiv.classList.add(globalStyles.active);
+  todoDiv.classList.add(styles.active);
 
   // make title editable
   const nameInput = editTodoTitle(todo, todoDiv);
@@ -124,10 +124,10 @@ const showTodoBar = (todo: Todo) => {
   createDeleteBtn(todoBarDiv, "todo", todo);
 
   todoDiv.addEventListener("mouseover", () => {
-    todoBarDiv.classList.add(globalStyles.active);
+    todoBarDiv.classList.add(styles.active);
   });
   todoDiv.addEventListener("mouseout", () => {
-    todoBarDiv.classList.remove(globalStyles.active);
+    todoBarDiv.classList.remove(styles.active);
   });
 
   todoBarDiv.addEventListener(
