@@ -9,7 +9,8 @@ import {
   getTodosByDate,
   getInboxProject,
 } from "../application_logic/storage";
-import styles from "../style.module.css";
+import styles from "./showTodos.module.css";
+import globalStyles from "../style.module.css";
 import {
   todoDueDateIcon,
   completedTodosBtn,
@@ -26,7 +27,7 @@ import {
 import { Project, Todo } from "types";
 
 const showTodoDetails = (todo: Todo, todoDiv: Element) => {
-  todoDiv.classList.add(styles.active);
+  todoDiv.classList.add(globalStyles.active);
 
   // make title editable
   const nameInput = editTodoTitle(todo, todoDiv);
@@ -123,10 +124,10 @@ const showTodoBar = (todo: Todo) => {
   createDeleteBtn(todoBarDiv, "todo", todo);
 
   todoDiv.addEventListener("mouseover", () => {
-    todoBarDiv.classList.add(styles.active);
+    todoBarDiv.classList.add(globalStyles.active);
   });
   todoDiv.addEventListener("mouseout", () => {
-    todoBarDiv.classList.remove(styles.active);
+    todoBarDiv.classList.remove(globalStyles.active);
   });
 
   todoBarDiv.addEventListener(

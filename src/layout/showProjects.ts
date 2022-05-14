@@ -1,7 +1,8 @@
-import router from "index";
+import { router } from "application_logic/auth";
 import { Project } from "types";
 import { isInbox } from "../application_logic/storage";
-import styles from "../style.module.css";
+import styles from "./showProjects.module.css";
+import globalStyles from "../style.module.css";
 import {
   addIcon,
   createRenameBtn,
@@ -28,7 +29,7 @@ const showProject = (
   switch (action) {
     case "showToday": {
       const icon = addIcon(projectDiv, "star");
-      icon.classList.add(styles.todayIcon);
+      icon.classList.add(globalStyles.todayIcon);
       projectName.textContent = "Today";
       projectDiv.addEventListener("click", () => {
         router.navigate("today");
@@ -69,10 +70,10 @@ const showProject = (
     createRenameBtn(projectDiv, project);
     createDeleteBtn(projectDiv, "project", project);
     projectDiv.addEventListener("mouseover", () => {
-      projectDiv.classList.add(styles.active);
+      projectDiv.classList.add(globalStyles.active);
     });
     projectDiv.addEventListener("mouseout", () => {
-      projectDiv.classList.remove(styles.active);
+      projectDiv.classList.remove(globalStyles.active);
     });
   } else {
     projectDiv.classList.add(styles.specialProject);

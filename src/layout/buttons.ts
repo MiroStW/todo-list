@@ -16,8 +16,10 @@ import {
   getProjectOfTodo,
   archiveProject,
 } from "../application_logic/storage";
-import styles from "../style.module.css";
-import { showTodoArea } from "./todos_view";
+import todoStyles from "./showTodos.module.css";
+import projectStyles from "./showProjects.module.css";
+import globalStyles from "../style.module.css";
+import { showTodoArea } from "./showTodos";
 
 const addIcon = (parent: Element, iconName: string, style?: "outlined") => {
   const icon = document.createElement("span");
@@ -26,7 +28,7 @@ const addIcon = (parent: Element, iconName: string, style?: "outlined") => {
   } else {
     icon.classList.add("material-icons");
   }
-  icon.classList.add(styles["md-18"]);
+  icon.classList.add(globalStyles["md-18"]);
   icon.textContent = iconName;
   parent.appendChild(icon);
 
@@ -57,7 +59,7 @@ const createNewItemBtn = (
 
 const createRenameBtn = (parent: Element, project: Project) => {
   const renameBtn = addIcon(parent, "edit", "outlined");
-  renameBtn.classList.add(styles.icon, styles.hiddenIcon);
+  renameBtn.classList.add(globalStyles.icon, globalStyles.hiddenIcon);
   renameBtn.addEventListener("click", () => {
     renameItem(project);
   });
@@ -67,7 +69,7 @@ const createRenameBtn = (parent: Element, project: Project) => {
 const completeTodoCheckbox = (todo: Todo, parent: Element) => {
   const todoComplete = document.createElement("input");
   todoComplete.type = "checkbox";
-  todoComplete.classList.add(styles.todoComplete);
+  todoComplete.classList.add(todoStyles.todoComplete);
   todoComplete.id = `checkbox-${todo.ref.id}`;
   if (todo.data.complete) todoComplete.setAttribute("checked", "");
   parent.appendChild(todoComplete);
@@ -80,7 +82,7 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
 
   todoComplete.addEventListener("click", () => {
     updateCompleted(todo);
-    if (!document.querySelector(`.${styles.todoOpen}`)) {
+    if (!document.querySelector(`.${todoStyles.todoOpen}`)) {
       getProjectOfTodo(todo).then((project) => {
         showTodoArea("showProject", project);
       });
@@ -95,9 +97,9 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
 
 const showPriority = (parent: Element, priority: number) => {
   const flag = addIcon(parent, "flag", priority === 4 ? "outlined" : undefined);
-  flag.classList.add(styles[`prio${priority}`]);
-  flag.classList.add(styles.todoPriority);
-  flag.classList.add(styles["md-18"]);
+  flag.classList.add(todoStyles[`prio${priority}`]);
+  flag.classList.add(todoStyles.todoPriority);
+  flag.classList.add(globalStyles["md-18"]);
 
   return flag;
 };
@@ -115,7 +117,7 @@ const priorityBtn = (todo: Todo, parent: Element, newPriority: number) => {
 
 const openPrioPicker = (todo: Todo, parent: Element) => {
   const pickerContainer = document.createElement("div");
-  pickerContainer.classList.add(styles.priorityPicker);
+  pickerContainer.classList.add(todoStyles.priorityPicker);
   priorityBtn(todo, pickerContainer, 1);
   priorityBtn(todo, pickerContainer, 2);
   priorityBtn(todo, pickerContainer, 3);
@@ -129,13 +131,17 @@ const completedTodosBtn = (
   parent: Element
 ) => {
   const btn = document.createElement("span");
-  btn.classList.add(styles.completedTodosBtn, styles.icon, "material-icons");
+  btn.classList.add(
+    todoStyles.completedTodosBtn,
+    globalStyles.icon,
+    "material-icons"
+  );
   btn.textContent = "restore";
   btn.addEventListener("click", () => {
     if (todoListCompleted.childElementCount === 0)
       showTodoArea("showCompleted", project);
     todoListCompleted.toggleAttribute("hidden");
-    btn.classList.toggle(styles["md-inactive"]);
+    btn.classList.toggle(globalStyles["md-inactive"]);
   });
   parent.appendChild(btn);
 };
@@ -153,19 +159,23 @@ const todoDueDateIcon = (todo: Todo, parent: Element) => {
     );
 
     if (daysToToday <= 0) {
-      icon.classList.add("material-icons", styles["md-18"], styles.todayIcon);
+      icon.classList.add(
+        "material-icons",
+        globalStyles["md-18"],
+        globalStyles.todayIcon
+      );
       icon.textContent = "star";
     } else if (daysToToday < 7) {
-      icon.classList.add(styles.todoDueDateIcon);
+      icon.classList.add(todoStyles.todoDueDateIcon);
       icon.textContent = format(fromUnixTime(todo.data.dueDate.seconds), "E");
     } else if (yearsToToday <= 0) {
-      icon.classList.add(styles.todoDueDateIcon);
+      icon.classList.add(todoStyles.todoDueDateIcon);
       icon.textContent = format(
         fromUnixTime(todo.data.dueDate.seconds),
         "d. MMM"
       );
     } else {
-      icon.classList.add(styles.todoDueDateIcon);
+      icon.classList.add(todoStyles.todoDueDateIcon);
       icon.textContent = format(
         fromUnixTime(todo.data.dueDate.seconds),
         "MMM yyyy"
@@ -178,17 +188,17 @@ const todoDueDateIcon = (todo: Todo, parent: Element) => {
 
 const showTodoTitle = (todo: Todo, parent: Element) => {
   const todoTitleDiv = document.createElement("span");
-  todoTitleDiv.classList.add(styles.todoTitle);
+  todoTitleDiv.classList.add(todoStyles.todoTitle);
   todoTitleDiv.textContent = todo.data.name;
   parent.appendChild(todoTitleDiv);
 };
 
 const editTodoTitle = (todo: Todo, parent: Element) => {
   const nameInput = document.createElement("input");
-  nameInput.classList.add(styles.todoTitle);
+  nameInput.classList.add(todoStyles.todoTitle);
   nameInput.value = todo.data.name;
   nameInput.placeholder = "Title";
-  parent.querySelector(`.${styles.todoTitle}`)!.replaceWith(nameInput);
+  parent.querySelector(`.${todoStyles.todoTitle}`)!.replaceWith(nameInput);
 
   return nameInput;
 };
@@ -246,7 +256,7 @@ const createDeleteBtn = (
   item: Project | Todo
 ) => {
   const deleteBtn = addIcon(parent, "delete", "outlined");
-  deleteBtn.classList.add(styles.icon, styles.hiddenIcon);
+  deleteBtn.classList.add(globalStyles.icon, globalStyles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
     type === "project"
       ? // to reduce complexity projects can only be archived, recursive deleteTodo would be necessary
@@ -258,7 +268,7 @@ const createDeleteBtn = (
 
 const createSeparator = (parent: Element) => {
   const separator = document.createElement("div");
-  separator.classList.add(styles.separator);
+  separator.classList.add(globalStyles.separator);
   parent.appendChild(separator);
 };
 
