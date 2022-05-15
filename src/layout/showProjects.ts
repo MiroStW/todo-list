@@ -1,4 +1,4 @@
-import { router } from "application_logic/auth";
+import { router } from "application_logic/router";
 import { Project } from "types";
 import { isInbox } from "../application_logic/storage";
 import styles from "./showProjects.module.css";
