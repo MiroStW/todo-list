@@ -16,10 +16,9 @@ import {
   getProjectOfTodo,
   archiveProject,
 } from "../application_logic/storage";
-import todoStyles from "./showTodos.module.css";
-import projectStyles from "./showProjects.module.css";
 import globalStyles from "../style.module.css";
-import { showTodoArea } from "./showTodos";
+import todoStyles from "components/showTodos/showTodos.module.css";
+import { showTodoArea } from "components/showTodos/showTodos";
 
 const addIcon = (parent: Element, iconName: string, style?: "outlined") => {
   const icon = document.createElement("span");

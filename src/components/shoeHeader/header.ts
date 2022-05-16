@@ -1,9 +1,8 @@
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "application_logic/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import styles from "./header.module.css";
 
 const showHeader = () => {
-  const auth = getAuth();
-
   const root = document.querySelector("#root")!;
 
   const header = document.createElement("div");
@@ -38,7 +37,7 @@ const showHeader = () => {
   const userMenuSignOut = document.createElement("li");
   userMenuSignOut.classList.add(styles.userMenuItem);
   userMenuSignOut.textContent = "sign out";
-  userMenuSignOut.addEventListener("click", () => signOut(getAuth()));
+  userMenuSignOut.addEventListener("click", () => signOut(auth));
   userMenuList.appendChild(userMenuSignOut);
 
   onAuthStateChanged(auth, (user) => {

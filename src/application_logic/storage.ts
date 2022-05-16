@@ -14,9 +14,9 @@ import {
   documentId,
 } from "firebase/firestore";
 import { auth } from "./auth";
-import { showTodoArea } from "layout/showTodos";
+import { showTodoArea } from "components/showTodos/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
-import showOnlineStatus from "./showOnlineStatus";
+import showOnlineStatus from "layout/showOnlineStatus";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 
 // factory for projects

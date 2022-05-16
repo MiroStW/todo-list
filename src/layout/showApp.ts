@@ -1,6 +1,6 @@
-import showHeader from "./header";
-import todoStyles from "./showTodos.module.css";
-import projectStyles from "./showProjects.module.css";
+import showHeader from "../components/shoeHeader/header";
+import todoStyles from "components/showTodos/showTodos.module.css";
+import projectStyles from "components/showProjects/showProjects.module.css";
 import showSpinner from "./spinner";
 import { showSnackbar } from "./snackbar";
 

@@ -1,5 +1,5 @@
 import { changeUI } from "layout/showApp";
-import { showTodoArea } from "layout/showTodos";
+import { showTodoArea } from "components/showTodos/showTodos";
 import Navigo from "navigo";
 import { currentProjects, getProjectById, unsubscribe } from "./storage";
 

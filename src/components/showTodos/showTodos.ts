@@ -8,9 +8,8 @@ import {
   getTodosByProject,
   getTodosByDate,
   getInboxProject,
-} from "../application_logic/storage";
+} from "application_logic/storage";
 import styles from "./showTodos.module.css";
-import globalStyles from "../style.module.css";
 import {
   todoDueDateIcon,
   completedTodosBtn,
@@ -23,7 +22,7 @@ import {
   createDeleteBtn,
   createNewItemBtn,
   createCancelBtn,
-} from "./buttons";
+} from "layout/buttons";
 import { Project, Todo } from "types";
 
 const showTodoDetails = (todo: Todo, todoDiv: Element) => {

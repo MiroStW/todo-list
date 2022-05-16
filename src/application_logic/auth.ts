@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import * as firebaseui from "firebaseui";
 import uiConfig from "firebaseUI-config.js";
-import showProjectList from "layout/showProjects";
+import showProjectList from "components/showProjects/showProjects";
 import { changeUI } from "layout/showApp";
 import { getProjects } from "./storage";
 import { getRoutes } from "./router";

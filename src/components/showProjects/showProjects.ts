@@ -1,15 +1,15 @@
 import { router } from "application_logic/router";
 import { Project } from "types";
-import { isInbox } from "../application_logic/storage";
+import { isInbox } from "application_logic/storage";
 import styles from "./showProjects.module.css";
-import globalStyles from "../style.module.css";
+import globalStyles from "style.module.css";
 import {
   addIcon,
   createRenameBtn,
   createDeleteBtn,
   createNewItemBtn,
   createSeparator,
-} from "./buttons";
+} from "../../layout/buttons";
 
 const clearProjectList = (projectArea: Element) => {
   // clear displayed project Area
