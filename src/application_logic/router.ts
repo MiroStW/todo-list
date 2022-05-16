@@ -21,17 +21,17 @@ const getRoutes = () => {
       else {
         getProjectById(match!.data!.id)
           .then((project) => showTodoArea("showProject", project))
-          .then(() => changeUI("spinner", "hide"));
+          .then(() => changeUI("loader", "hide"));
       }
     })
     .on("/today", () => {
-      showTodoArea("showToday").then(() => changeUI("spinner", "hide"));
+      showTodoArea("showToday").then(() => changeUI("loader", "hide"));
     })
     .on("/upcoming", () => {
-      showTodoArea("showUpcoming").then(() => changeUI("spinner", "hide"));
+      showTodoArea("showUpcoming").then(() => changeUI("loader", "hide"));
     })
     .on(() => {
-      showTodoArea("showProject").then(() => changeUI("spinner", "hide"));
+      showTodoArea("showProject").then(() => changeUI("loader", "hide"));
     })
     .resolve();
 };

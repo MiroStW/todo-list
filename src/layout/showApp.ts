@@ -1,14 +1,14 @@
 import showHeader from "../components/showHeader/header";
 import todoStyles from "components/showTodos/showTodos.module.css";
 import projectStyles from "components/showProjects/showProjects.module.css";
-import showSpinner from "./spinner";
+import showLoader from "./loader";
 import { showSnackbar } from "./snackbar";
 
 const root = document.querySelector("#root")!;
 const projectArea = document.createElement("div");
 const todoArea = document.createElement("div");
 const authArea = document.createElement("div");
-const spinner = showSpinner();
+const loader = showLoader();
 
 const showApp = () => {
   // header
@@ -33,7 +33,7 @@ const showApp = () => {
 };
 
 const changeUI = (
-  element: "projectArea" | "todoArea" | "authArea" | "spinner",
+  element: "projectArea" | "todoArea" | "authArea" | "loader",
   action: "show" | "hide"
 ) => {
   switch (element) {
@@ -52,10 +52,10 @@ const changeUI = (
         ? authArea.removeAttribute("hidden")
         : authArea.setAttribute("hidden", "true");
       break;
-    case "spinner":
+    case "loader":
       action === "show"
-        ? spinner.removeAttribute("hidden")
-        : spinner.setAttribute("hidden", "true");
+        ? loader.removeAttribute("hidden")
+        : loader.setAttribute("hidden", "true");
       break;
     default:
       break;
