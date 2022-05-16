@@ -1,4 +1,4 @@
-import showHeader from "../components/shoeHeader/header";
+import showHeader from "../components/showHeader/header";
 import todoStyles from "components/showTodos/showTodos.module.css";
 import projectStyles from "components/showProjects/showProjects.module.css";
 import showSpinner from "./spinner";
