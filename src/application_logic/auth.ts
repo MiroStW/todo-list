@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import * as firebaseui from "firebaseui";
+import "firebaseui/dist/firebaseui.css";
 import uiConfig from "firebaseUI-config.js";
 import showProjectList from "components/showProjects/showProjects";
 import { changeUI } from "layout/showApp";

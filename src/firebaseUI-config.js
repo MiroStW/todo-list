@@ -6,15 +6,15 @@ import {
 
 const uiConfig = {
   callbacks: {
-    signInSuccessWithAuthResult(authResult, redirectUrl) {
-      // console.log("signInSuccessWithAuthResult called, user:");
-      // console.log(authResult.user);
-      // User successfully signed in.
-      // Return type determines whether we continue the redirect automatically
-      // or whether we leave that to developer to handle.
+    // signInSuccessWithAuthResult(authResult, redirectUrl) {
+    // console.log("signInSuccessWithAuthResult called, user:");
+    // console.log(authResult.user);
+    // User successfully signed in.
+    // Return type determines whether we continue the redirect automatically
+    // or whether we leave that to developer to handle.
 
-      return false;
-    },
+    //   return false;
+    // },
     uiShown() {
       // The widget is rendered.
       // Hide the loader.
