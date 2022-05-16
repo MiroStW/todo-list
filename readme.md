@@ -9,9 +9,9 @@ Live demo here: https://todo-list-app-5c488.web.app/
 - fully typed app
 - no framework, plain javascript
 
-## clone or fork the project
+## Run the app
 
-After cloning the project locally follow these steps to set up firebase backend:
+To run the app, you must have a Firebase project set up. After cloning the project locally follow these steps to set up your own firebase backend:
 
 1. Create a new firebase project
    - go to https://console.firebase.google.com/
