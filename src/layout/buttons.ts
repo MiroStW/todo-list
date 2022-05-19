@@ -40,6 +40,7 @@ const createNewItemBtn = (
   project?: Project
 ) => {
   const newBtn = document.createElement("button");
+  newBtn.classList.add(globalStyles.primary);
   if (type === "project") {
     newBtn.textContent = "new project";
     newBtn.addEventListener("click", () => {
@@ -211,6 +212,7 @@ const createUpdateTodoBtn = (
   newDueDate: HTMLInputElement
 ) => {
   const saveBtn = document.createElement("button");
+  saveBtn.classList.add(globalStyles.primary);
   saveBtn.textContent = "save";
   saveBtn.addEventListener("click", () => {
     if (newDueDate.value) {

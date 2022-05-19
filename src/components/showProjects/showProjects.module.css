@@ -9,8 +9,12 @@
 
 .projectarea {
   padding-left: 10px;
-  border-right: 1px white dashed;
+  border-right: 1px solid #5f6368;
   height: 100%;
+}
+
+.projectList {
+  margin-bottom: 10px;
 }
 
 .upcomingIcon {
@@ -40,6 +44,6 @@
 
 .project:hover,
 .specialProject:hover {
-  background: #444;
+  background: rgb(255 255 255 / 4%);
   cursor: pointer;
 }

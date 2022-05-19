@@ -9,8 +9,8 @@ body {
 }
 
 body {
-  background: black;
-  color: white;
+  background: #202124;
+  color: #e8eaed;
   font-family: sans-serif;
   font-size: 16px;
 }
@@ -50,14 +50,25 @@ h2 {
 }
 
 button {
-  background-color: black;
-  border: white 1px solid;
+  border: 1px solid rgb(245, 222, 178);
   border-radius: 4px;
-  color: wheat;
   line-height: 25px;
   margin: 10px;
   padding: 0 5px;
   cursor: pointer;
+}
+
+button:hover {
+  background: rgb(255 255 255 / 4%);
+}
+
+button.primary {
+  background: rgb(245, 222, 178);
+  color: black;
+}
+
+button.primary:hover {
+  background: rgb(251, 242, 223);
 }
 
 .md-inactive {
@@ -83,5 +94,5 @@ button {
 }
 
 .separator {
-  height: 20px;
+  height: 10px;
 }

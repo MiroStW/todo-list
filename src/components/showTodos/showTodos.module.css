@@ -15,11 +15,11 @@
 
 .todoList,
 .todoListCompleted {
-  display: block;
+  margin-bottom: 10px;
 }
 
 .todo {
-  border-bottom: 1px white dashed;
+  border-bottom: 1px solid #5f6368;
   display: grid;
   grid-template-columns: repeat(2, min-content) auto;
 }
@@ -38,7 +38,7 @@
 }
 
 .todo.active:hover {
-  background: #000;
+  background: #202124;
   cursor: initial;
 }
 
@@ -112,7 +112,8 @@ input[type="checkbox" i].todoComplete {
 }
 
 .todoDueDateIcon {
-  background: #555;
+  background: rgba(245, 222, 178, 0.12);
+  border: 1px solid rgb(245, 222, 178);
   padding: 1px 4px;
   border-radius: 2px;
   font-size: 14px;
@@ -120,8 +121,7 @@ input[type="checkbox" i].todoComplete {
 
 .todo input,
 .todo textarea {
-  background: black;
-  color: white;
+  background: #202124;
   font-size: 16px;
   border: none;
   outline: none;
@@ -136,7 +136,7 @@ input[type="checkbox" i].todoComplete {
 }
 
 .todo:hover {
-  background: #444;
+  background: rgb(255 255 255 / 4%);
   cursor: pointer;
 }
 

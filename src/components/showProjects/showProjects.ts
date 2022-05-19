@@ -22,7 +22,7 @@ const showProject = (
   action: "showProject" | "showToday" | "showUpcoming",
   project?: Project
 ) => {
-  const projectArea = document.querySelector(`.${styles.projectarea}`)!;
+  const projectList = document.querySelector(`.${styles.projectList}`)!;
   const projectDiv = document.createElement("div");
 
   const projectName = document.createElement("span");
@@ -79,7 +79,7 @@ const showProject = (
     projectDiv.classList.add(styles.specialProject);
   }
 
-  projectArea.appendChild(projectDiv);
+  projectList.appendChild(projectDiv);
 };
 
 const showProjectList = (projects: Project[]) => {
@@ -91,19 +91,23 @@ const showProjectList = (projects: Project[]) => {
   projectsHeader.textContent = "Projects";
   projectArea.appendChild(projectsHeader);
 
+  const projectList = document.createElement("div");
+  projectList.classList.add(styles.projectList);
+  projectArea.appendChild(projectList);
+
   // inbox view
   showProject(
     "showProject",
     projects.find((project) => isInbox(project))
   );
 
-  createSeparator(projectArea);
+  createSeparator(projectList);
 
   // special views
   showProject("showToday");
   showProject("showUpcoming");
 
-  createSeparator(projectArea);
+  createSeparator(projectList);
 
   // project list without inbox
   projects.forEach((project) => {
