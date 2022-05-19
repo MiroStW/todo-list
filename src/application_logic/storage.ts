@@ -16,7 +16,7 @@ import {
 import { auth } from "./auth";
 import { showTodoArea } from "components/showTodos/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
-import showOnlineStatus from "layout/showOnlineStatus";
+import showOnlineStatus from "components/showOnlineStatus/showOnlineStatus";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 
 // factory for projects

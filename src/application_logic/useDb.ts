@@ -7,7 +7,7 @@ import {
   connectFirestoreEmulator,
   enableMultiTabIndexedDbPersistence,
 } from "firebase/firestore";
-import { useSnackbar } from "layout/snackbar";
+import { useSnackbar } from "components/snackbar/snackbar";
 import { Project, ProjectData, TodoData } from "../types";
 
 // Export firestore incase we need to access it directly
