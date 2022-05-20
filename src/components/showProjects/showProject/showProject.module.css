@@ -1,0 +1,30 @@
+.project {
+  /* border-bottom: 1px white dashed; */
+  width: 80%;
+  display: grid;
+  grid-template-columns: auto repeat(2, max-content);
+  padding: 8px;
+}
+
+.specialProject {
+  /* border-bottom: 1px white dashed; */
+  width: 80%;
+  display: grid;
+  gap: 6px;
+  grid-template-columns: max-content auto;
+  padding: 8px;
+}
+
+.upcomingIcon {
+  color: red;
+}
+
+.inboxIcon {
+  color: lightskyblue;
+}
+
+.project:hover,
+.specialProject:hover {
+  background: rgb(255 255 255 / 4%);
+  cursor: pointer;
+}

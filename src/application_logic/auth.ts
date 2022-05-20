@@ -7,7 +7,7 @@ import {
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import uiConfig from "firebaseUI-config.js";
-import showProjectList from "components/showProjects/showProjects";
+import { showProjects } from "components/showProjects/showProjects";
 import { changeUI } from "components/showApp/showApp";
 import { getProjects } from "./storage";
 import { getRoutes } from "./router";
@@ -20,13 +20,13 @@ const fbAuthUi = new firebaseui.auth.AuthUI(auth);
 const authUser = () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(user);
+      // console.log(user);
       // console.log(auth);
       changeUI("authArea", "hide");
       changeUI("projectArea", "show");
       changeUI("todoArea", "show");
 
-      getProjects(showProjectList);
+      getProjects(showProjects);
       getRoutes();
     } else {
       fbAuthUi.start("#firebaseui-auth-container", uiConfig);
