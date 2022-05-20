@@ -1,0 +1,34 @@
+:global(.brokenImg) {
+  position: relative;
+  top: -17px;
+  right: 0px;
+}
+
+.userWidget {
+  position: relative;
+  margin-left: auto;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.userImage {
+  overflow: hidden;
+  line-height: 28px;
+  width: 100%;
+  height: 28px;
+  border: 1px solid #5f6368;
+  border-radius: 50%;
+}
+
+.userMenu {
+  position: absolute;
+  right: -1px;
+  top: 42px;
+  padding: 7px;
+  width: 78px;
+  background: #202124;
+  border: 1px solid #5f6368;
+}
