@@ -16,7 +16,7 @@ import {
 import { auth } from "./auth";
 import { showTodoArea } from "components/showTodos/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
-import showOnlineStatus from "components/showOnlineStatus/showOnlineStatus";
+import onlineStatus from "components/onlineStatus/onlineStatus";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 
 // factory for projects
@@ -134,7 +134,7 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
     // });
 
     if (!snapshot.size) addInboxProject();
-    showOnlineStatus(snapshot);
+    onlineStatus(snapshot);
   });
 };
 
