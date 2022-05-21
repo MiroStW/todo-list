@@ -10,6 +10,7 @@ import {
   getInboxProject,
 } from "application_logic/storage";
 import styles from "./showTodos.module.css";
+import todoListStyles from "./todoList/todoList.module.css";
 import {
   todoDueDateIcon,
   completedTodosBtn,
@@ -24,131 +25,7 @@ import {
   createCancelBtn,
 } from "layout/buttons";
 import { Project, Todo } from "types";
-
-const showTodoDetails = (todo: Todo, todoDiv: Element) => {
-  todoDiv.classList.add(styles.active);
-
-  // make title editable
-  const nameInput = editTodoTitle(todo, todoDiv);
-  nameInput.focus();
-
-  const todoDivOpen = document.createElement("div");
-  todoDivOpen.classList.add(styles.todoOpen);
-
-  // todo description
-  // [] expand textarea when reopening todo
-  const descriptionInput = document.createElement("textarea");
-  descriptionInput.value = todo.data.description;
-  descriptionInput.placeholder = "Description";
-
-  function OnInput(this: HTMLElement) {
-    this.style.height = "auto";
-    this.style.height = `${this.scrollHeight}px`;
-  }
-  descriptionInput.addEventListener("input", OnInput, false);
-
-  todoDivOpen.appendChild(descriptionInput);
-
-  const todoBottomRow = document.createElement("div");
-  todoBottomRow.classList.add(styles.todoBottomRow);
-  // todo duedate
-  const dueDateInput = document.createElement("input");
-  dueDateInput.classList.add(styles.todoDueDate);
-  dueDateInput.placeholder = "Due date";
-  todoBottomRow.appendChild(dueDateInput);
-
-  // show created date
-  // const createdDate = document.createElement("div");
-  // createdDate.textContent = format(
-  //   fromUnixTime(todo.createdDate),
-  //   "yyyy-mm-dd"
-  // );
-  // todoDivOpen.appendChild(createdDate);
-
-  // buttons
-  const todoBtnBar = document.createElement("div");
-  todoBtnBar.classList.add(styles.todoBtnBar);
-
-  createUpdateTodoBtn(
-    todo,
-    todoBtnBar,
-    nameInput,
-    descriptionInput,
-    document.querySelector(`#checkbox-${todo.ref.id}`)!,
-    dueDateInput
-  );
-
-  createCancelBtn(todo, todoBtnBar);
-
-  todoBottomRow.appendChild(todoBtnBar);
-  todoDivOpen.appendChild(todoBottomRow);
-
-  todoDiv.appendChild(todoDivOpen);
-
-  flatpickr(dueDateInput, {
-    defaultDate: todo.data.dueDate
-      ? fromUnixTime(todo.data.dueDate.seconds)
-      : undefined,
-  });
-};
-
-const showTodoBar = (todo: Todo) => {
-  const todoList = todo.data.complete
-    ? document.querySelector(`.${styles.todoListCompleted}`)!
-    : document.querySelector(`.${styles.todoList}`)!;
-  const todoDiv = document.createElement("div");
-  todoDiv.classList.add(styles.todo);
-
-  // complete checkbox
-  completeTodoCheckbox(todo, todoDiv);
-
-  // priority flag
-  const priority = showPriority(todoDiv, todo.data.priority);
-  priority.addEventListener("click", () => {
-    openPrioPicker(todo, todoDiv);
-  });
-
-  // todo bar
-  const todoBarDiv = document.createElement("div");
-  todoBarDiv.classList.add(styles.todoBar);
-  todoDiv.appendChild(todoBarDiv);
-
-  // dueDate icon
-  todoDueDateIcon(todo, todoBarDiv);
-
-  // todo title
-  showTodoTitle(todo, todoBarDiv);
-
-  // remove button
-  createDeleteBtn(todoBarDiv, "todo", todo);
-
-  todoDiv.addEventListener("mouseover", () => {
-    todoBarDiv.classList.add(styles.active);
-  });
-  todoDiv.addEventListener("mouseout", () => {
-    todoBarDiv.classList.remove(styles.active);
-  });
-
-  todoBarDiv.addEventListener(
-    "click",
-    () => {
-      showTodoDetails(todo, todoDiv);
-    },
-    { once: true }
-  );
-
-  todoList.appendChild(todoDiv);
-};
-
-const showTodoList = (todos: Todo[], showCompleted: boolean) => {
-  const todoList = document.querySelector(`.${styles.todoList}`)!;
-  if (todos.length === 0) todoList.textContent = "No todos yet.";
-  if (!showCompleted)
-    while (todoList.childNodes.length > 0) {
-      todoList.removeChild(todoList.childNodes[0]);
-    }
-  todos.forEach((todo) => showTodoBar(todo));
-};
+import { showTodoList } from "./todoList/todoList";
 
 const showTodoArea = async (
   action: "showCompleted" | "showProject" | "showToday" | "showUpcoming",
@@ -169,12 +46,12 @@ const showTodoArea = async (
 
   // show todo list
   const todoList = document.createElement("div");
-  todoList.classList.add(styles.todoList);
+  todoList.classList.add(todoListStyles.todoList);
   todoArea.appendChild(todoList);
 
   // show completed todos
   const todoListCompleted = document.createElement("div");
-  todoListCompleted.classList.add(styles.todoListCompleted);
+  todoListCompleted.classList.add(todoListStyles.todoListCompleted);
   todoListCompleted.setAttribute("hidden", "");
   todoArea.appendChild(todoListCompleted);
 
@@ -212,7 +89,7 @@ const showTodoArea = async (
       break;
   }
 };
-export { showTodoArea, showTodoDetails };
+export { showTodoArea };
 
 // overall todoArea
 // [x] focus immediately in title

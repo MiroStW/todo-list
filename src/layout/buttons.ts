@@ -17,7 +17,9 @@ import {
   archiveProject,
 } from "../application_logic/storage";
 import globalStyles from "../style.module.css";
-import todoStyles from "components/showTodos/showTodos.module.css";
+import todoDetailsStyles from "components/showTodos/todoDetails/todoDetails.module.css";
+import todosStyles from "components/showTodos/showTodos.module.css";
+import todoStyles from "components/showTodos/showTodo/showTodo.module.css";
 import { showTodoArea } from "components/showTodos/showTodos";
 
 const addIcon = (parent: Element, iconName: string, style?: "outlined") => {
@@ -69,7 +71,7 @@ const createRenameBtn = (parent: Element, project: Project) => {
 const completeTodoCheckbox = (todo: Todo, parent: Element) => {
   const todoComplete = document.createElement("input");
   todoComplete.type = "checkbox";
-  todoComplete.classList.add(todoStyles.todoComplete);
+  todoComplete.classList.add(todoDetailsStyles.todoComplete);
   todoComplete.id = `checkbox-${todo.ref.id}`;
   if (todo.data.complete) todoComplete.setAttribute("checked", "");
   parent.appendChild(todoComplete);
@@ -82,7 +84,7 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
 
   todoComplete.addEventListener("click", () => {
     updateCompleted(todo);
-    if (!document.querySelector(`.${todoStyles.todoOpen}`)) {
+    if (!document.querySelector(`.${todoDetailsStyles.todoOpen}`)) {
       getProjectOfTodo(todo).then((project) => {
         showTodoArea("showProject", project);
       });
@@ -97,8 +99,8 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
 
 const showPriority = (parent: Element, priority: number) => {
   const flag = addIcon(parent, "flag", priority === 4 ? "outlined" : undefined);
-  flag.classList.add(todoStyles[`prio${priority}`]);
-  flag.classList.add(todoStyles.todoPriority);
+  flag.classList.add(todoDetailsStyles[`prio${priority}`]);
+  flag.classList.add(todoDetailsStyles.todoPriority);
   flag.classList.add(globalStyles["md-18"]);
 
   return flag;
@@ -117,7 +119,7 @@ const priorityBtn = (todo: Todo, parent: Element, newPriority: number) => {
 
 const openPrioPicker = (todo: Todo, parent: Element) => {
   const pickerContainer = document.createElement("div");
-  pickerContainer.classList.add(todoStyles.priorityPicker);
+  pickerContainer.classList.add(todoDetailsStyles.priorityPicker);
   priorityBtn(todo, pickerContainer, 1);
   priorityBtn(todo, pickerContainer, 2);
   priorityBtn(todo, pickerContainer, 3);

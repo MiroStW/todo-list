@@ -1,0 +1,101 @@
+.todoOpen {
+  grid-column: 2 / -1;
+}
+
+.todoBottomRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+input[type="checkbox" i].todoComplete {
+  margin: 10.5px 8px;
+  grid-row: 1 / 8;
+  background: white;
+  width: 13px;
+  height: 13px;
+  color: black;
+}
+
+[type="checkbox"] {
+  position: relative;
+  /* left: 15px; */
+  /* top: -4px; */
+  z-index: 0;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+[type="checkbox"] + label {
+  position: absolute;
+}
+
+[type="checkbox"]:checked + label {
+  background-color: grey;
+  margin: 10.5px 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.todoPriority {
+  padding: 7px 3px;
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
+  cursor: pointer;
+}
+
+.priorityPicker {
+  background: black;
+  grid-row: 1 / 1;
+  grid-column: 2 / 4;
+  width: max-content;
+  cursor: pointer;
+}
+
+.prio1 {
+  color: #ff0000;
+}
+
+.prio2 {
+  color: #fb8c00;
+}
+
+.prio3 {
+  color: #b0fb00;
+}
+
+.prio4 {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.todo input,
+.todo textarea {
+  background: #202124;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+.todo textarea {
+  width: -webkit-fill-available;
+  resize: none;
+  overflow-y: hidden;
+  font-family: sans-serif;
+  padding: 8px 0;
+}
+
+.flatpickr-calendar,
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+span.flatpickr-weekday {
+  background: black;
+}
+
+.flatpickr-calendar.arrowTop:before {
+  border-bottom-color: white;
+}
+
+.flatpickr-calendar {
+  border-top: 1px white dashed;
+  border-bottom: 1px white dashed;
+  border-radius: initial;
+}
