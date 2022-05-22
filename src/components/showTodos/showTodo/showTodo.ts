@@ -1,15 +1,15 @@
 import {
-  completeTodoCheckbox,
   showPriority,
   openPrioPicker,
   todoDueDateIcon,
   showTodoTitle,
   createDeleteBtn,
-} from "layout/buttons";
+} from "helpers/buttons/buttons";
 import { Todo } from "types";
 import styles from "./showTodo.module.css";
 import todoListStyles from "../todoList/todoList.module.css";
 import { todoDetails } from "../todoDetails/todoDetails";
+import completeTodoCheckbox from "./completedTodoCheckbox";
 
 const showTodo = (todo: Todo) => {
   const todoList = todo.data.complete

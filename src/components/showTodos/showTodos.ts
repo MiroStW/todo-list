@@ -9,9 +9,10 @@ import {
 } from "application_logic/storage";
 import styles from "./showTodos.module.css";
 import todoListStyles from "./todoList/todoList.module.css";
-import { completedTodosBtn, createNewItemBtn } from "layout/buttons";
+import { completedTodosBtn } from "helpers/buttons/buttons";
 import { Project } from "types";
 import { showTodoList } from "./todoList/todoList";
+import createItemBtn from "helpers/buttons/createItemBtn";
 
 const showTodoArea = async (
   action: "showCompleted" | "showProject" | "showToday" | "showUpcoming",
@@ -62,12 +63,12 @@ const showTodoArea = async (
         getInboxProject().then((inbox) => {
           todoHeader.textContent = inbox.data.name;
           getTodosByProject(inbox, showTodoList, false);
-          createNewItemBtn(todoArea, "todo", project);
+          createItemBtn(todoArea, "todo", project);
         });
       } else {
         todoHeader.textContent = project.data.name;
         getTodosByProject(project, showTodoList, false);
-        createNewItemBtn(todoArea, "todo", project);
+        createItemBtn(todoArea, "todo", project);
         completedTodosBtn(project, todoListCompleted, todoHeaderDiv);
       }
       break;

@@ -1,4 +1,4 @@
-import { createNewItemBtn } from "layout/buttons";
+import createItemBtn from "helpers/buttons/createItemBtn";
 import { Project } from "types";
 import { projectList } from "./projectList/projectList";
 import styles from "./showProjects.module.css";
@@ -21,7 +21,7 @@ const showProjects = (projects: Project[]) => {
 
   projectList(projects);
 
-  createNewItemBtn(projectArea, "project");
+  createItemBtn(projectArea, "project");
 };
 
 export { showProjects };

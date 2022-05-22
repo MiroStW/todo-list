@@ -11,91 +11,15 @@ import {
   updateTodo,
   updatePriority,
   updateCompleted,
-  renameItem,
-  createItem,
   getProjectOfTodo,
   archiveProject,
-} from "../application_logic/storage";
-import globalStyles from "../style.module.css";
+} from "../../application_logic/storage";
+import globalStyles from "style.module.css";
 import todoDetailsStyles from "components/showTodos/todoDetails/todoDetails.module.css";
 import todosStyles from "components/showTodos/showTodos.module.css";
 import todoStyles from "components/showTodos/showTodo/showTodo.module.css";
 import { showTodoArea } from "components/showTodos/showTodos";
-
-const addIcon = (parent: Element, iconName: string, style?: "outlined") => {
-  const icon = document.createElement("span");
-  if (style === "outlined") {
-    icon.classList.add("material-icons-outlined");
-  } else {
-    icon.classList.add("material-icons");
-  }
-  icon.classList.add(globalStyles["md-18"]);
-  icon.textContent = iconName;
-  parent.appendChild(icon);
-
-  return icon;
-};
-
-const createNewItemBtn = (
-  parent: Element,
-  type: "project" | "todo",
-  project?: Project
-) => {
-  const newBtn = document.createElement("button");
-  newBtn.classList.add(globalStyles.primary);
-  if (type === "project") {
-    newBtn.textContent = "new project";
-    newBtn.addEventListener("click", () => {
-      createItem(type);
-    });
-    parent.appendChild(newBtn);
-  }
-  if (type === "todo") {
-    newBtn.textContent = "new todo";
-    newBtn.addEventListener("click", () => {
-      createItem(type, project);
-    });
-    parent.appendChild(newBtn);
-  }
-};
-
-const createRenameBtn = (parent: Element, project: Project) => {
-  const renameBtn = addIcon(parent, "edit", "outlined");
-  renameBtn.classList.add(globalStyles.icon, globalStyles.hiddenIcon);
-  renameBtn.addEventListener("click", () => {
-    renameItem(project);
-  });
-  parent.appendChild(renameBtn);
-};
-
-const completeTodoCheckbox = (todo: Todo, parent: Element) => {
-  const todoComplete = document.createElement("input");
-  todoComplete.type = "checkbox";
-  todoComplete.classList.add(todoDetailsStyles.todoComplete);
-  todoComplete.id = `checkbox-${todo.ref.id}`;
-  if (todo.data.complete) todoComplete.setAttribute("checked", "");
-  parent.appendChild(todoComplete);
-
-  const todoCompleteLabel = document.createElement("label");
-  todoCompleteLabel.setAttribute("for", `checkbox-${todo.ref.id}`);
-  todoCompleteLabel.classList.add("material-icons");
-  if (todo.data.complete) todoCompleteLabel.textContent = "done";
-  parent.appendChild(todoCompleteLabel);
-
-  todoComplete.addEventListener("click", () => {
-    updateCompleted(todo);
-    if (!document.querySelector(`.${todoDetailsStyles.todoOpen}`)) {
-      getProjectOfTodo(todo).then((project) => {
-        showTodoArea("showProject", project);
-      });
-    } else {
-      todoComplete.toggleAttribute("checked");
-      todoCompleteLabel.textContent === "done"
-        ? (todoCompleteLabel.textContent = "")
-        : (todoCompleteLabel.textContent = "done");
-    }
-  });
-};
+import addIcon from "./addIcon";
 
 const showPriority = (parent: Element, priority: number) => {
   const flag = addIcon(parent, "flag", priority === 4 ? "outlined" : undefined);
@@ -276,7 +200,6 @@ const createSeparator = (parent: Element) => {
 };
 
 export {
-  addIcon,
   createSeparator,
   todoDueDateIcon,
   completedTodosBtn,
@@ -285,9 +208,6 @@ export {
   createDeleteBtn,
   createUpdateTodoBtn,
   createCancelBtn,
-  completeTodoCheckbox,
-  createRenameBtn,
-  createNewItemBtn,
   showPriority,
   openPrioPicker,
 };

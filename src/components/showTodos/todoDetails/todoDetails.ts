@@ -4,7 +4,7 @@ import {
   editTodoTitle,
   createUpdateTodoBtn,
   createCancelBtn,
-} from "layout/buttons";
+} from "helpers/buttons/buttons";
 import { Todo } from "types";
 import styles from "./todoDetails.module.css";
 import showTodoStyles from "../showTodo/showTodo.module.css";
