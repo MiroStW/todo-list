@@ -1,4 +1,4 @@
-import { changeUI } from "components/showApp/showApp";
+import { changeUI } from "components/showApp";
 import { showTodoArea } from "components/showTodos/showTodos";
 import Navigo from "navigo";
 import { currentProjects, getProjectById, unsubscribe } from "./storage";

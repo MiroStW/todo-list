@@ -1,8 +1,8 @@
-import showHeader from "../showHeader/header";
-import todoStyles from "components/showTodos/showTodos.module.css";
-import projectStyles from "components/showProjects/showProjects.module.css";
-import showLoader from "../loader/loader";
-import { showSnackbar } from "../snackbar/snackbar";
+import showHeader from "./showHeader/header";
+import todoStyles from "./showTodos/showTodos.module.css";
+import projectStyles from "./showProjects/showProjects.module.css";
+import showLoader from "helpers/loader/loader";
+import { showSnackbar } from "helpers/snackbar/snackbar";
 
 const root = document.querySelector("#root")!;
 const projectArea = document.createElement("div");

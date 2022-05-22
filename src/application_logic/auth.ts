@@ -8,7 +8,7 @@ import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import uiConfig from "firebaseUI-config.js";
 import { showProjects } from "components/showProjects/showProjects";
-import { changeUI } from "components/showApp/showApp";
+import { changeUI } from "components/showApp";
 import { getProjects } from "./storage";
 import { getRoutes } from "./router";
 
