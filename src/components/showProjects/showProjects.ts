@@ -1,4 +1,4 @@
-import createItemBtn from "helpers/buttons/createItemBtn";
+import createItemBtn from "components/helpers/buttons/createItemBtn";
 import { Project } from "types";
 import { projectList } from "./projectList/projectList";
 import styles from "./showProjects.module.css";

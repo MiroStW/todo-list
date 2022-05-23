@@ -9,10 +9,10 @@ import {
 } from "application_logic/storage";
 import styles from "./showTodos.module.css";
 import todoListStyles from "./todoList/todoList.module.css";
-import { completedTodosBtn } from "helpers/buttons/buttons";
 import { Project } from "types";
 import { showTodoList } from "./todoList/todoList";
-import createItemBtn from "helpers/buttons/createItemBtn";
+import createItemBtn from "components/helpers/buttons/createItemBtn";
+import completedTodosBtn from "./showTodo/completedTodosBtn";
 
 const showTodoArea = async (
   action: "showCompleted" | "showProject" | "showToday" | "showUpcoming",

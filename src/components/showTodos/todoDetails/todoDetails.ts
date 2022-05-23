@@ -1,13 +1,11 @@
 import { fromUnixTime } from "date-fns";
 import flatpickr from "flatpickr";
-import {
-  editTodoTitle,
-  createUpdateTodoBtn,
-  createCancelBtn,
-} from "helpers/buttons/buttons";
 import { Todo } from "types";
 import styles from "./todoDetails.module.css";
 import showTodoStyles from "../showTodo/showTodo.module.css";
+import editTodoTitle from "./editTodoTitle";
+import updateTodoBtn from "./updateTodoBtn";
+import cancelBtn from "./cancelBtn";
 
 const todoDetails = (todo: Todo, todoDiv: Element) => {
   todoDiv.classList.add(showTodoStyles.active);
@@ -53,7 +51,7 @@ const todoDetails = (todo: Todo, todoDiv: Element) => {
   const todoBtnBar = document.createElement("div");
   todoBtnBar.classList.add(styles.todoBtnBar);
 
-  createUpdateTodoBtn(
+  updateTodoBtn(
     todo,
     todoBtnBar,
     nameInput,
@@ -62,7 +60,7 @@ const todoDetails = (todo: Todo, todoDiv: Element) => {
     dueDateInput
   );
 
-  createCancelBtn(todo, todoBtnBar);
+  cancelBtn(todo, todoBtnBar);
 
   todoBottomRow.appendChild(todoBtnBar);
   todoDivOpen.appendChild(todoBottomRow);

@@ -1,15 +1,12 @@
-import {
-  showPriority,
-  openPrioPicker,
-  todoDueDateIcon,
-  showTodoTitle,
-  createDeleteBtn,
-} from "helpers/buttons/buttons";
+import { deleteBtn } from "components/helpers/buttons/deleteBtn";
 import { Todo } from "types";
 import styles from "./showTodo.module.css";
 import todoListStyles from "../todoList/todoList.module.css";
 import { todoDetails } from "../todoDetails/todoDetails";
 import completeTodoCheckbox from "./completedTodoCheckbox";
+import { showPriority, openPrioPicker } from "./priorityPicker";
+import todoDueDateIcon from "./todoDueDateIcon";
+import showTodoTitle from "./todoTitle";
 
 const showTodo = (todo: Todo) => {
   const todoList = todo.data.complete
@@ -39,7 +36,7 @@ const showTodo = (todo: Todo) => {
   showTodoTitle(todo, todoBarDiv);
 
   // remove button
-  createDeleteBtn(todoBarDiv, "todo", todo);
+  deleteBtn(todoBarDiv, "todo", todo);
 
   todoDiv.addEventListener("mouseover", () => {
     todoBarDiv.classList.add(styles.active);

@@ -1,5 +1,5 @@
 import { QuerySnapshot } from "firebase/firestore";
-import { useSnackbar } from "helpers/snackbar/snackbar";
+import { useSnackbar } from "components/helpers/snackbar/snackbar";
 
 let onlineStatus: boolean;
 

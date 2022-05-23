@@ -7,37 +7,6 @@
   justify-content: space-between;
 }
 
-.todoPriority {
-  padding: 7px 3px;
-  grid-row: 1 / 1;
-  grid-column: 2 / 2;
-  cursor: pointer;
-}
-
-.priorityPicker {
-  background: black;
-  grid-row: 1 / 1;
-  grid-column: 2 / 4;
-  width: max-content;
-  cursor: pointer;
-}
-
-.prio1 {
-  color: #ff0000;
-}
-
-.prio2 {
-  color: #fb8c00;
-}
-
-.prio3 {
-  color: #b0fb00;
-}
-
-.prio4 {
-  color: rgba(255, 255, 255, 0.3);
-}
-
 .todo input,
 .todo textarea {
   background: #202124;

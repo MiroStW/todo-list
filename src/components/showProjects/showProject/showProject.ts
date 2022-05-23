@@ -1,12 +1,12 @@
-import { createDeleteBtn } from "helpers/buttons/buttons";
+import { deleteBtn } from "components/helpers/buttons/deleteBtn";
 import { Project } from "types";
 import styles from "./showProject.module.css";
 import projectsStyles from "../projectList/projectList.module.css";
 import globalStyles from "style.module.css";
 import { router } from "application_logic/router";
 import { isInbox } from "application_logic/storage";
-import addIcon from "helpers/buttons/addIcon";
-import renameBtn from "helpers/buttons/renameBtn";
+import addIcon from "components/helpers/buttons/addIcon";
+import renameBtn from "components/helpers/buttons/renameBtn";
 
 const showProject = (
   action: "showProject" | "showToday" | "showUpcoming",
@@ -58,7 +58,7 @@ const showProject = (
   if (project && !isInbox(project)) {
     projectDiv.classList.add(styles.project);
     renameBtn(projectDiv, project);
-    createDeleteBtn(projectDiv, "project", project);
+    deleteBtn(projectDiv, "project", project);
     projectDiv.addEventListener("mouseover", () => {
       projectDiv.classList.add(globalStyles.active);
     });

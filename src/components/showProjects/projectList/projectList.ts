@@ -2,8 +2,13 @@ import { Project } from "types";
 import { isInbox } from "application_logic/storage";
 import styles from "./projectList.module.css";
 import showProjectsStyles from "../showProjects.module.css";
-import { createSeparator } from "helpers/buttons/buttons";
 import { showProject } from "../showProject/showProject";
+
+const createSeparator = (parent: Element) => {
+  const separator = document.createElement("div");
+  separator.classList.add(styles.separator);
+  parent.appendChild(separator);
+};
 
 const projectList = (projects: Project[]) => {
   const projectArea = document.querySelector(

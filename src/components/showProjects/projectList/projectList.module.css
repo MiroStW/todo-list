@@ -1,3 +1,7 @@
 .projectList {
   margin-bottom: 10px;
 }
+
+.separator {
+  height: 10px;
+}
