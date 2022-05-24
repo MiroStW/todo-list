@@ -23,11 +23,15 @@ const todoDetails = (todo: Todo, todoDiv: Element) => {
   descriptionInput.value = todo.data.description;
   descriptionInput.placeholder = "Description";
 
-  function OnInput(this: HTMLElement) {
+  //expand textarea height to show full text
+  descriptionInput.addEventListener("input", function () {
     this.style.height = "auto";
     this.style.height = `${this.scrollHeight}px`;
-  }
-  descriptionInput.addEventListener("input", OnInput, false);
+  });
+  descriptionInput.addEventListener("click", function () {
+    this.style.height = "auto";
+    this.style.height = `${this.scrollHeight}px`;
+  });
 
   todoDivOpen.appendChild(descriptionInput);
 

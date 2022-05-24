@@ -7,16 +7,17 @@
   justify-content: space-between;
 }
 
-.todo input,
-.todo textarea {
+.todoOpen input,
+.todoOpen textarea {
   background: #202124;
   font-size: 16px;
   border: none;
   outline: none;
 }
 
-.todo textarea {
+.todoOpen textarea {
   width: -webkit-fill-available;
+  height: 68px;
   resize: none;
   overflow-y: hidden;
   font-family: sans-serif;
