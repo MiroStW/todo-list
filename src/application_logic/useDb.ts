@@ -10,7 +10,7 @@ import {
 import { useSnackbar } from "components/helpers/snackbar/snackbar";
 import { Project, ProjectData, TodoData } from "../types";
 
-// Export firestore incase we need to access it directly
+// Export firestore instance
 export const firestore = getFirestore();
 
 // comment out this line to switch to production db
@@ -32,7 +32,7 @@ const createCollectionGroup = <T = DocumentData>(collectionName: string) => {
   return collectionGroup(firestore, collectionName) as CollectionReference<T>;
 };
 
-// export all your collections
+// export all collections
 export const projectsCol = createCollection<ProjectData>("projects");
 export const todosCol = createCollectionGroup<TodoData>("todos");
 export const projectTodosCol = (project: Project) =>
