@@ -7,6 +7,7 @@ import completeTodoCheckbox from "./completedTodoCheckbox";
 import { showPriority, openPrioPicker } from "./priorityPicker";
 import todoDueDateIcon from "./todoDueDateIcon";
 import showTodoTitle from "./todoTitle";
+import { router } from "application_logic/router";
 
 const showTodo = (todo: Todo) => {
   const todoList = todo.data.complete
@@ -30,7 +31,7 @@ const showTodo = (todo: Todo) => {
   todoDiv.appendChild(todoBarDiv);
 
   // dueDate icon
-  todoDueDateIcon(todo, todoBarDiv);
+  if (!router.matchLocation("/today")) todoDueDateIcon(todo, todoBarDiv);
 
   // todo title
   showTodoTitle(todo, todoBarDiv);

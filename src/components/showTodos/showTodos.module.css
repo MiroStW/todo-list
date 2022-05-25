@@ -3,12 +3,12 @@
 }
 
 .todoHeader {
-  display: grid;
-  grid-template-columns: auto fit-content(100%);
+  display: flex;
   align-items: center;
 }
 
 .todoHeader h2 {
+  flex: 1;
   margin: 0;
   padding-left: 8px;
 }

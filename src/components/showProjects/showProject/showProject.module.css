@@ -15,14 +15,6 @@
   padding: 8px;
 }
 
-.upcomingIcon {
-  color: red;
-}
-
-.inboxIcon {
-  color: lightskyblue;
-}
-
 .project:hover,
 .specialProject:hover {
   background: rgb(255 255 255 / 4%);

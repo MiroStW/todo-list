@@ -29,7 +29,7 @@ const showProject = (
     }
     case "showUpcoming": {
       const icon = addIcon(projectDiv, "date_range");
-      icon.classList.add(styles.upcomingIcon);
+      icon.classList.add(globalStyles.upcomingIcon);
       projectName.textContent = "Upcoming";
       projectDiv.addEventListener("click", () => {
         router.navigate("upcoming");
@@ -41,7 +41,7 @@ const showProject = (
       if (project) {
         if (isInbox(project)) {
           const icon = addIcon(projectDiv, "inbox");
-          icon.classList.add(styles.inboxIcon);
+          icon.classList.add(globalStyles.inboxIcon);
         }
         projectName.textContent = project.data.name;
         projectDiv.addEventListener("click", () => {
