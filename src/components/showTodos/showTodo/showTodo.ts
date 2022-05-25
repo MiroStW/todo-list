@@ -1,6 +1,7 @@
 import { deleteBtn } from "components/helpers/buttons/deleteBtn";
 import { Todo } from "types";
 import styles from "./showTodo.module.css";
+import globalStyles from "style.module.css";
 import todoListStyles from "../todoList/todoList.module.css";
 import { todoDetails } from "../todoDetails/todoDetails";
 import completeTodoCheckbox from "./completedTodoCheckbox";
@@ -41,9 +42,11 @@ const showTodo = (todo: Todo) => {
 
   todoDiv.addEventListener("mouseover", () => {
     todoBarDiv.classList.add(styles.active);
+    todoBarDiv.classList.add(globalStyles.active);
   });
   todoDiv.addEventListener("mouseout", () => {
     todoBarDiv.classList.remove(styles.active);
+    todoBarDiv.classList.remove(globalStyles.active);
   });
 
   todoBarDiv.addEventListener(
