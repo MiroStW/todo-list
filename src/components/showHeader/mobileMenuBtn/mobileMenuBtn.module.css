@@ -6,8 +6,19 @@
   padding: 8px;
 }
 
+.hideIcon {
+  display: none;
+}
+
 @media (max-width: 500px) {
   .mobileMenuBtn {
     display: flex;
   }
+}
+
+.open {
+  display: block !important;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
 }
