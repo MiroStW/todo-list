@@ -1,0 +1,13 @@
+.mobileMenuBtn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  padding: 8px;
+}
+
+@media (max-width: 500px) {
+  .mobileMenuBtn {
+    display: flex;
+  }
+}

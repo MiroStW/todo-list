@@ -4,7 +4,7 @@ const addIcon = (
   parent: Element,
   iconName: string,
   style: "filled" | "outlined" = "filled",
-  size: 18 | 20 = 18
+  size: 18 | 20 | 24 = 18
 ) => {
   const icon = document.createElement("span");
   if (style === "outlined") {

@@ -1,6 +1,7 @@
 import { auth } from "application_logic/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import styles from "./header.module.css";
+import mobileMenuBtn from "./mobileMenuBtn/mobileMenuBtn";
 import { userMenu } from "./userMenu/userMenu";
 
 const showHeader = () => {
@@ -12,15 +13,16 @@ const showHeader = () => {
 
   const headerTitle = document.createElement("div");
   headerTitle.classList.add(styles.headerTitle);
-  header.appendChild(headerTitle);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       headerTitle.textContent = `${user.displayName}'s todo system`;
-
+      mobileMenuBtn();
+      header.appendChild(headerTitle);
       userMenu();
     } else {
       headerTitle.textContent = "Todo system";
+      header.appendChild(headerTitle);
     }
   });
 };
