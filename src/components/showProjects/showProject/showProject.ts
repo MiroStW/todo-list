@@ -7,6 +7,7 @@ import { router } from "application_logic/router";
 import { isInbox } from "application_logic/storage";
 import addIcon from "components/helpers/buttons/addIcon";
 import renameBtn from "components/helpers/buttons/renameBtn";
+import { toggleMobileMenu } from "components/showHeader/mobileMenuBtn/mobileMenuBtn";
 
 const showProject = (
   action: "showProject" | "showToday" | "showUpcoming",
@@ -23,6 +24,7 @@ const showProject = (
       projectName.textContent = "Today";
       projectDiv.addEventListener("click", () => {
         router.navigate("today");
+        toggleMobileMenu();
         // showTodoArea("showToday");
       });
       break;
@@ -33,6 +35,7 @@ const showProject = (
       projectName.textContent = "Upcoming";
       projectDiv.addEventListener("click", () => {
         router.navigate("upcoming");
+        toggleMobileMenu();
         // showTodoArea("showUpcoming");
       });
       break;
@@ -46,6 +49,7 @@ const showProject = (
         projectName.textContent = project.data.name;
         projectDiv.addEventListener("click", () => {
           router.navigate(`projects/${project.ref.id}`);
+          toggleMobileMenu();
           // showTodoArea("showProject", project);
         });
       }

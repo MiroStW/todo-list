@@ -3,8 +3,17 @@ import styles from "./mobileMenuBtn.module.css";
 import headerStyles from "../header.module.css";
 import projectStyles from "components/showProjects/showProjects.module.css";
 
-const mobileMenuBtn = () => {
+const toggleMobileMenu = () => {
   const projectArea = document.querySelector(`.${projectStyles.projectarea}`)!;
+  const mobileMenuBtn = document.querySelector(`.${styles.mobileMenuBtn}`)!;
+
+  projectArea.classList.toggle(styles.open);
+  Array.from(mobileMenuBtn.children).forEach((icon) => {
+    icon.classList.toggle(styles.hideIcon);
+  });
+};
+
+const mobileMenuBtn = () => {
   const header = document.querySelector(`.${headerStyles.header}`)!;
 
   const btn = document.createElement("div");
@@ -15,11 +24,7 @@ const mobileMenuBtn = () => {
   const closeMenuIcon = addIcon(btn, "close", "filled", 24);
   closeMenuIcon.classList.add(styles.hideIcon);
 
-  btn.addEventListener("click", () => {
-    projectArea.classList.toggle(styles.open);
-    openMenuIcon.classList.toggle(styles.hideIcon);
-    closeMenuIcon.classList.toggle(styles.hideIcon);
-  });
+  btn.addEventListener("click", toggleMobileMenu);
 };
 
-export default mobileMenuBtn;
+export { mobileMenuBtn, toggleMobileMenu };
