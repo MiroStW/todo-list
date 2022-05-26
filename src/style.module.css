@@ -19,7 +19,7 @@ body {
   display: grid;
   grid-template-columns: 200px auto;
   grid-template-rows: max-content auto;
-  gap: 15px;
+  row-gap: 15px;
   max-width: 960px;
   margin: 0 auto;
   height: 100%;
@@ -98,4 +98,8 @@ button.primary:hover {
 
 .md-20 {
   font-size: 20px;
+}
+
+.md-24 {
+  font-size: 24px;
 }

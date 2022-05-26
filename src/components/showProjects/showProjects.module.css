@@ -1,3 +1,9 @@
+@media (max-width: 500px) {
+  .projectarea {
+    display: none;
+  }
+}
+
 .projectarea div:checked + label {
   background: #fff;
   color: #5a5243;
@@ -11,4 +17,5 @@
   padding-left: 10px;
   border-right: 1px solid #5f6368;
   height: 100%;
+  /* width: 189px; */
 }
