@@ -8,6 +8,8 @@ Live demo here: https://todo-list-app-5c488.web.app/
 - live updates & offline capability
 - fully typed app
 - no framework, plain javascript
+- responsive design
+- webpack & babel set up
 
 ## Run the app
 
