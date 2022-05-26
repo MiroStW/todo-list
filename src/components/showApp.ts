@@ -1,10 +1,12 @@
 import showHeader from "./showHeader/header";
 import todoStyles from "./showTodos/showTodos.module.css";
 import projectStyles from "./showProjects/showProjects.module.css";
+import styles from "style.module.css";
 import showLoader from "components/helpers/loader/loader";
 import { showSnackbar } from "components/helpers/snackbar/snackbar";
 
 const root = document.querySelector("#root")!;
+const main = document.createElement("div");
 const projectArea = document.createElement("div");
 const todoArea = document.createElement("div");
 const authArea = document.createElement("div");
@@ -14,19 +16,22 @@ const showApp = () => {
   // header
   showHeader();
 
+  main.classList.add(styles.main);
+  root.appendChild(main);
+
   // project list
   projectArea.classList.add(projectStyles.projectarea);
   projectArea.setAttribute("hidden", "true");
-  root.appendChild(projectArea);
+  main.appendChild(projectArea);
 
   // Todo list
   todoArea.classList.add(todoStyles.todoarea);
   todoArea.setAttribute("hidden", "true");
-  root.appendChild(todoArea);
+  main.appendChild(todoArea);
 
   // sign-in flow
   authArea.setAttribute("id", "firebaseui-auth-container");
-  root.appendChild(authArea);
+  main.appendChild(authArea);
 
   // show alerts
   showSnackbar();

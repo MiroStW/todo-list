@@ -16,10 +16,8 @@ body {
 }
 
 :global(#root) {
-  display: grid;
-  grid-template-columns: 200px auto;
-  grid-template-rows: max-content auto;
-  row-gap: 15px;
+  display: flex;
+  flex-flow: column;
   max-width: 960px;
   margin: 0 auto;
   height: 100%;
@@ -28,6 +26,13 @@ body {
 :global(#firebaseui-auth-container) {
   grid-column-end: -1;
   grid-column-start: 1;
+}
+
+.main {
+  flex: 1;
+  position: relative;
+  margin-top: 15px;
+  display: flex;
 }
 
 .hiddenIcon {
