@@ -63,7 +63,7 @@ module.exports = {
       filename: "404.html",
     }),
   ],
-  devtool: "eval-source-map",
+  devtool: "source-map",
   optimization: {
     moduleIds: "deterministic",
     runtimeChunk: "single",
