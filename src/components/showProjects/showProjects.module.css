@@ -19,3 +19,11 @@
   border-right: 1px solid #5f6368;
   height: 100%;
 }
+
+.projectList {
+  margin-bottom: 10px;
+}
+
+.separator {
+  height: 10px;
+}

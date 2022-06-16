@@ -1,10 +1,9 @@
 import { Project } from "types";
 import { isInbox } from "application_logic/storage";
-import styles from "./projectList.module.css";
-import showProjectsStyles from "../showProjects.module.css";
+import styles from "../showProjects.module.css";
 import { showProject } from "../showProject/showProject";
 
-const createSeparator = (parent: Element) => {
+const showSeparator = (parent: Element) => {
   const separator = document.createElement("div");
   separator.classList.add(styles.separator);
   parent.appendChild(separator);
@@ -19,13 +18,13 @@ const projectList = (parent: Element, projects: Project[]) => {
     projects.find((project) => isInbox(project))
   );
 
-  createSeparator(projectList);
+  showSeparator(parent);
 
   // special views
   showProject(parent, "showToday");
   showProject(parent, "showUpcoming");
 
-  createSeparator(projectList);
+  showSeparator(parent);
 
   // project list without inbox
   projects.forEach((project) => {

@@ -18,6 +18,7 @@ import { showTodoArea } from "components/showTodos/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import onlineStatus from "components/helpers/onlineStatus/onlineStatus";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
+import projectStyles from "components/showProjects/showProjects.module.css";
 
 // factory for projects
 const Project = (name: string, isInbox?: boolean): ProjectData => ({
@@ -89,7 +90,11 @@ const getInboxProject = async () => {
   }))[0];
 };
 
-const getProjects = (renderer: (projects: Project[]) => void) => {
+const getProjects = (
+  renderer: (parent: Element, projects: Project[]) => void
+) => {
+  const projectList = document.querySelector(`.${projectStyles.projectList}`)!;
+
   const q = query(
     projectsCol,
     where("ownerID", "==", auth.currentUser?.uid),
@@ -105,7 +110,7 @@ const getProjects = (renderer: (projects: Project[]) => void) => {
         data: doc.data(),
       });
     });
-    renderer(projects);
+    renderer(projectList, projects);
     currentProjects = projects;
     // snapshot.docChanges().map((change) => {
     //   if (change.type === "added") {

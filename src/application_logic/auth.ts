@@ -7,10 +7,10 @@ import {
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import uiConfig from "firebaseUI-config.js";
-import { showProjects } from "components/showProjects/showProjects";
 import { changeUI } from "components/showApp";
 import { getProjects } from "./storage";
 import { getRoutes } from "./router";
+import { projectList } from "components/showProjects/projectList/projectList";
 
 const auth = getAuth();
 // comment out this line to switch to production db
@@ -26,7 +26,7 @@ const authUser = () => {
       changeUI("projectArea", "show");
       changeUI("todoArea", "show");
 
-      getProjects(showProjects);
+      getProjects(projectList);
       getRoutes();
     } else {
       fbAuthUi.start("#firebaseui-auth-container", uiConfig);
