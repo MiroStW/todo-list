@@ -1,6 +1,8 @@
 import globalStyles from "style.module.css";
 
-const addIcon = (
+// change to showIcon
+// change properties to be passed inside an object
+const showIcon = (
   parent: Element,
   iconName: string,
   style: "filled" | "outlined" = "filled",
@@ -19,4 +21,4 @@ const addIcon = (
   return icon;
 };
 
-export default addIcon;
+export default showIcon;

@@ -1,7 +1,7 @@
 import { auth } from "application_logic/auth";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import styles from "./userMenu.module.css";
-import headerStyles from "../header.module.css";
+import headerStyles from "../showHeader.module.css";
 
 const userMenu = () => {
   const header = document.querySelector(`.${headerStyles.header}`)!;

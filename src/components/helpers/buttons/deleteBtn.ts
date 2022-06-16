@@ -1,14 +1,14 @@
 import { Project, Todo } from "types";
 import { deleteTodo, archiveProject } from "../../../application_logic/storage";
 import globalStyles from "style.module.css";
-import addIcon from "./addIcon";
+import showIcon from "./showIcon";
 
 const deleteBtn = (
   parent: Element,
   type: "project" | "todo",
   item: Project | Todo
 ) => {
-  const deleteBtn = addIcon(parent, "delete", "outlined");
+  const deleteBtn = showIcon(parent, "delete", "outlined");
   deleteBtn.classList.add(globalStyles.icon, globalStyles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
     type === "project"

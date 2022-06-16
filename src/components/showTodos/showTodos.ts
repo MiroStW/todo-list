@@ -14,7 +14,7 @@ import { Project } from "types";
 import { showTodoList } from "./todoList/todoList";
 import createItemBtn from "components/helpers/buttons/createItemBtn";
 import completedTodosBtn from "./showTodo/completedTodosBtn";
-import addIcon from "components/helpers/buttons/addIcon";
+import showIcon from "components/helpers/buttons/showIcon";
 
 const showTodoArea = async (
   action: "showCompleted" | "showProject" | "showToday" | "showUpcoming",
@@ -53,7 +53,7 @@ const showTodoArea = async (
       break;
     }
     case "showToday": {
-      const icon = addIcon(todoHeaderDiv, "star", "filled", 20);
+      const icon = showIcon(todoHeaderDiv, "star", "filled", 20);
       icon.classList.add(globalStyles.todayIcon);
       todoHeader.textContent = "Today";
       getTodosByDate("past", showTodoList);
@@ -61,7 +61,7 @@ const showTodoArea = async (
       break;
     }
     case "showUpcoming": {
-      const icon = addIcon(todoHeaderDiv, "date_range", "filled", 20);
+      const icon = showIcon(todoHeaderDiv, "date_range", "filled", 20);
       icon.classList.add(globalStyles.upcomingIcon);
       todoHeader.textContent = "Upcoming";
       getTodosByDate("future", showTodoList);
@@ -71,7 +71,7 @@ const showTodoArea = async (
     case "showProject": {
       if (!project) project = await getInboxProject();
       if (project.data.isInbox) {
-        const icon = addIcon(todoHeaderDiv, "inbox", "filled", 20);
+        const icon = showIcon(todoHeaderDiv, "inbox", "filled", 20);
         icon.classList.add(globalStyles.inboxIcon);
       }
       todoHeader.textContent = project.data.name;

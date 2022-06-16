@@ -1,6 +1,6 @@
 import { auth } from "application_logic/auth";
 import { onAuthStateChanged } from "firebase/auth";
-import styles from "./header.module.css";
+import styles from "./showHeader.module.css";
 import { mobileMenuBtn } from "./mobileMenuBtn/mobileMenuBtn";
 import { userMenu } from "./userMenu/userMenu";
 

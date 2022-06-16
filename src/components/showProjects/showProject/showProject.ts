@@ -5,7 +5,7 @@ import projectsStyles from "../projectList/projectList.module.css";
 import globalStyles from "style.module.css";
 import { router } from "application_logic/router";
 import { isInbox } from "application_logic/storage";
-import addIcon from "components/helpers/buttons/addIcon";
+import showIcon from "components/helpers/buttons/showIcon";
 import renameBtn from "components/helpers/buttons/renameBtn";
 import { toggleMobileMenu } from "components/showHeader/mobileMenuBtn/mobileMenuBtn";
 
@@ -19,7 +19,8 @@ const showProject = (
   const projectName = document.createElement("span");
   switch (action) {
     case "showToday": {
-      const icon = addIcon(projectDiv, "star");
+      const icon = showIcon(projectDiv, "star");
+      // could be handled by showIcon
       icon.classList.add(globalStyles.todayIcon);
       projectName.textContent = "Today";
       projectDiv.addEventListener("click", () => {
@@ -30,7 +31,7 @@ const showProject = (
       break;
     }
     case "showUpcoming": {
-      const icon = addIcon(projectDiv, "date_range");
+      const icon = showIcon(projectDiv, "date_range");
       icon.classList.add(globalStyles.upcomingIcon);
       projectName.textContent = "Upcoming";
       projectDiv.addEventListener("click", () => {
@@ -43,7 +44,7 @@ const showProject = (
     default: {
       if (project) {
         if (isInbox(project)) {
-          const icon = addIcon(projectDiv, "inbox");
+          const icon = showIcon(projectDiv, "inbox");
           icon.classList.add(globalStyles.inboxIcon);
         }
         projectName.textContent = project.data.name;
