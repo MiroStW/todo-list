@@ -10,10 +10,10 @@ import renameBtn from "components/helpers/buttons/renameBtn";
 import { toggleMobileMenu } from "components/showHeader/mobileMenuBtn/mobileMenuBtn";
 
 const showProject = (
+  parent: Element,
   action: "showProject" | "showToday" | "showUpcoming",
   project?: Project
 ) => {
-  const projectList = document.querySelector(`.${projectsStyles.projectList}`)!;
   const projectDiv = document.createElement("div");
 
   const projectName = document.createElement("span");
@@ -74,7 +74,7 @@ const showProject = (
     projectDiv.classList.add(styles.specialProject);
   }
 
-  projectList.appendChild(projectDiv);
+  parent.appendChild(projectDiv);
 };
 
 export { showProject };

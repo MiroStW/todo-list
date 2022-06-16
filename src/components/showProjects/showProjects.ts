@@ -1,27 +1,28 @@
 import createItemBtn from "components/helpers/buttons/createItemBtn";
-import { Project } from "types";
-import { projectList } from "./projectList/projectList";
 import styles from "./showProjects.module.css";
 
-const clearProjectArea = (projectArea: Element) => {
-  // clear displayed project Area
-  while (projectArea.childNodes.length > 0) {
-    projectArea.removeChild(projectArea.childNodes[0]);
-  }
-};
-
-const showProjects = (projects: Project[]) => {
-  const projectArea = document.querySelector(`.${styles.projectarea}`)!;
-  clearProjectArea(projectArea);
-
-  // header
+const showHeader = (parent: Element) => {
   const projectsHeader = document.createElement("h2");
   projectsHeader.textContent = "Projects";
-  projectArea.appendChild(projectsHeader);
+  parent.appendChild(projectsHeader);
+};
 
-  projectList(projects);
+const showProjectList = (parent: Element) => {
+  const projectList = document.createElement("div");
+  projectList.classList.add(styles.projectList);
+  parent.appendChild(projectList);
 
-  createItemBtn(projectArea, "project");
+  return projectList;
+};
+
+const showProjects = (parent: Element) => {
+  // pass over projectArea Element instead of find it again and maybe merge with showTodos?
+
+  showHeader(parent);
+
+  showProjectList(parent);
+
+  createItemBtn(parent, "project");
 };
 
 export { showProjects };

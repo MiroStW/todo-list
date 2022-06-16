@@ -10,17 +10,11 @@ const createSeparator = (parent: Element) => {
   parent.appendChild(separator);
 };
 
-const projectList = (projects: Project[]) => {
-  const projectArea = document.querySelector(
-    `.${showProjectsStyles.projectarea}`
-  )!;
-
-  const projectList = document.createElement("div");
-  projectList.classList.add(styles.projectList);
-  projectArea.appendChild(projectList);
-
+const projectList = (parent: Element, projects: Project[]) => {
+  parent.innerHTML = "";
   // inbox view
   showProject(
+    parent,
     "showProject",
     projects.find((project) => isInbox(project))
   );
@@ -28,14 +22,14 @@ const projectList = (projects: Project[]) => {
   createSeparator(projectList);
 
   // special views
-  showProject("showToday");
-  showProject("showUpcoming");
+  showProject(parent, "showToday");
+  showProject(parent, "showUpcoming");
 
   createSeparator(projectList);
 
   // project list without inbox
   projects.forEach((project) => {
-    if (!isInbox(project)) showProject("showProject", project);
+    if (!isInbox(project)) showProject(parent, "showProject", project);
   });
 };
 
