@@ -80,18 +80,6 @@ button.primary:hover {
 .md-inactive {
   color: rgba(255, 255, 255, 0.3);
 }
-
-.inboxIcon {
-  color: lightskyblue;
-}
-
-.todayIcon {
-  color: yellow;
-}
-
-.upcomingIcon {
-  color: red;
-}
 .icon {
   cursor: pointer;
   /* margin-left: 7px;

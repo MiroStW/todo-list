@@ -53,16 +53,26 @@ const showTodoArea = async (
       break;
     }
     case "showToday": {
-      const icon = showIcon(todoHeaderDiv, "star", "filled", 20);
-      icon.classList.add(globalStyles.todayIcon);
+      showIcon({
+        parent: todoHeaderDiv,
+        iconName: "star",
+        style: "filled",
+        size: 20,
+        color: "yellow",
+      });
       todoHeader.textContent = "Today";
       getTodosByDate("past", showTodoList);
       todoHeaderDiv.appendChild(todoHeader);
       break;
     }
     case "showUpcoming": {
-      const icon = showIcon(todoHeaderDiv, "date_range", "filled", 20);
-      icon.classList.add(globalStyles.upcomingIcon);
+      showIcon({
+        parent: todoHeaderDiv,
+        iconName: "date_range",
+        style: "filled",
+        size: 20,
+        color: "red",
+      });
       todoHeader.textContent = "Upcoming";
       getTodosByDate("future", showTodoList);
       todoHeaderDiv.appendChild(todoHeader);
@@ -71,8 +81,13 @@ const showTodoArea = async (
     case "showProject": {
       if (!project) project = await getInboxProject();
       if (project.data.isInbox) {
-        const icon = showIcon(todoHeaderDiv, "inbox", "filled", 20);
-        icon.classList.add(globalStyles.inboxIcon);
+        showIcon({
+          parent: todoHeaderDiv,
+          iconName: "inbox",
+          style: "filled",
+          size: 20,
+          color: "teal",
+        });
       }
       todoHeader.textContent = project.data.name;
       getTodosByProject(project, showTodoList, false);

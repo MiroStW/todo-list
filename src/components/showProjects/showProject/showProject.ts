@@ -19,9 +19,11 @@ const showProject = (
   const projectName = document.createElement("span");
   switch (action) {
     case "showToday": {
-      const icon = showIcon(projectDiv, "star");
-      // could be handled by showIcon
-      icon.classList.add(globalStyles.todayIcon);
+      showIcon({
+        parent: projectDiv,
+        iconName: "star",
+        color: "yellow",
+      });
       projectName.textContent = "Today";
       projectDiv.addEventListener("click", () => {
         router.navigate("today");
@@ -31,8 +33,11 @@ const showProject = (
       break;
     }
     case "showUpcoming": {
-      const icon = showIcon(projectDiv, "date_range");
-      icon.classList.add(globalStyles.upcomingIcon);
+      showIcon({
+        parent: projectDiv,
+        iconName: "date_range",
+        color: "red",
+      });
       projectName.textContent = "Upcoming";
       projectDiv.addEventListener("click", () => {
         router.navigate("upcoming");
@@ -44,8 +49,11 @@ const showProject = (
     default: {
       if (project) {
         if (isInbox(project)) {
-          const icon = showIcon(projectDiv, "inbox");
-          icon.classList.add(globalStyles.inboxIcon);
+          showIcon({
+            parent: projectDiv,
+            iconName: "inbox",
+            color: "teal",
+          });
         }
         projectName.textContent = project.data.name;
         projectDiv.addEventListener("click", () => {
