@@ -8,7 +8,7 @@ const deleteBtn = (
   type: "project" | "todo",
   item: Project | Todo
 ) => {
-  const deleteBtn = showIcon(parent, "delete", "outlined");
+  const deleteBtn = showIcon({ parent, iconName: "delete", style: "outlined" });
   deleteBtn.classList.add(globalStyles.icon, globalStyles.hiddenIcon);
   deleteBtn.addEventListener("click", () => {
     type === "project"

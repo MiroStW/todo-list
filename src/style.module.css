@@ -109,3 +109,23 @@ button.primary:hover {
 .md-24 {
   font-size: 24px;
 }
+
+.yellow {
+  color: yellow;
+}
+
+.red {
+  color: red;
+}
+
+.teal {
+  color: lightskyblue;
+}
+
+.orange {
+  color: #fb8c00;
+}
+
+.green {
+  color: #b0fb00;
+}

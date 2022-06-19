@@ -7,9 +7,16 @@ import globalStyles from "style.module.css";
 
 const showPriority = (parent: Element, priority: number) => {
   const flag = showIcon(
-    parent,
-    "flag",
-    priority === 4 ? "outlined" : undefined
+    priority === 4
+      ? {
+          parent,
+          iconName: "flag",
+          style: "outlined",
+        }
+      : {
+          parent,
+          iconName: "flag",
+        }
   );
   flag.classList.add(todoStyles[`prio${priority}`]);
   flag.classList.add(todoStyles.todoPriority);

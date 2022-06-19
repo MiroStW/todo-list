@@ -20,8 +20,18 @@ const mobileMenuBtn = () => {
   btn.classList.add(styles.mobileMenuBtn);
   header.appendChild(btn);
 
-  const openMenuIcon = showIcon(btn, "menu", "filled", 24);
-  const closeMenuIcon = showIcon(btn, "close", "filled", 24);
+  const openMenuIcon = showIcon({
+    parent: btn,
+    iconName: "menu",
+    style: "filled",
+    size: 24,
+  });
+  const closeMenuIcon = showIcon({
+    parent: btn,
+    iconName: "close",
+    style: "filled",
+    size: 24,
+  });
   closeMenuIcon.classList.add(styles.hideIcon);
 
   btn.addEventListener("click", toggleMobileMenu);
