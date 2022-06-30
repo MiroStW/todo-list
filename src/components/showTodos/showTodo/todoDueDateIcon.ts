@@ -6,7 +6,7 @@ import {
 } from "date-fns";
 import { Todo } from "types";
 import todoStyles from "./showTodo.module.css";
-import globalStyles from "style.module.css";
+import showIcon from "components/helpers/buttons/showIcon";
 
 const todoDueDateIcon = (todo: Todo, parent: Element) => {
   const icon = document.createElement("div");
@@ -21,12 +21,7 @@ const todoDueDateIcon = (todo: Todo, parent: Element) => {
     );
 
     if (daysToToday <= 0) {
-      icon.classList.add(
-        "material-icons",
-        globalStyles["md-18"],
-        globalStyles.todayIcon
-      );
-      icon.textContent = "star";
+      showIcon({ parent: icon, iconName: "star", color: "yellow" });
     } else if (daysToToday < 7) {
       icon.classList.add(todoStyles.todoDueDateIcon);
       icon.textContent = format(fromUnixTime(todo.data.dueDate.seconds), "E");
