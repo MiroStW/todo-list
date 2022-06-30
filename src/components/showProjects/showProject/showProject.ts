@@ -9,66 +9,72 @@ import showIcon from "components/helpers/buttons/showIcon";
 import renameBtn from "components/helpers/buttons/renameBtn";
 import { toggleMobileMenu } from "components/showHeader/mobileMenuBtn/mobileMenuBtn";
 
-const showProject = (
-  parent: Element,
-  action: "showProject" | "showToday" | "showUpcoming",
-  project?: Project
-) => {
+// get rid of switch
+// split up in 3 different functions
+// maybe extract to showProject(icon name, style, root)
+
+const showToday = (parent: Element) => {
   const projectDiv = document.createElement("div");
-
+  projectDiv.classList.add(styles.specialProject);
   const projectName = document.createElement("span");
-  switch (action) {
-    case "showToday": {
-      showIcon({
-        parent: projectDiv,
-        iconName: "star",
-        color: "yellow",
-      });
-      projectName.textContent = "Today";
-      projectDiv.addEventListener("click", () => {
-        router.navigate("today");
-        toggleMobileMenu();
-        // showTodoArea("showToday");
-      });
-      break;
-    }
-    case "showUpcoming": {
-      showIcon({
-        parent: projectDiv,
-        iconName: "date_range",
-        color: "red",
-      });
-      projectName.textContent = "Upcoming";
-      projectDiv.addEventListener("click", () => {
-        router.navigate("upcoming");
-        toggleMobileMenu();
-        // showTodoArea("showUpcoming");
-      });
-      break;
-    }
-    default: {
-      if (project) {
-        if (isInbox(project)) {
-          showIcon({
-            parent: projectDiv,
-            iconName: "inbox",
-            color: "teal",
-          });
-        }
-        projectName.textContent = project.data.name;
-        projectDiv.addEventListener("click", () => {
-          router.navigate(`projects/${project.ref.id}`);
-          toggleMobileMenu();
-          // showTodoArea("showProject", project);
-        });
-      }
-      break;
-    }
-  }
-  projectDiv.appendChild(projectName);
+  projectName.textContent = "Today";
 
+  showIcon({
+    parent: projectDiv,
+    iconName: "star",
+    color: "yellow",
+  });
+
+  projectDiv.addEventListener("click", () => {
+    router.navigate("today");
+    toggleMobileMenu();
+  });
+
+  projectDiv.appendChild(projectName);
+  parent.appendChild(projectDiv);
+};
+
+const showUpcoming = (parent: Element) => {
+  const projectDiv = document.createElement("div");
+  projectDiv.classList.add(styles.specialProject);
+  const projectName = document.createElement("span");
+  projectName.textContent = "Upcoming";
+
+  showIcon({
+    parent: projectDiv,
+    iconName: "date_range",
+    color: "red",
+  });
+
+  projectDiv.addEventListener("click", () => {
+    router.navigate("upcoming");
+    toggleMobileMenu();
+  });
+
+  projectDiv.appendChild(projectName);
+  parent.appendChild(projectDiv);
+};
+
+const showProject = (parent: Element, project: Project) => {
+  const projectDiv = document.createElement("div");
+  const projectName = document.createElement("span");
+  projectName.textContent = project.data.name;
+
+  if (isInbox(project)) {
+    projectDiv.classList.add(styles.specialProject);
+
+    showIcon({
+      parent: projectDiv,
+      iconName: "inbox",
+      color: "teal",
+    });
+
+    projectDiv.appendChild(projectName);
+  }
   // buttons only for projects & if != inbox
-  if (project && !isInbox(project)) {
+  else {
+    projectDiv.appendChild(projectName);
+
     projectDiv.classList.add(styles.project);
     renameBtn(projectDiv, project);
     deleteBtn(projectDiv, "project", project);
@@ -78,11 +84,14 @@ const showProject = (
     projectDiv.addEventListener("mouseout", () => {
       projectDiv.classList.remove(globalStyles.active);
     });
-  } else {
-    projectDiv.classList.add(styles.specialProject);
   }
+
+  projectDiv.addEventListener("click", () => {
+    router.navigate(`projects/${project.ref.id}`);
+    toggleMobileMenu();
+  });
 
   parent.appendChild(projectDiv);
 };
 
-export { showProject };
+export { showProject, showToday, showUpcoming };
