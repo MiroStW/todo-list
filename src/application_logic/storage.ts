@@ -84,15 +84,22 @@ const getInboxProject = async () => {
     where("isInbox", "==", true)
   );
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((inbox) => ({
+
+  let inbox = snapshot.docs.map((inbox) => ({
     ref: inbox.ref,
     data: inbox.data(),
   }))[0];
+
+  // for new users inbox project needs to be added first
+  if (!snapshot.size) inbox = await addInboxProject();
+
+  return inbox;
 };
 
 const getProjects = (
   renderer: (parent: Element, projects: Project[]) => void
 ) => {
+  // TODO: is there a better way to this?
   const projectList = document.querySelector(`.${projectStyles.projectList}`)!;
 
   const q = query(
@@ -102,45 +109,48 @@ const getProjects = (
     orderBy("createdDate")
   );
 
-  unsubscribe = onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
-    const projects: Project[] = [];
-    snapshot.forEach((doc) => {
-      projects.push({
-        ref: doc.ref,
-        data: doc.data(),
+  unsubscribe = onSnapshot(
+    q,
+    { includeMetadataChanges: true },
+    async (snapshot) => {
+      const projects: Project[] = [];
+      snapshot.forEach((doc) => {
+        projects.push({
+          ref: doc.ref,
+          data: doc.data(),
+        });
       });
-    });
-    renderer(projectList, projects);
-    currentProjects = projects;
-    // snapshot.docChanges().map((change) => {
-    //   if (change.type === "added") {
-    //     projects.push({
-    //       ref: change.doc.ref,
-    //       data: change.doc.data(),
-    //     } as Project);
-    //   }
+      renderer(projectList, projects);
+      currentProjects = projects;
+      // snapshot.docChanges().map((change) => {
+      //   if (change.type === "added") {
+      //     projects.push({
+      //       ref: change.doc.ref,
+      //       data: change.doc.data(),
+      //     } as Project);
+      //   }
 
-    //   if (change.type === "modified") {
-    //     const i = projects.findIndex(
-    //       (project) => project.ref.id === change.doc.id
-    //     );
-    //     projects[i] = {
-    //       ref: change.doc.ref,
-    //       data: change.doc.data(),
-    //     };
-    //   }
+      //   if (change.type === "modified") {
+      //     const i = projects.findIndex(
+      //       (project) => project.ref.id === change.doc.id
+      //     );
+      //     projects[i] = {
+      //       ref: change.doc.ref,
+      //       data: change.doc.data(),
+      //     };
+      //   }
 
-    //   if (change.type === "removed") {
-    //     const i = projects.findIndex(
-    //       (project) => project.ref.id === change.doc.id
-    //     );
-    //     projects.splice(i);
-    //   }
-    // });
+      //   if (change.type === "removed") {
+      //     const i = projects.findIndex(
+      //       (project) => project.ref.id === change.doc.id
+      //     );
+      //     projects.splice(i);
+      //   }
+      // });
 
-    if (!snapshot.size) addInboxProject();
-    onlineStatus(snapshot);
-  });
+      onlineStatus(snapshot);
+    }
+  );
 };
 
 const getTodosByProject = (
