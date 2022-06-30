@@ -12,6 +12,7 @@ const showToday = (parent: Element) => {
   const projectDiv = document.createElement("div");
   projectDiv.classList.add(styles.specialProject);
   const projectName = document.createElement("span");
+  projectName.classList.add(styles.projectName);
   projectName.textContent = "Today";
 
   showIcon({
@@ -33,6 +34,7 @@ const showUpcoming = (parent: Element) => {
   const projectDiv = document.createElement("div");
   projectDiv.classList.add(styles.specialProject);
   const projectName = document.createElement("span");
+  projectName.classList.add(styles.projectName);
   projectName.textContent = "Upcoming";
 
   showIcon({
@@ -53,6 +55,7 @@ const showUpcoming = (parent: Element) => {
 const showProject = (parent: Element, project: Project) => {
   const projectDiv = document.createElement("div");
   const projectName = document.createElement("span");
+  projectName.classList.add(styles.projectName);
   projectName.textContent = project.data.name;
 
   if (isInbox(project)) {

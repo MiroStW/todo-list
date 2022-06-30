@@ -15,6 +15,24 @@
   padding: 8px;
 }
 
+@media (max-width: 500px) {
+  .project,
+  .specialProject {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.projectName {
+  margin-right: 36px;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.project:hover .projectName {
+  margin-right: 0;
+}
+
 .project:hover,
 .specialProject:hover {
   background: rgb(255 255 255 / 4%);

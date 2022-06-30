@@ -53,6 +53,7 @@ h2 {
   font-size: 20px;
   font-weight: 500;
   padding: 10px 0;
+  word-break: break-word;
 }
 
 button {
