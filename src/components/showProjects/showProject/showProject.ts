@@ -1,17 +1,12 @@
 import { deleteBtn } from "components/helpers/buttons/deleteBtn";
 import { Project } from "types";
 import styles from "./showProject.module.css";
-import projectsStyles from "../projectList/projectList.module.css";
 import globalStyles from "style.module.css";
 import { router } from "application_logic/router";
 import { isInbox } from "application_logic/storage";
 import showIcon from "components/helpers/buttons/showIcon";
 import renameBtn from "components/helpers/buttons/renameBtn";
 import { toggleMobileMenu } from "components/showHeader/mobileMenuBtn/mobileMenuBtn";
-
-// get rid of switch
-// split up in 3 different functions
-// maybe extract to showProject(icon name, style, root)
 
 const showToday = (parent: Element) => {
   const projectDiv = document.createElement("div");

@@ -8,7 +8,6 @@ import {
   getInboxProject,
 } from "application_logic/storage";
 import styles from "./showTodos.module.css";
-import globalStyles from "style.module.css";
 import todoListStyles from "./todoList/todoList.module.css";
 import { Project } from "types";
 import { showTodoList } from "./todoList/todoList";
