@@ -97,11 +97,9 @@ const getInboxProject = async () => {
 };
 
 const getProjects = (
+  parent: Element,
   renderer: (parent: Element, projects: Project[]) => void
 ) => {
-  // TODO: is there a better way to this?
-  const projectList = document.querySelector(`.${projectStyles.projectList}`)!;
-
   const q = query(
     projectsCol,
     where("ownerID", "==", auth.currentUser?.uid),
@@ -120,7 +118,7 @@ const getProjects = (
           data: doc.data(),
         });
       });
-      renderer(projectList, projects);
+      renderer(parent, projects);
       currentProjects = projects;
       // snapshot.docChanges().map((change) => {
       //   if (change.type === "added") {
