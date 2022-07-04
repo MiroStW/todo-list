@@ -13,7 +13,8 @@ const showSeparator = (parent: Element) => {
   parent.appendChild(separator);
 };
 
-const projectList = (parent: Element, projects: Project[]) => {
+//TODO rename "showProjectList"
+const showProjectList = (parent: Element, projects: Project[]) => {
   parent.innerHTML = "";
   // inbox view
   showProject(parent, projects.find((project) => isInbox(project))!);
@@ -32,4 +33,4 @@ const projectList = (parent: Element, projects: Project[]) => {
   });
 };
 
-export { projectList };
+export { showProjectList };
