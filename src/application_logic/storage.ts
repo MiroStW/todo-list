@@ -17,28 +17,31 @@ import { auth } from "./auth";
 import { showTodoArea } from "components/showTodos/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import showOnlineStatus from "components/helpers/onlineStatus/showOnlineStatus";
-import { projectsCol, projectTodosCol, todosCol } from "./useDb";
-import projectStyles from "components/showProjects/showProjects.module.css";
+import { projects, todosOfProject, todos } from "./useDb";
 
 // factory for projects
-const Project = (name: string, isInbox?: boolean): ProjectData => ({
-  name,
-  createdDate: Timestamp.now(),
-  ownerID: auth.currentUser?.uid!,
-  ...(isInbox && { isInbox: true }),
-  isArchived: false,
-});
+const Project = (name: string, isInbox?: boolean): ProjectData => {
+  return {
+    name,
+    createdDate: Timestamp.now(),
+    ownerID: auth.currentUser?.uid!,
+    ...(isInbox && { isInbox: true }),
+    isArchived: false,
+  };
+};
 
 // factory for todos
-const Todo = (name: string): TodoData => ({
-  name,
-  complete: false,
-  description: "",
-  dueDate: null,
-  priority: 4,
-  createdDate: Timestamp.now(),
-  ownerID: auth.currentUser?.uid!,
-});
+const Todo = (name: string): TodoData => {
+  return {
+    name,
+    complete: false,
+    description: "",
+    dueDate: null,
+    priority: 4,
+    createdDate: Timestamp.now(),
+    ownerID: auth.currentUser?.uid!,
+  };
+};
 
 let currentProjects: Project[] = [];
 let unsubscribe: Unsubscribe;
@@ -50,11 +53,12 @@ const getProjectOfTodo = (todo: Todo) => {
         ref: doc.ref,
         data: doc.data(),
       } as Project)
-  )};
+  );
+};
 
 const getProjectById = async (id: string) => {
   const q = query(
-    projectsCol,
+    projects,
     where("ownerID", "==", auth.currentUser?.uid),
     where(documentId(), "==", id)
   );
@@ -67,7 +71,7 @@ const getProjectById = async (id: string) => {
 
 // add inbox project for new users
 const addInboxProject = () => {
-  return addDoc(projectsCol, Project("Inbox", true)).then((newInboxRef) =>
+  return addDoc(projects, Project("Inbox", true)).then((newInboxRef) =>
     getDoc(newInboxRef).then(
       (documentSnapshot) =>
         ({
@@ -75,11 +79,12 @@ const addInboxProject = () => {
           data: documentSnapshot.data(),
         } as Project)
     )
-  )};
+  );
+};
 
 const getInboxProject = async () => {
   const q = query(
-    projectsCol,
+    projects,
     where("ownerID", "==", auth.currentUser?.uid),
     where("isInbox", "==", true)
   );
@@ -101,7 +106,7 @@ const getProjects = (
   renderer: (parent: Element, projects: Project[]) => void
 ) => {
   const q = query(
-    projectsCol,
+    projects,
     where("ownerID", "==", auth.currentUser?.uid),
     where("isArchived", "==", false), // doesnt filter for docs without the field
     orderBy("createdDate")
@@ -157,7 +162,7 @@ const getTodosByProject = (
   completed: boolean = false
 ) => {
   const q = query(
-    projectTodosCol(project),
+    todosOfProject(project),
     where("complete", "==", completed),
     where("ownerID", "==", auth.currentUser?.uid),
     orderBy("createdDate")
@@ -180,7 +185,7 @@ const getTodosByDate = (
   renderer: (todos: Todo[], showCompleted: boolean) => void
 ) => {
   const q = query(
-    todosCol,
+    todos,
     where("dueDate", type === "past" ? "<=" : ">", new Date()),
     where("complete", "==", false),
     where("ownerID", "==", auth.currentUser?.uid),
@@ -202,7 +207,7 @@ const getTodosByDate = (
 const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);
   if (name && type === "project") {
-    addDoc(projectsCol, Project(name))
+    addDoc(projects, Project(name))
       .then((ref) => getDoc(ref))
       .then((doc) => {
         const project = {
@@ -213,7 +218,7 @@ const createItem = (type: "project" | "todo", parentProject?: Project) => {
       });
   }
   if (name && parentProject && type === "todo") {
-    addDoc(projectTodosCol(parentProject), Todo(name));
+    addDoc(todosOfProject(parentProject), Todo(name));
   }
 };
 

@@ -33,7 +33,7 @@ const createCollectionGroup = <T = DocumentData>(collectionName: string) => {
 };
 
 // export all collections
-export const projectsCol = createCollection<ProjectData>("projects");
-export const todosCol = createCollectionGroup<TodoData>("todos");
-export const projectTodosCol = (project: Project) =>
+export const projects = createCollection<ProjectData>("projects");
+export const todos = createCollectionGroup<TodoData>("todos");
+export const todosOfProject = (project: Project) =>
   createCollection<TodoData>(`projects/${project.ref.id}/todos`);
