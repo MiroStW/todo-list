@@ -8,7 +8,7 @@ import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import uiConfig from "firebaseUI-config.js";
 
-interface authUserProps {
+interface AuthUserProps {
   onUserLogin: () => void;
   onUserLoggedOut: () => void;
 }
@@ -18,7 +18,7 @@ const auth = getAuth();
 // connectAuthEmulator(auth, "http://localhost:9099");
 const fbAuthUi = new firebaseui.auth.AuthUI(auth);
 
-const authUser = ({ onUserLogin, onUserLoggedOut }: authUserProps) => {
+const authUser = ({ onUserLogin, onUserLoggedOut }: AuthUserProps) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // console.log(user);
