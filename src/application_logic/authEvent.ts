@@ -4,15 +4,14 @@ import projectStyles from "components/showProjects/showProjects.module.css";
 import { showProjectList } from "components/showProjects/showProjectList/showProjectList";
 import { createRoutes } from "./router";
 
+const getProjectListDiv = () =>
+  document.querySelector(`.${projectStyles.projectList}`)!;
+
 const onUserLoggedIn = () => {
   changeUI("authArea", "hide");
   changeUI("projectArea", "show");
   changeUI("todoArea", "show");
-  // TODO: extract getProjectListDom
-  const projectListDom = document.querySelector(
-    `.${projectStyles.projectList}`
-  )!;
-  getProjects(projectListDom, showProjectList);
+  getProjects(getProjectListDiv(), showProjectList);
   createRoutes();
 };
 
