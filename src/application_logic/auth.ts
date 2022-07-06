@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
-import uiConfig from "firebaseUI-config.js";
+import { uiConfig } from "firebaseUI-config.js";
 
 const auth = getAuth();
 // comment out this line to switch to production db

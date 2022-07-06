@@ -1,4 +1,4 @@
-import createItemBtn from "components/helpers/buttons/createItemBtn";
+import { createItemBtn } from "components/helpers/buttons/createItemBtn";
 import styles from "./showProjects.module.css";
 
 const showHeader = (parent: Element) => {
