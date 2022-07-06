@@ -11,9 +11,9 @@ import styles from "./showTodos.module.css";
 import todoListStyles from "./todoList/todoList.module.css";
 import { Project } from "types";
 import { showTodoList } from "./todoList/todoList";
-import createItemBtn from "components/helpers/buttons/createItemBtn";
-import completedTodosBtn from "./showTodo/completedTodosBtn";
-import showIcon from "components/helpers/buttons/showIcon";
+import { createItemBtn } from "components/helpers/buttons/createItemBtn";
+import { completedTodosBtn } from "./showTodo/completedTodosBtn";
+import { showIcon } from "components/helpers/buttons/showIcon";
 
 const showTodoArea = async (
   action: "showCompleted" | "showProject" | "showToday" | "showUpcoming",

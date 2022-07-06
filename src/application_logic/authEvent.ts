@@ -1,8 +1,8 @@
 import { changeUI } from "components/showApp";
-import { getRoutes } from "./router";
 import { getProjects } from "./storage";
 import projectStyles from "components/showProjects/showProjects.module.css";
 import { showProjectList } from "components/showProjects/showProjectList/showProjectList";
+import { createRoutes } from "./router";
 
 const onUserLoggedIn = () => {
   changeUI("authArea", "hide");
@@ -13,7 +13,7 @@ const onUserLoggedIn = () => {
     `.${projectStyles.projectList}`
   )!;
   getProjects(projectListDom, showProjectList);
-  getRoutes();
+  createRoutes();
 };
 
 const onUserLoggedOut = () => {

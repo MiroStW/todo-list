@@ -1,6 +1,6 @@
 import { renameItem } from "application_logic/storage";
 import { Project } from "types";
-import showIcon from "./showIcon";
+import { showIcon } from "./showIcon";
 import globalStyles from "style.module.css";
 
 const renameBtn = (parent: Element, project: Project) => {
@@ -12,4 +12,4 @@ const renameBtn = (parent: Element, project: Project) => {
   parent.appendChild(renameBtn);
 };
 
-export default renameBtn;
+export { renameBtn };

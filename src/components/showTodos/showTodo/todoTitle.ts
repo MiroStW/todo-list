@@ -8,4 +8,4 @@ const showTodoTitle = (todo: Todo, parent: Element) => {
   parent.appendChild(todoTitleDiv);
 };
 
-export default showTodoTitle;
+export { showTodoTitle };

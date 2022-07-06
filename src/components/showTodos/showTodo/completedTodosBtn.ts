@@ -24,4 +24,4 @@ const completedTodosBtn = (
   parent.appendChild(btn);
 };
 
-export default completedTodosBtn;
+export { completedTodosBtn };

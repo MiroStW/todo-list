@@ -28,4 +28,4 @@ const showIcon = ({
   return icon;
 };
 
-export default showIcon;
+export { showIcon };

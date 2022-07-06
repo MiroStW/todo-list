@@ -15,4 +15,4 @@ const showOnlineStatus = (snapshot: QuerySnapshot) => {
   }
 };
 
-export default showOnlineStatus;
+export { showOnlineStatus };

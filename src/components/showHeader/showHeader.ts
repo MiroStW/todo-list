@@ -27,4 +27,4 @@ const showHeader = () => {
   });
 };
 
-export default showHeader;
+export { showHeader };

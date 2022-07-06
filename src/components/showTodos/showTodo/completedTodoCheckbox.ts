@@ -33,4 +33,4 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
   });
 };
 
-export default completeTodoCheckbox;
+export { completeTodoCheckbox };

@@ -34,7 +34,7 @@ const firebaseConfig = {
   messagingSenderId: "YOURSENDERID",
   appId: "YOURAPPID"
 };
-export default firebaseConfig;
+export {firebaseConfig};
 ```
 
 4. Add database

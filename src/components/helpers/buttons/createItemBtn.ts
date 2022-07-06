@@ -25,4 +25,4 @@ const createItemBtn = (
   }
 };
 
-export default createItemBtn;
+export { createItemBtn };

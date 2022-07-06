@@ -6,7 +6,7 @@ import {
 } from "date-fns";
 import { Todo } from "types";
 import todoStyles from "./showTodo.module.css";
-import showIcon from "components/helpers/buttons/showIcon";
+import { showIcon } from "components/helpers/buttons/showIcon";
 
 const todoDueDateIcon = (todo: Todo, parent: Element) => {
   const icon = document.createElement("div");
@@ -43,4 +43,4 @@ const todoDueDateIcon = (todo: Todo, parent: Element) => {
   parent.appendChild(icon);
 };
 
-export default todoDueDateIcon;
+export { todoDueDateIcon };

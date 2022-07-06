@@ -11,4 +11,4 @@ const editTodoTitle = (todo: Todo, parent: Element) => {
   return nameInput;
 };
 
-export default editTodoTitle;
+export { editTodoTitle };

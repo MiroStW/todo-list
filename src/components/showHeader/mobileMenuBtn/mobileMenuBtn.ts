@@ -1,4 +1,4 @@
-import showIcon from "components/helpers/buttons/showIcon";
+import { showIcon } from "components/helpers/buttons/showIcon";
 import styles from "./mobileMenuBtn.module.css";
 import headerStyles from "../showHeader.module.css";
 import projectStyles from "components/showProjects/showProjects.module.css";

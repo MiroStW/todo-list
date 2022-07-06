@@ -1,7 +1,7 @@
 import { Project, Todo } from "types";
 import { deleteTodo, archiveProject } from "../../../application_logic/storage";
 import globalStyles from "style.module.css";
-import showIcon from "./showIcon";
+import { showIcon } from "./showIcon";
 
 const deleteBtn = (
   parent: Element,

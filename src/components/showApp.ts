@@ -1,8 +1,8 @@
-import showHeader from "./showHeader/showHeader";
+import { showHeader } from "./showHeader/showHeader";
 import todoStyles from "./showTodos/showTodos.module.css";
 import projectStyles from "./showProjects/showProjects.module.css";
 import styles from "style.module.css";
-import showLoader from "components/helpers/loader/loader";
+import { showLoader } from "components/helpers/loader/loader";
 import { showSnackbar } from "components/helpers/snackbar/snackbar";
 import { showProjects } from "./showProjects/showProjects";
 

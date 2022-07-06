@@ -37,4 +37,4 @@ const uiConfig = {
   // privacyPolicyUrl: "<your-privacy-policy-url>",
 };
 
-export default uiConfig;
+export { uiConfig };

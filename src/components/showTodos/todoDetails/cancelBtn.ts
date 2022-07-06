@@ -14,4 +14,4 @@ const cancelBtn = (todo: Todo, parent: Element) => {
   parent.appendChild(cancelBtn);
 };
 
-export default cancelBtn;
+export { cancelBtn };

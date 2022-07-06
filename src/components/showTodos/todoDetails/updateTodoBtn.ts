@@ -39,4 +39,4 @@ const createUpdateTodoBtn = (
   parent.appendChild(saveBtn);
 };
 
-export default createUpdateTodoBtn;
+export { createUpdateTodoBtn };

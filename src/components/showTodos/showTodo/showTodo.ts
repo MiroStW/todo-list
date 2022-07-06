@@ -4,10 +4,10 @@ import styles from "./showTodo.module.css";
 import globalStyles from "style.module.css";
 import todoListStyles from "../todoList/todoList.module.css";
 import { todoDetails } from "../todoDetails/todoDetails";
-import completeTodoCheckbox from "./completedTodoCheckbox";
+import { completeTodoCheckbox } from "./completedTodoCheckbox";
 import { showPriority, openPrioPicker } from "./priorityPicker";
-import todoDueDateIcon from "./todoDueDateIcon";
-import showTodoTitle from "./todoTitle";
+import { todoDueDateIcon } from "./todoDueDateIcon";
+import { showTodoTitle } from "./todoTitle";
 import { router } from "application_logic/router";
 
 const showTodo = (todo: Todo) => {

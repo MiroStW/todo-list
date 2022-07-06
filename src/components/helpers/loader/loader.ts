@@ -16,4 +16,4 @@ const showLoader = () => {
   return loader;
 };
 
-export default showLoader;
+export { showLoader };

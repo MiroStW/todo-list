@@ -3,9 +3,9 @@ import flatpickr from "flatpickr";
 import { Todo } from "types";
 import styles from "./todoDetails.module.css";
 import showTodoStyles from "../showTodo/showTodo.module.css";
-import editTodoTitle from "./editTodoTitle";
-import updateTodoBtn from "./updateTodoBtn";
-import cancelBtn from "./cancelBtn";
+import { editTodoTitle } from "./editTodoTitle";
+import { createUpdateTodoBtn } from "./updateTodoBtn";
+import { cancelBtn } from "./cancelBtn";
 
 const todoDetails = (todo: Todo, todoDiv: Element) => {
   todoDiv.classList.add(showTodoStyles.active);
@@ -55,7 +55,7 @@ const todoDetails = (todo: Todo, todoDiv: Element) => {
   const todoBtnBar = document.createElement("div");
   todoBtnBar.classList.add(styles.todoBtnBar);
 
-  updateTodoBtn(
+  createUpdateTodoBtn(
     todo,
     todoBtnBar,
     nameInput,
