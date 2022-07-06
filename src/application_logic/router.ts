@@ -1,7 +1,7 @@
 import { changeUI } from "components/showApp";
 import { showTodoArea } from "components/showTodos/showTodos";
 import Navigo from "navigo";
-import { currentProjects, getProjectById, unsubscribe } from "./storage";
+import { getProjectById, unsubscribe } from "./storage";
 
 const router = new Navigo("/").hooks({
   leave(done, match) {
@@ -14,16 +14,9 @@ const router = new Navigo("/").hooks({
 const createRoutes = () => {
   router
     .on("/projects/:id", (match) => {
-      // move logic to getProjectById
-      const openedProject = currentProjects.find(
-        (project) => project.ref.id === match!.data!.id
-      );
-      if (openedProject) showTodoArea("showProject", openedProject);
-      else {
-        getProjectById(match!.data!.id)
-          .then((project) => showTodoArea("showProject", project))
-          .then(() => changeUI("loader", "hide"));
-      }
+      getProjectById(match!.data!.id)
+        .then((project) => showTodoArea("showProject", project))
+        .then(() => changeUI("loader", "hide"));
     })
     .on("/today", () => {
       showTodoArea("showToday").then(() => changeUI("loader", "hide"));

@@ -12,6 +12,7 @@ import {
   orderBy,
   Unsubscribe,
   documentId,
+  getDocsFromCache,
 } from "firebase/firestore";
 import { auth } from "./auth";
 import { showTodoArea } from "components/showTodos/showTodos";
@@ -43,7 +44,6 @@ const Todo = (name: string): TodoData => {
   };
 };
 
-let currentProjects: Project[] = [];
 let unsubscribe: Unsubscribe;
 
 const getProjectOfTodo = (todo: Todo) => {
@@ -62,6 +62,14 @@ const getProjectById = async (id: string) => {
     where("ownerID", "==", auth.currentUser?.uid),
     where(documentId(), "==", id)
   );
+
+  const cachedSnapshot = await getDocsFromCache(q);
+  if (cachedSnapshot.size)
+    return cachedSnapshot.docs.map((project) => ({
+      ref: project.ref,
+      data: project.data(),
+    }))[0];
+
   const snapshot = await getDocs(q);
   return snapshot.docs.map((project) => ({
     ref: project.ref,
@@ -124,7 +132,6 @@ const getProjects = (
         });
       });
       renderer(parent, projects);
-      currentProjects = projects;
       // snapshot.docChanges().map((change) => {
       //   if (change.type === "added") {
       //     projects.push({
@@ -280,7 +287,6 @@ const archiveProject = (project: Project) => {
 const isInbox = (project: Project) => project.data.isInbox === true;
 
 export {
-  currentProjects,
   unsubscribe,
   getProjectById,
   getTodosByDate,
