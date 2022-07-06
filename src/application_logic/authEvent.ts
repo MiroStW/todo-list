@@ -4,7 +4,7 @@ import { getProjects } from "./storage";
 import projectStyles from "components/showProjects/showProjects.module.css";
 import { showProjectList } from "components/showProjects/showProjectList/showProjectList";
 
-const onUserLogin = () => {
+const onUserLoggedIn = () => {
   changeUI("authArea", "hide");
   changeUI("projectArea", "show");
   changeUI("todoArea", "show");
@@ -22,4 +22,4 @@ const onUserLoggedOut = () => {
   changeUI("todoArea", "hide");
 };
 
-export { onUserLoggedOut, onUserLogin };
+export { onUserLoggedOut, onUserLoggedIn };

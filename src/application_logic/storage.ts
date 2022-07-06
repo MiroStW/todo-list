@@ -16,7 +16,7 @@ import {
 import { auth } from "./auth";
 import { showTodoArea } from "components/showTodos/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
-import onlineStatus from "components/helpers/onlineStatus/onlineStatus";
+import showOnlineStatus from "components/helpers/onlineStatus/showOnlineStatus";
 import { projectsCol, projectTodosCol, todosCol } from "./useDb";
 import projectStyles from "components/showProjects/showProjects.module.css";
 
@@ -43,14 +43,14 @@ const Todo = (name: string): TodoData => ({
 let currentProjects: Project[] = [];
 let unsubscribe: Unsubscribe;
 
-const getProjectOfTodo = (todo: Todo) =>
-  getDoc(todo.ref.parent.parent as DocumentReference).then(
+const getProjectOfTodo = (todo: Todo) => {
+  return getDoc(todo.ref.parent.parent as DocumentReference).then(
     (doc) =>
       ({
         ref: doc.ref,
         data: doc.data(),
       } as Project)
-  );
+  )};
 
 const getProjectById = async (id: string) => {
   const q = query(
@@ -66,16 +66,16 @@ const getProjectById = async (id: string) => {
 };
 
 // add inbox project for new users
-const addInboxProject = () =>
-  addDoc(projectsCol, Project("Inbox", true)).then((newInbox) =>
-    getDoc(newInbox).then(
+const addInboxProject = () => {
+  return addDoc(projectsCol, Project("Inbox", true)).then((newInboxRef) =>
+    getDoc(newInboxRef).then(
       (documentSnapshot) =>
         ({
           ref: documentSnapshot.ref,
           data: documentSnapshot.data(),
         } as Project)
     )
-  );
+  )};
 
 const getInboxProject = async () => {
   const q = query(
@@ -146,7 +146,7 @@ const getProjects = (
       //   }
       // });
 
-      onlineStatus(snapshot);
+      showOnlineStatus(snapshot);
     }
   );
 };

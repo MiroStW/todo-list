@@ -13,17 +13,17 @@ const auth = getAuth();
 // connectAuthEmulator(auth, "http://localhost:9099");
 const fbAuthUi = new firebaseui.auth.AuthUI(auth);
 
-interface authUserProps {
-  onUserLogin: () => void;
+interface AuthUserProps {
+  onUserLoggedIn: () => void;
   onUserLoggedOut: () => void;
 }
 
-const authUser = ({ onUserLogin, onUserLoggedOut }: authUserProps) => {
+const authUser = ({ onUserLoggedIn, onUserLoggedOut }: AuthUserProps) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // console.log(user);
       // console.log(auth);
-      onUserLogin();
+      onUserLoggedIn();
     } else {
       fbAuthUi.start("#firebaseui-auth-container", uiConfig);
       onUserLoggedOut();

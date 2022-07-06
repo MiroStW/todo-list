@@ -11,9 +11,10 @@ const router = new Navigo("/").hooks({
   },
 });
 
-const getRoutes = () => {
+const createRoutes = () => {
   router
     .on("/projects/:id", (match) => {
+      // move logic to getProjectById
       const openedProject = currentProjects.find(
         (project) => project.ref.id === match!.data!.id
       );
@@ -35,4 +36,4 @@ const getRoutes = () => {
     })
     .resolve();
 };
-export { router, getRoutes };
+export { router, createRoutes };
