@@ -166,11 +166,11 @@ const getProjects = (
 const getTodosByProject = (
   project: Project,
   renderer: (todos: Todo[], showCompleted: boolean) => void,
-  completed: boolean = false
+  isCompleted: boolean = false
 ) => {
   const q = query(
     todosOfProject(project),
-    where("complete", "==", completed),
+    where("complete", "==", isCompleted),
     where("ownerID", "==", auth.currentUser?.uid),
     orderBy("createdDate")
   );
@@ -183,7 +183,7 @@ const getTodosByProject = (
         data: doc.data(),
       });
     });
-    renderer(todos, completed);
+    renderer(todos, isCompleted);
   });
 };
 
