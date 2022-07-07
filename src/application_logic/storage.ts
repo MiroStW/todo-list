@@ -229,11 +229,14 @@ const createItem = (type: "project" | "todo", parentProject?: Project) => {
   }
 };
 
-const renameItem = (item: Project) => {
-  const newName = prompt(`What is the new name of ${item.data.name}?`);
+const renameProject = (project: Project) => {
+  const newName = prompt(
+    `What is the new name of ${project.data.name}?`,
+    project.data.name
+  );
   // TODO:  differentiate between project & todo updates
   if (newName) {
-    updateDoc(item.ref, {
+    updateDoc(project.ref, {
       name: newName,
     });
   }
@@ -297,7 +300,7 @@ export {
   isInbox,
   deleteTodo,
   archiveProject,
-  renameItem,
+  renameProject,
   updateTodo,
   updateCompleted,
   updatePriority,
