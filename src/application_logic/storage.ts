@@ -13,6 +13,8 @@ import {
   Unsubscribe,
   documentId,
   getDocsFromCache,
+  FirestoreDataConverter,
+  QueryDocumentSnapshot,
 } from "firebase/firestore";
 import { auth } from "./auth";
 import { showTodoArea } from "components/showTodos/showTodos";
@@ -42,6 +44,33 @@ const Todo = (name: string): TodoData => {
     createdDate: Timestamp.now(),
     ownerID: auth.currentUser?.uid!,
   };
+};
+
+// function firestoreConverter(): FirestoreDataConverter<Project|Todo> {
+//   return {
+//     toFirestore: (object: Project | Todo) => {
+//       return object.data;
+//     },
+//     fromFirestore: (snapshot: QueryDocumentSnapshot<ProjectData|TodoData> ): Project | Todo => {
+//       // const data = snapshot.data(options);
+//       return {
+//         ref: snapshot.ref,
+//         data: snapshot.data(),
+//       };
+//     },
+//   };};
+
+const projectConverter: FirestoreDataConverter<Project> = {
+  toFirestore: (project: Project) => {
+    return project.data;
+  },
+  fromFirestore: (snapshot: QueryDocumentSnapshot<ProjectData>): Project => {
+    // const data = snapshot.data(options);
+    return {
+      ref: snapshot.ref,
+      data: snapshot.data(),
+    };
+  },
 };
 
 let unsubscribe: Unsubscribe;
@@ -118,7 +147,7 @@ const getProjects = (
     where("ownerID", "==", auth.currentUser?.uid),
     where("isArchived", "==", false), // doesnt filter for docs without the field
     orderBy("createdDate")
-  );
+  ).withConverter(projectConverter);
 
   unsubscribe = onSnapshot(
     q,
@@ -126,10 +155,7 @@ const getProjects = (
     async (snapshot) => {
       const projects: Project[] = [];
       snapshot.forEach((doc) => {
-        projects.push({
-          ref: doc.ref,
-          data: doc.data(),
-        });
+        projects.push(doc.data());
       });
       renderer(parent, projects);
       // snapshot.docChanges().map((change) => {
