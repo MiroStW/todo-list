@@ -1,4 +1,7 @@
-import { updatePriority, getProjectOfTodo } from "application_logic/storage";
+import {
+  updatePriority,
+  getProjectOfTodo,
+} from "application_logic/storage/storage";
 import { showIcon } from "components/helpers/buttons/showIcon";
 import { Todo } from "types";
 import { showTodoArea } from "../showTodos";

@@ -6,7 +6,7 @@ import {
   getTodosByProject,
   getTodosByDate,
   getInboxProject,
-} from "application_logic/storage";
+} from "application_logic/storage/storage";
 import styles from "./showTodos.module.css";
 import todoListStyles from "./todoList/todoList.module.css";
 import { Project } from "types";

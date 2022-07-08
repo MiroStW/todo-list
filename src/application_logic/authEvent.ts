@@ -1,5 +1,5 @@
 import { changeUI } from "components/showApp";
-import { getProjects } from "./storage";
+import { getProjects } from "./storage/storage";
 import projectStyles from "components/showProjects/showProjects.module.css";
 import { showProjectList } from "components/showProjects/showProjectList/showProjectList";
 import { createRoutes } from "./router";

@@ -1,7 +1,7 @@
 import { changeUI } from "components/showApp";
 import { showTodoArea } from "components/showTodos/showTodos";
 import Navigo from "navigo";
-import { getProjectById, unsubscribe } from "./storage";
+import { getProjectById, unsubscribe } from "./storage/storage";
 
 const router = new Navigo("/").hooks({
   leave(done, match) {

@@ -1,4 +1,7 @@
-import { getProjectOfTodo, updateCompleted } from "application_logic/storage";
+import {
+  getProjectOfTodo,
+  updateCompleted,
+} from "application_logic/storage/storage";
 import { Todo } from "types";
 import { showTodoArea } from "../showTodos";
 import todoDetailsStyles from "../todoDetails/todoDetails.module.css";

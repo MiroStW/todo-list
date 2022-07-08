@@ -1,5 +1,5 @@
 import { Project } from "types";
-import { isInbox } from "application_logic/storage";
+import { isInbox } from "application_logic/storage/storage";
 import styles from "../showProjects.module.css";
 import {
   showProject,

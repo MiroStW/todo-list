@@ -1,5 +1,8 @@
 import { Project, Todo } from "types";
-import { deleteTodo, archiveProject } from "../../../application_logic/storage";
+import {
+  deleteTodo,
+  archiveProject,
+} from "../../../application_logic/storage/storage";
 import globalStyles from "style.module.css";
 import { showIcon } from "./showIcon";
 

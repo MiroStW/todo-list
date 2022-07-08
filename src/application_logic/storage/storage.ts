@@ -13,7 +13,7 @@ import {
   documentId,
   getDocsFromCache,
 } from "firebase/firestore";
-import { auth } from "./auth";
+import { auth } from "../auth";
 import { showTodoArea } from "components/showTodos/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import { showOnlineStatus } from "components/helpers/onlineStatus/showOnlineStatus";

@@ -1,4 +1,4 @@
-import { updateTodo } from "application_logic/storage";
+import { updateTodo } from "application_logic/storage/storage";
 import { Timestamp } from "firebase/firestore";
 import { Todo } from "types";
 import globalStyles from "style.module.css";
