@@ -1,4 +1,4 @@
-import { renameProject } from "application_logic/storage";
+import { renameProject } from "application_logic/storage/updateItems";
 import { Project } from "types";
 import { showIcon } from "./showIcon";
 import globalStyles from "style.module.css";

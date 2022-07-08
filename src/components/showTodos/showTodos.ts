@@ -5,13 +5,13 @@ import "flatpickr/dist/themes/dark.css";
 import {
   getTodosByProject,
   getTodosByDate,
-  getInboxProject,
-} from "application_logic/storage";
+} from "application_logic/storage/getTodos";
+import { getInboxProject } from "application_logic/storage/getInboxProject";
 import styles from "./showTodos.module.css";
 import todoListStyles from "./todoList/todoList.module.css";
 import { Project } from "types";
 import { showTodoList } from "./todoList/todoList";
-import { createItemBtn } from "components/helpers/buttons/createItemBtn";
+import { createTodoBtn } from "components/helpers/buttons/createItemBtn";
 import { completedTodosBtn } from "./showTodo/completedTodosBtn";
 import { showIcon } from "components/helpers/buttons/showIcon";
 
@@ -90,7 +90,7 @@ const showTodoArea = async (
       }
       todoHeader.textContent = project.data.name;
       getTodosByProject(project, showTodoList, false);
-      createItemBtn(todoArea, "todo", project);
+      createTodoBtn(todoArea, project);
       todoHeaderDiv.appendChild(todoHeader);
       completedTodosBtn(project, todoListCompleted, todoHeaderDiv);
       break;

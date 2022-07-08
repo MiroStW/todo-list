@@ -8,7 +8,7 @@ import {
   enableMultiTabIndexedDbPersistence,
 } from "firebase/firestore";
 import { useSnackbar } from "components/helpers/snackbar/snackbar";
-import { Project, ProjectData, TodoData } from "../types";
+import { Project, ProjectData, TodoData } from "../../types";
 
 // Export firestore instance
 export const firestore = getFirestore();

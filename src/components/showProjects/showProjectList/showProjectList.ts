@@ -1,11 +1,11 @@
 import { Project } from "types";
-import { isInbox } from "application_logic/storage";
 import styles from "../showProjects.module.css";
 import {
   showProject,
   showToday,
   showUpcoming,
 } from "../showProject/showProject";
+import { isInbox } from "application_logic/storage/getInboxProject";
 
 const showSeparator = (parent: Element) => {
   const separator = document.createElement("div");
