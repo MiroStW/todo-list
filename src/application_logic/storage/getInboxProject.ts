@@ -1,7 +1,7 @@
 import { auth } from "application_logic/auth";
 import { addDoc, query, where, getDocs } from "firebase/firestore";
 import { Project } from "types";
-import { createProjectData } from "./createItem";
+import { createProjectData } from "./factory";
 import { projectConverter } from "./firestoreConverter";
 import { projects } from "./useDb";
 
