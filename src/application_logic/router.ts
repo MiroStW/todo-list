@@ -9,6 +9,7 @@ const router = new Navigo("/").hooks({
     // unsubscribe last subscribtion before opening next
     unsubscribeProjects();
     unsubscribeTodos();
+    changeUI("loader", "show");
     done();
   },
 });
