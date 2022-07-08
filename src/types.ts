@@ -28,7 +28,12 @@ export interface TodoData {
   ownerID: string;
 }
 
-export interface Todo {
-  ref: DocumentReference<TodoData>;
-  data: TodoData;
+export class Todo {
+  readonly ref: DocumentReference<TodoData>;
+  readonly data: TodoData;
+
+  constructor(ref: DocumentReference<TodoData>, data: TodoData) {
+    this.ref = ref;
+    this.data = data;
+  }
 }
