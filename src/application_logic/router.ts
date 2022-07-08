@@ -15,19 +15,22 @@ const router = new Navigo("/").hooks({
 
 const createRoutes = () => {
   router
-    .on("/projects/:id", (match) => {
-      getProjectById(match!.data!.id)
-        .then((project) => showTodoArea("showProject", project))
-        .then(() => changeUI("loader", "hide"));
+    .on("/projects/:id", async (match) => {
+      const project = await getProjectById(match!.data!.id);
+      await showTodoArea("showProject", project);
+      changeUI("loader", "hide");
     })
-    .on("/today", () => {
-      showTodoArea("showToday").then(() => changeUI("loader", "hide"));
+    .on("/today", async () => {
+      await showTodoArea("showToday");
+      changeUI("loader", "hide");
     })
-    .on("/upcoming", () => {
-      showTodoArea("showUpcoming").then(() => changeUI("loader", "hide"));
+    .on("/upcoming", async () => {
+      await showTodoArea("showUpcoming");
+      changeUI("loader", "hide");
     })
-    .on(() => {
-      showTodoArea("showProject").then(() => changeUI("loader", "hide"));
+    .on(async () => {
+      await showTodoArea("showProject");
+      changeUI("loader", "hide");
     })
     .resolve();
 };

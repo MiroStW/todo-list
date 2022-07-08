@@ -17,10 +17,11 @@ import { projects } from "./useDb";
 
 let unsubscribeProjects: Unsubscribe;
 
-const getProjectOfTodo = (todo: Todo) => {
-  return getDoc(
+const getProjectOfTodo = async (todo: Todo) => {
+  const project = await getDoc(
     todo.ref.parent.parent!.withConverter(projectConverter)
-  ).then((project) => project.data());
+  );
+  return project.data();
 };
 
 const getProjectById = async (id: string) => {

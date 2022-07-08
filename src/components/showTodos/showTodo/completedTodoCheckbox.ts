@@ -19,12 +19,11 @@ const completeTodoCheckbox = (todo: Todo, parent: Element) => {
   if (todo.data.complete) todoCompleteLabel.textContent = "done";
   parent.appendChild(todoCompleteLabel);
 
-  todoComplete.addEventListener("click", () => {
+  todoComplete.addEventListener("click", async () => {
     updateCompleted(todo);
     if (!document.querySelector(`.${todoDetailsStyles.todoOpen}`)) {
-      getProjectOfTodo(todo).then((project) => {
-        showTodoArea("showProject", project);
-      });
+      const project = await getProjectOfTodo(todo);
+      showTodoArea("showProject", project);
     } else {
       todoComplete.toggleAttribute("checked");
       todoCompleteLabel.textContent === "done"

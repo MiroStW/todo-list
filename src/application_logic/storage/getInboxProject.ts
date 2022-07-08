@@ -6,11 +6,10 @@ import { projectConverter } from "./firestoreConverter";
 import { projects } from "./useDb";
 
 // add inbox project for new users
-const createInboxProject = () => {
+const createInboxProject = async () => {
   const projectData = createProjectData("Inbox", true);
-  return addDoc(projects, projectData).then(
-    (newInboxRef) => new Project(newInboxRef, projectData)
-  );
+  const newInboxRef = await addDoc(projects, projectData);
+  return new Project(newInboxRef, projectData);
 };
 
 const getInboxProject = async () => {

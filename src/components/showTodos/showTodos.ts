@@ -45,9 +45,8 @@ const showTodoArea = async (
   switch (action) {
     case "showCompleted": {
       if (!project) {
-        getInboxProject().then((inbox) => {
-          getTodosByProject(inbox, showTodoList, true);
-        });
+        const inbox = await getInboxProject();
+        getTodosByProject(inbox, showTodoList, true);
       } else getTodosByProject(project, showTodoList, true);
       break;
     }

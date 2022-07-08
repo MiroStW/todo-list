@@ -28,11 +28,10 @@ const showPriority = (parent: Element, priority: number) => {
 
 const priorityBtn = (todo: Todo, parent: Element, newPriority: number) => {
   const btn = showPriority(parent, newPriority);
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click", async () => {
     updatePriority(todo, newPriority);
-    getProjectOfTodo(todo).then((project) => {
-      showTodoArea("showProject", project);
-    });
+    const project = await getProjectOfTodo(todo);
+    showTodoArea("showProject", project);
     parent.remove();
   });
 };
