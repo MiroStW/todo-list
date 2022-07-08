@@ -5,7 +5,6 @@ import {
   where,
   Timestamp,
   updateDoc,
-  DocumentReference,
   getDoc,
   deleteDoc,
   onSnapshot,
@@ -13,15 +12,13 @@ import {
   Unsubscribe,
   documentId,
   getDocsFromCache,
-  FirestoreDataConverter,
-  QueryDocumentSnapshot,
-  QuerySnapshot,
 } from "firebase/firestore";
 import { auth } from "./auth";
 import { showTodoArea } from "components/showTodos/showTodos";
 import { Project, ProjectData, Todo, TodoData } from "types";
 import { showOnlineStatus } from "components/helpers/onlineStatus/showOnlineStatus";
 import { projects, todosOfProject, todos } from "./useDb";
+import { projectConverter, todoConverter } from "./firestoreConverter";
 
 // factory for projects
 const createProjectData = (name: string, isInbox?: boolean): ProjectData => {
@@ -47,36 +44,12 @@ const createTodoData = (name: string): TodoData => {
   };
 };
 
-type LocalDocumentData<D> = { ref: DocumentReference<D>, data: D };
-
-function createFirestoreConverter<T>(): FirestoreDataConverter<LocalDocumentData<T>> {
-  return {
-    toFirestore: (localData: LocalDocumentData<T>) => {
-      return localData.data;
-    },
-    fromFirestore: (snapshot: QueryDocumentSnapshot<T>): LocalDocumentData<T> => {
-      // const data = snapshot.data(options);
-      return {
-        ref: snapshot.ref,
-        data: snapshot.data(),
-      };
-    },
-  };
-};
-
-const projectConverter = createFirestoreConverter<ProjectData>();
-const todoConverter = createFirestoreConverter<TodoData>();
-
 let unsubscribe: Unsubscribe;
 
 const getProjectOfTodo = (todo: Todo) => {
-  return getDoc(todo.ref.parent.parent as DocumentReference).then(
-    (doc) =>
-    ({
-      ref: doc.ref,
-      data: doc.data(),
-    } as Project)
-  );
+  return getDoc(
+    todo.ref.parent.parent!.withConverter(projectConverter)
+  ).then((project) => project.data());
 };
 
 const getProjectById = async (id: string) => {
@@ -87,8 +60,7 @@ const getProjectById = async (id: string) => {
   ).withConverter(projectConverter);
 
   const cachedSnapshot = await getDocsFromCache(q);
-  if (cachedSnapshot.size > 0)
-    return cachedSnapshot.docs[0].data();
+  if (cachedSnapshot.size > 0) return cachedSnapshot.docs[0].data();
 
   const snapshot = await getDocs(q);
   return snapshot.docs[0].data();
@@ -97,10 +69,9 @@ const getProjectById = async (id: string) => {
 // add inbox project for new users
 const addInboxProject = () => {
   const projectData = createProjectData("Inbox", true);
-  return addDoc(projects, projectData).then((newInboxRef) => (new Project(
-    newInboxRef,
-    projectData
-  )))
+  return addDoc(projects, projectData).then(
+    (newInboxRef) => new Project(newInboxRef, projectData)
+  );
 };
 
 const getInboxProject = async () => {
@@ -108,7 +79,7 @@ const getInboxProject = async () => {
     projects,
     where("ownerID", "==", auth.currentUser?.uid),
     where("isInbox", "==", true)
-  ).withConverter(createFirestoreConverter<ProjectData>());
+  ).withConverter(projectConverter);
   const snapshot = await getDocs(q);
 
   // for new users inbox project needs to be added first
@@ -178,15 +149,12 @@ const getTodosByProject = (
     where("complete", "==", isCompleted),
     where("ownerID", "==", auth.currentUser?.uid),
     orderBy("createdDate")
-  );
+  ).withConverter(todoConverter);
 
   unsubscribe = onSnapshot(q, (snapshot) => {
     const todos: Todo[] = [];
     snapshot.forEach((doc) => {
-      todos.push({
-        ref: doc.ref,
-        data: doc.data(),
-      });
+      todos.push(doc.data());
     });
     renderer(todos, isCompleted);
   });
@@ -202,15 +170,12 @@ const getTodosByDate = (
     where("complete", "==", false),
     where("ownerID", "==", auth.currentUser?.uid),
     orderBy("dueDate")
-  );
+  ).withConverter(todoConverter);
 
   unsubscribe = onSnapshot(q, (snapshot) => {
     const todos: Todo[] = [];
     snapshot.forEach((doc) => {
-      todos.push({
-        ref: doc.ref,
-        data: doc.data(),
-      });
+      todos.push(doc.data());
     });
     renderer(todos, false);
   });
@@ -219,18 +184,16 @@ const getTodosByDate = (
 const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);
   if (name && type === "project") {
-    addDoc(projects, createProjectData(name))
-      .then((ref) => getDoc(ref))
-      .then((doc) => {
-        const project = {
-          ref: doc.ref,
-          data: doc.data()!,
-        };
-        showTodoArea("showProject", project);
-      });
+    const projectData = createProjectData(name);
+    addDoc(projects, projectData)
+      .then((newRef) => new Project(newRef, projectData))
+      .then((project) => showTodoArea("showProject", project));
   }
   if (name && parentProject && type === "todo") {
-    addDoc(todosOfProject(parentProject), createTodoData(name));
+    const todoData = createTodoData(name);
+    addDoc(todosOfProject(parentProject), todoData).then(
+      (newRef) => new Todo(newRef, todoData)
+    );
   }
 };
 
