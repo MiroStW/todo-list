@@ -1,32 +1,8 @@
 import { showTodoArea } from "components/showTodos/showTodos";
-import { Timestamp, addDoc } from "firebase/firestore";
-import { auth } from "../auth";
-import { ProjectData, TodoData, Project, Todo } from "types";
+import { addDoc } from "firebase/firestore";
 import { projects, todosOfProject } from "./useDb";
-
-// factory for projects
-const createProjectData = (name: string, isInbox?: boolean): ProjectData => {
-  return {
-    name,
-    createdDate: Timestamp.now(),
-    ownerID: auth.currentUser?.uid!,
-    ...(isInbox && { isInbox: true }),
-    isArchived: false,
-  };
-};
-
-// factory for todos
-const createTodoData = (name: string): TodoData => {
-  return {
-    name,
-    complete: false,
-    description: "",
-    dueDate: null,
-    priority: 4,
-    createdDate: Timestamp.now(),
-    ownerID: auth.currentUser?.uid!,
-  };
-};
+import { createProjectData, createTodoData } from "./factory";
+import { Project, Todo } from "types";
 
 const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);
@@ -44,4 +20,4 @@ const createItem = (type: "project" | "todo", parentProject?: Project) => {
   }
 };
 
-export { createItem, createProjectData };
+export { createItem };
