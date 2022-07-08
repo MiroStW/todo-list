@@ -1,4 +1,4 @@
-import { createItem } from "application_logic/storage/storage";
+import { createItem } from "application_logic/storage/createItem";
 import { Project } from "types";
 import globalStyles from "style.module.css";
 

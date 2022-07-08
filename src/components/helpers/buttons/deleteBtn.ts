@@ -2,7 +2,7 @@ import { Project, Todo } from "types";
 import {
   deleteTodo,
   archiveProject,
-} from "../../../application_logic/storage/storage";
+} from "../../../application_logic/storage/deleteItems";
 import globalStyles from "style.module.css";
 import { showIcon } from "./showIcon";
 

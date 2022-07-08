@@ -1,12 +1,10 @@
-import {
-  updatePriority,
-  getProjectOfTodo,
-} from "application_logic/storage/storage";
 import { showIcon } from "components/helpers/buttons/showIcon";
 import { Todo } from "types";
 import { showTodoArea } from "../showTodos";
 import todoStyles from "./showTodo.module.css";
 import globalStyles from "style.module.css";
+import { getProjectOfTodo } from "application_logic/storage/getProjects";
+import { updatePriority } from "application_logic/storage/updateItems";
 
 const showPriority = (parent: Element, priority: number) => {
   const flag = showIcon(

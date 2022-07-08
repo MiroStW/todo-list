@@ -1,12 +1,14 @@
 import { changeUI } from "components/showApp";
 import { showTodoArea } from "components/showTodos/showTodos";
 import Navigo from "navigo";
-import { getProjectById, unsubscribe } from "./storage/storage";
+import { getProjectById, unsubscribeProjects } from "./storage/getProjects";
+import { unsubscribeTodos } from "./storage/getTodos";
 
 const router = new Navigo("/").hooks({
   leave(done, match) {
     // unsubscribe last subscribtion before opening next
-    unsubscribe();
+    unsubscribeProjects();
+    unsubscribeTodos();
     done();
   },
 });

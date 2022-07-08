@@ -5,8 +5,8 @@ import "flatpickr/dist/themes/dark.css";
 import {
   getTodosByProject,
   getTodosByDate,
-  getInboxProject,
-} from "application_logic/storage/storage";
+} from "application_logic/storage/getTodos";
+import { getInboxProject } from "application_logic/storage/getInboxProject";
 import styles from "./showTodos.module.css";
 import todoListStyles from "./todoList/todoList.module.css";
 import { Project } from "types";

@@ -1,4 +1,4 @@
-import { getProjectOfTodo } from "application_logic/storage/storage";
+import { getProjectOfTodo } from "application_logic/storage/getProjects";
 import { Todo } from "types";
 import { showTodoArea } from "../showTodos";
 
