@@ -1,28 +1,28 @@
-import { createItem } from "application_logic/storage/createItem";
+import {
+  createProject,
+  createTodo,
+} from "application_logic/storage/createItem";
 import { Project } from "types";
 import globalStyles from "style.module.css";
 
-const createItemBtn = (
-  parent: Element,
-  type: "project" | "todo",
-  project?: Project
-) => {
+const createProjectBtn = (parent: Element) => {
   const newBtn = document.createElement("button");
   newBtn.classList.add(globalStyles.primary);
-  if (type === "project") {
-    newBtn.textContent = "new project";
-    newBtn.addEventListener("click", () => {
-      createItem(type);
-    });
-    parent.appendChild(newBtn);
-  }
-  if (type === "todo") {
-    newBtn.textContent = "new todo";
-    newBtn.addEventListener("click", () => {
-      createItem(type, project);
-    });
-    parent.appendChild(newBtn);
-  }
+  newBtn.textContent = "new project";
+  newBtn.addEventListener("click", () => {
+    createProject();
+  });
+  parent.appendChild(newBtn);
 };
 
-export { createItemBtn };
+const createTodoBtn = (parent: Element, project: Project) => {
+  const newBtn = document.createElement("button");
+  newBtn.classList.add(globalStyles.primary);
+  newBtn.textContent = "new todo";
+  newBtn.addEventListener("click", () => {
+    createTodo(project);
+  });
+  parent.appendChild(newBtn);
+};
+
+export { createProjectBtn, createTodoBtn };
