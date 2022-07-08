@@ -15,6 +15,7 @@ import {
   getDocsFromCache,
   FirestoreDataConverter,
   QueryDocumentSnapshot,
+  QuerySnapshot,
 } from "firebase/firestore";
 import { auth } from "./auth";
 import { showTodoArea } from "components/showTodos/showTodos";
@@ -23,7 +24,7 @@ import { showOnlineStatus } from "components/helpers/onlineStatus/showOnlineStat
 import { projects, todosOfProject, todos } from "./useDb";
 
 // factory for projects
-const Project = (name: string, isInbox?: boolean): ProjectData => {
+const createProjectData = (name: string, isInbox?: boolean): ProjectData => {
   return {
     name,
     createdDate: Timestamp.now(),
@@ -34,7 +35,7 @@ const Project = (name: string, isInbox?: boolean): ProjectData => {
 };
 
 // factory for todos
-const Todo = (name: string): TodoData => {
+const createTodoData = (name: string): TodoData => {
   return {
     name,
     complete: false,
@@ -46,42 +47,35 @@ const Todo = (name: string): TodoData => {
   };
 };
 
-// function firestoreConverter(): FirestoreDataConverter<Project|Todo> {
-//   return {
-//     toFirestore: (object: Project | Todo) => {
-//       return object.data;
-//     },
-//     fromFirestore: (snapshot: QueryDocumentSnapshot<ProjectData|TodoData> ): Project | Todo => {
-//       // const data = snapshot.data(options);
-//       return {
-//         ref: snapshot.ref,
-//         data: snapshot.data(),
-//       };
-//     },
-//   };};
+type LocalDocumentData<D> = { ref: DocumentReference<D>, data: D };
 
-const projectConverter: FirestoreDataConverter<Project> = {
-  toFirestore: (project: Project) => {
-    return project.data;
-  },
-  fromFirestore: (snapshot: QueryDocumentSnapshot<ProjectData>): Project => {
-    // const data = snapshot.data(options);
-    return {
-      ref: snapshot.ref,
-      data: snapshot.data(),
-    };
-  },
+function createFirestoreConverter<T>(): FirestoreDataConverter<LocalDocumentData<T>> {
+  return {
+    toFirestore: (localData: LocalDocumentData<T>) => {
+      return localData.data;
+    },
+    fromFirestore: (snapshot: QueryDocumentSnapshot<T>): LocalDocumentData<T> => {
+      // const data = snapshot.data(options);
+      return {
+        ref: snapshot.ref,
+        data: snapshot.data(),
+      };
+    },
+  };
 };
+
+const projectConverter = createFirestoreConverter<ProjectData>();
+const todoConverter = createFirestoreConverter<TodoData>();
 
 let unsubscribe: Unsubscribe;
 
 const getProjectOfTodo = (todo: Todo) => {
   return getDoc(todo.ref.parent.parent as DocumentReference).then(
     (doc) =>
-      ({
-        ref: doc.ref,
-        data: doc.data(),
-      } as Project)
+    ({
+      ref: doc.ref,
+      data: doc.data(),
+    } as Project)
   );
 };
 
@@ -90,33 +84,23 @@ const getProjectById = async (id: string) => {
     projects,
     where("ownerID", "==", auth.currentUser?.uid),
     where(documentId(), "==", id)
-  );
+  ).withConverter(projectConverter);
 
   const cachedSnapshot = await getDocsFromCache(q);
-  if (cachedSnapshot.size)
-    return cachedSnapshot.docs.map((project) => ({
-      ref: project.ref,
-      data: project.data(),
-    }))[0];
+  if (cachedSnapshot.size > 0)
+    return cachedSnapshot.docs[0].data();
 
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((project) => ({
-    ref: project.ref,
-    data: project.data(),
-  }))[0];
+  return snapshot.docs[0].data();
 };
 
 // add inbox project for new users
 const addInboxProject = () => {
-  return addDoc(projects, Project("Inbox", true)).then((newInboxRef) =>
-    getDoc(newInboxRef).then(
-      (documentSnapshot) =>
-        ({
-          ref: documentSnapshot.ref,
-          data: documentSnapshot.data(),
-        } as Project)
-    )
-  );
+  const projectData = createProjectData("Inbox", true);
+  return addDoc(projects, projectData).then((newInboxRef) => (new Project(
+    newInboxRef,
+    projectData
+  )))
 };
 
 const getInboxProject = async () => {
@@ -124,18 +108,13 @@ const getInboxProject = async () => {
     projects,
     where("ownerID", "==", auth.currentUser?.uid),
     where("isInbox", "==", true)
-  );
+  ).withConverter(createFirestoreConverter<ProjectData>());
   const snapshot = await getDocs(q);
 
-  let inbox = snapshot.docs.map((inbox) => ({
-    ref: inbox.ref,
-    data: inbox.data(),
-  }))[0];
-
   // for new users inbox project needs to be added first
-  if (!snapshot.size) inbox = await addInboxProject();
+  if (!snapshot.size) return await addInboxProject();
 
-  return inbox;
+  return snapshot.docs[0].data();
 };
 
 const getProjects = (
@@ -240,7 +219,7 @@ const getTodosByDate = (
 const createItem = (type: "project" | "todo", parentProject?: Project) => {
   const name = prompt(`What is the title of the new ${type}?`);
   if (name && type === "project") {
-    addDoc(projects, Project(name))
+    addDoc(projects, createProjectData(name))
       .then((ref) => getDoc(ref))
       .then((doc) => {
         const project = {
@@ -251,7 +230,7 @@ const createItem = (type: "project" | "todo", parentProject?: Project) => {
       });
   }
   if (name && parentProject && type === "todo") {
-    addDoc(todosOfProject(parentProject), Todo(name));
+    addDoc(todosOfProject(parentProject), createTodoData(name));
   }
 };
 

@@ -8,9 +8,14 @@ export interface ProjectData {
   ownerID: string;
 }
 
-export interface Project {
-  ref: DocumentReference<ProjectData>;
-  data: ProjectData;
+export class Project {
+  readonly ref: DocumentReference<ProjectData>;
+  readonly data: ProjectData;
+
+  constructor(ref: DocumentReference<ProjectData>, data: ProjectData) {
+    this.ref = ref;
+    this.data = data;
+  }
 }
 
 export interface TodoData {
