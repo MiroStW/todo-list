@@ -35,7 +35,7 @@ const getProjectById = async (id: string) => {
   if (cachedSnapshot.size > 0) return cachedSnapshot.docs[0].data();
 
   const snapshot = await getDocs(q);
-  return snapshot.docs[0].data();
+  if (snapshot.size > 0) return snapshot.docs[0].data();
 };
 
 const getProjects = (

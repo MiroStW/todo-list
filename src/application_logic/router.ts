@@ -1,4 +1,5 @@
 import { changeUI } from "components/showApp";
+import { showError } from "components/showTodos/showError";
 import { showTodoArea } from "components/showTodos/showTodos";
 import Navigo from "navigo";
 import { getProjectById, unsubscribeProjects } from "./storage/getProjects";
@@ -17,8 +18,18 @@ const router = new Navigo("/").hooks({
 const createRoutes = () => {
   router
     .on("/projects/:id", async (match) => {
-      const project = await getProjectById(match!.data!.id);
-      await showTodoArea("showProject", project);
+      try {
+        const project = await getProjectById(match!.data!.id);
+        await showTodoArea("showProject", project);
+      } catch (err) {
+        if (err instanceof Error) {
+          if (err.message == "Missing or insufficient permissions.") {
+            showError("Project not found");
+          } else {
+            showError(err.message);
+          }
+        }
+      }
       changeUI("loader", "hide");
     })
     .on("/today", async () => {
@@ -31,6 +42,10 @@ const createRoutes = () => {
     })
     .on(async () => {
       await showTodoArea("showProject");
+      changeUI("loader", "hide");
+    })
+    .notFound(() => {
+      showError("not found");
       changeUI("loader", "hide");
     })
     .resolve();
