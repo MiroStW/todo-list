@@ -13,7 +13,6 @@ const showSeparator = (parent: Element) => {
   parent.appendChild(separator);
 };
 
-//TODO rename "showProjectList"
 const showProjectList = (parent: Element, projects: Project[]) => {
   parent.innerHTML = "";
   // inbox view

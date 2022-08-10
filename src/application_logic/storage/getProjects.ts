@@ -58,31 +58,6 @@ const getProjects = (
         projects.push(doc.data());
       });
       renderer(parent, projects);
-      // snapshot.docChanges().map((change) => {
-      //   if (change.type === "added") {
-      //     projects.push({
-      //       ref: change.doc.ref,
-      //       data: change.doc.data(),
-      //     } as Project);
-      //   }
-
-      //   if (change.type === "modified") {
-      //     const i = projects.findIndex(
-      //       (project) => project.ref.id === change.doc.id
-      //     );
-      //     projects[i] = {
-      //       ref: change.doc.ref,
-      //       data: change.doc.data(),
-      //     };
-      //   }
-
-      //   if (change.type === "removed") {
-      //     const i = projects.findIndex(
-      //       (project) => project.ref.id === change.doc.id
-      //     );
-      //     projects.splice(i);
-      //   }
-      // });
 
       showOnlineStatus(snapshot);
     }

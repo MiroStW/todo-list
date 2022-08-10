@@ -6,7 +6,6 @@ const renameProject = (project: Project) => {
     `What is the new name of ${project.data.name}?`,
     project.data.name
   );
-  // TODO:  differentiate between project & todo updates
   if (newName) {
     updateDoc(project.ref, {
       name: newName,
