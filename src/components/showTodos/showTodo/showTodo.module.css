@@ -45,12 +45,14 @@ input[type="checkbox" i].todoComplete {
   /* left: 15px; */
   /* top: -4px; */
   z-index: 0;
+  border-radius: 3px;
   -webkit-appearance: none;
   cursor: pointer;
 }
 
 [type="checkbox"] + label {
   position: absolute;
+  border-radius: 3px;
 }
 
 [type="checkbox"]:checked + label {
