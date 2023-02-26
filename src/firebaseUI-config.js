@@ -1,3 +1,5 @@
+import styles from "./components/helpers/loader/loader.module.css";
+
 import {
   GoogleAuthProvider,
   // GithubAuthProvider,
@@ -18,7 +20,7 @@ const uiConfig = {
     uiShown() {
       // The widget is rendered.
       // Hide the loader.
-      document.getElementById("loader").style.display = "none";
+      document.getElementById(styles.loader).style.display = "none";
     },
   },
   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
